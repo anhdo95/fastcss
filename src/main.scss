@@ -1,0 +1,34 @@
+$color-primary: #3dd8f3;
+$color-secondary: #aa8232;
+
+html {
+  transform: rotate(-90deg);
+  transform-origin: left top;
+  width: 100vh;
+  overflow-x: hidden;
+  position: absolute;
+  top: 100%;
+  left: 0;
+}
+
+.btn {
+  color: lch(53 105 40deg);
+  border: none;
+  outline: none;
+
+  &__primary {
+    color: $color-primary;
+  }
+
+  &__secondary {
+    color: $color-secondary;
+  }
+}
+
+:fullscreen {
+  font-size: 1rem;
+}
+
+:is(input, select):is(:focus, :hover) {
+  color: #f20;
+}

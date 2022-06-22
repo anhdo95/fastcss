@@ -1,0 +1,22 @@
+{
+  "name": "postcss",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "build": "yarn compile && yarn lint && postcss compile/main.css -o dist/main.css",
+    "compile": "node-sass src/main.scss compile/main.css",
+    "lint": "stylelint \"src/**/*.scss\""
+  },
+  "devDependencies": {
+    "autoprefixer": "^10.4.7",
+    "node-sass": "^7.0.1",
+    "postcss": "^8.4.14",
+    "postcss-cli": "^9.1.0",
+    "postcss-modules": "^4.3.1",
+    "postcss-preset-env": "^7.7.1",
+    "stylelint": "^14.9.1",
+    "stylelint-config-prettier": "^9.0.3",
+    "stylelint-config-standard-scss": "^4.0.0"
+  }
+}
