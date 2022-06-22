@@ -4,12 +4,13 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "build": "yarn compile && yarn lint && postcss compile/main.css -o dist/main.css",
+    "build": "yarn compile && yarn lint && postcss compile/main.css -o dist/main.min.css",
     "compile": "node-sass src/main.scss compile/main.css",
     "lint": "stylelint \"src/**/*.scss\""
   },
   "devDependencies": {
     "autoprefixer": "^10.4.7",
+    "cssnano": "^5.1.12",
     "node-sass": "^7.0.1",
     "postcss": "^8.4.14",
     "postcss-cli": "^9.1.0",

@@ -1,5 +1,5 @@
-$color-primary: #3dd8f3;
-$color-secondary: #aa8232;
+@import 'variables';
+@import 'mixins';
 
 html {
   transform: rotate(-90deg);
@@ -12,6 +12,8 @@ html {
 }
 
 .btn {
+  @include flex-center;
+
   color: lch(53 105 40deg);
   border: none;
   outline: none;
