@@ -9,5 +9,5 @@ module.exports = function buildScreens(root, { config }) {
     })
   });
 
-  root.first.before(customMediaAtRules)
+  return customMediaAtRules
 };

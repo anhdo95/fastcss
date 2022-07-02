@@ -20,7 +20,6 @@ fs.readFile(from, function (err, styles) {
 
       fs.writeFileSync(to, result.css);
       if (result.map) {
-        console.log('result.map :>> ', result);
         fs.writeFileSync(toMap, JSON.stringify(result.map));
       }
     });
