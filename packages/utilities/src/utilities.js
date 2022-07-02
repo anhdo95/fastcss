@@ -1,6 +1,7 @@
 const buildScreens = require('./screens')
 const buildColors = require('./colors')
 const substituteApplyAtRules = require('./applyAtRules')
+const buildFlex = require('./generators/flex')
 
 module.exports = function utilitiesPlugin(root, { opts }) {
   root.walkAtRules('use', rule => {
@@ -9,11 +10,12 @@ module.exports = function utilitiesPlugin(root, { opts }) {
       const { textColors, bgColors, colorsInScreens } = buildColors(root, opts)
 
       root.insertBefore(rule, [
-        ...screens,
-        ...textColors,
-        ...bgColors,
-        ...colorsInScreens
-      ])
+        screens,
+        textColors,
+        bgColors,
+        colorsInScreens,
+        buildFlex(opts)
+      ].flat())
 
       substituteApplyAtRules(root, opts)
 
