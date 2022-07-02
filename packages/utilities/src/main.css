@@ -1,0 +1,8 @@
+@use utilities;
+
+body {
+  @apply text-#333;
+
+  font-size: 0.875rem;
+  line-height: 1;
+}

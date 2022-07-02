@@ -1,0 +1,13 @@
+{
+  "name": "postcss-utilities",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "build": "node index.js"
+  },
+  "devDependencies": {
+    "lodash": "^4.17.21",
+    "postcss": "^8.4.14"
+  }
+}
