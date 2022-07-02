@@ -5,12 +5,13 @@ module.exports = function utilitiesPlugin(root, { opts }) {
   root.walkAtRules('use', rule => {
     if (rule.params === 'utilities') {
       const screens = buildScreens(root, opts)
-      const { textColors, bgColors } = buildColors(root, opts)
+      const { textColors, bgColors, colorsInScreens } = buildColors(root, opts)
 
       root.insertBefore(rule, [
         ...screens,
         ...textColors,
-        ...bgColors
+        ...bgColors,
+        ...colorsInScreens
       ])
 
       rule.remove()
