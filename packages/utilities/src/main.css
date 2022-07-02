@@ -1,8 +1,12 @@
 @use utilities;
 
 body {
-  @apply text-#333;
+  @apply text-grey-900;
 
   font-size: 0.875rem;
   line-height: 1;
+}
+
+a {
+  @apply text-green-dark;
 }

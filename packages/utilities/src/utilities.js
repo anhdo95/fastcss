@@ -1,5 +1,6 @@
 const buildScreens = require('./screens')
 const buildColors = require('./colors')
+const substituteApplyAtRules = require('./applyAtRules')
 
 module.exports = function utilitiesPlugin(root, { opts }) {
   root.walkAtRules('use', rule => {
@@ -13,6 +14,8 @@ module.exports = function utilitiesPlugin(root, { opts }) {
         ...bgColors,
         ...colorsInScreens
       ])
+
+      substituteApplyAtRules(root, opts)
 
       rule.remove()
     }
