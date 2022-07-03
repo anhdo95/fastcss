@@ -19,7 +19,7 @@ module.exports = function substituteResponsive(root, { config }) {
       .append(
         rules.map((rule) =>
           rule.clone({
-            selector: `.${screen}\\:${rule.selector.slice(1)}`,
+            selectors: rule.selectors.map(selector => `.${screen}\\:${selector.slice(1)}`),
           })
         )
       );
