@@ -6,12 +6,12 @@ module.exports = function defineClasses(classes) {
     const decls = _.map(properties, (value, prop) => {
       return postcss.decl({
         prop: _.kebabCase(prop),
-        value
+        value,
       })
     })
 
     return postcss.rule({
-      selector: `.${className}`
+      selector: `.${className}`,
     }).append(decls)
   }
 

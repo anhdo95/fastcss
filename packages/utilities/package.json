@@ -4,10 +4,15 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "build": "node index.js"
+    "build": "node index.js",
+    "postbuild": "yarn stylelint",
+    "stylelint": "stylelint dist/**/*.css --fix"
   },
   "devDependencies": {
     "lodash": "^4.17.21",
-    "postcss": "^8.4.14"
+    "postcss": "^8.4.14",
+    "stylelint": "^14.9.1",
+    "stylelint-config-prettier": "^9.0.3",
+    "stylelint-config-standard": "^26.0.0"
   }
 }

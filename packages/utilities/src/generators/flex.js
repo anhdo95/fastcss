@@ -1,6 +1,6 @@
-const defineClasses = require("../utils/defineClasses");
+const defineClasses = require("../libs/defineClasses");
 
-module.exports = function buildFlex(opts) {
+module.exports = function flex(opts) {
   return defineClasses({
     flex: {
       display: "flex",
