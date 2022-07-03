@@ -1,5 +1,6 @@
 const postcss = require('postcss')
 const _ = require('lodash')
+const escapeSelector = require('../utils/escapeSelector')
 
 module.exports = function defineClasses(classes) {
   function defineClass(className, properties) {
@@ -11,7 +12,7 @@ module.exports = function defineClasses(classes) {
     })
 
     return postcss.rule({
-      selector: `.${className}`,
+      selector: `.${escapeSelector(className)}`,
     }).append(decls)
   }
 
