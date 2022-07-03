@@ -12,16 +12,16 @@ module.exports = function sizing({ config: { sizing } }) {
           height: sizing.common[size],
         },
         [`min-w-${size}`]: {
-          width: sizing.common[size],
+          'min-width': sizing.common[size],
         },
         [`min-h-${size}`]: {
-          height: sizing.common[size],
+          'min-height': sizing.common[size],
         },
         [`max-w-${size}`]: {
-          width: sizing.common[size],
+          'max-width': sizing.common[size],
         },
         [`max-h-${size}`]: {
-          height: sizing.common[size],
+          'max-height': sizing.common[size],
         },
       }
     }, {})
