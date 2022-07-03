@@ -1,6 +1,7 @@
 const fs = require("fs");
 const path = require("path");
 const postcss = require("postcss");
+const postcssPresetEnv = require("postcss-preset-env");
 const utilities = require("./src/utilities");
 const defaultConfig = require("./src/default.config.js");
 
@@ -11,7 +12,7 @@ const toMap = "./dist/main.css.map";
 fs.readFile(from, function (err, styles) {
   const opts = { from, to, map: { inline: false }, config: defaultConfig };
 
-  postcss([utilities])
+  postcss([utilities, postcssPresetEnv])
     .process(styles, opts)
     .then((result) => {
       if (!fs.existsSync(to)) {

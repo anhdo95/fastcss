@@ -6,7 +6,7 @@ module.exports = function backgroundColors({ config: { colors } }) {
       return {
         ...classes,
         [`bg-${color}`]: {
-          color: colors[color],
+          'background-color': colors[color],
         },
       }
     }, {})
