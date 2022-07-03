@@ -19,4 +19,5 @@ button {
 
 .card {
   @apply min-w-1/3 max-w-1/2;
+  @apply my-2 px-2;
 }
