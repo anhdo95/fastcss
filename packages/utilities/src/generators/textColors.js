@@ -1,5 +1,5 @@
 const hoverable = require('../directives/hoverable')
-const defineClasses = require('../libs/defineClasses')
+const defineClasses = require('../utils/defineClasses')
 
 module.exports = function textColors({ config: { colors } }) {
   return hoverable(

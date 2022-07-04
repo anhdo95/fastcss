@@ -1,7 +1,7 @@
 const postcss = require("postcss");
 const cloneNodes = require("../utils/cloneNodes");
 
-module.exports = function substituteResponsive(root, { config }) {
+module.exports = function responsiveAtRule(root, { opts: { config } }) {
   const rules = [];
 
   root.walkAtRules("responsive", (atRule) => {

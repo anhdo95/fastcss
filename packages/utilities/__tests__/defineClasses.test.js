@@ -1,4 +1,4 @@
-const defineClasses = require('../src/libs/defineClasses')
+const defineClasses = require('../src/utils/defineClasses')
 const cw = require('../src/utils/collapseWhitespaces')
 
 describe('defineClasses', () => {
