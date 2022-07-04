@@ -5,7 +5,7 @@ const postcssPresetEnv = require("postcss-preset-env");
 const utilities = require("./src/utilities");
 const defaultConfig = require("./src/default.config.js");
 
-const from = "./src/main.css";
+const from = "./css/main.css";
 const to = "./dist/main.css";
 const toMap = "./dist/main.css.map";
 
