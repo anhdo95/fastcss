@@ -62,10 +62,28 @@ describe('applyAtRule', () => {
       }
     `)
 
-    const output = 'Unkown selector .p-8'
+    return run(input).catch((error) => {
+      expect(error).toMatchObject({ name: 'CssSyntaxError' })
+    })
+  })
+
+  it('it fails if the class has mutliple rulesets', async () => {
+    const input = cw(`
+      .container {
+        max-width: 100%;
+      }
+
+      .container {
+        width: 100%;
+      }
+
+      .main {
+        @apply container;
+      }
+    `)
 
     return run(input).catch((error) => {
-      expect(error.reason).toBe(output)
+      expect(error).toMatchObject({ name: 'CssSyntaxError' })
     })
   })
 })

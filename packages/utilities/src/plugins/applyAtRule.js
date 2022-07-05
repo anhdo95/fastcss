@@ -3,13 +3,14 @@ const cloneNodes = require("../utils/cloneNodes");
 const escapeSelector = require('../utils/escapeSelector');
 
 module.exports = function applyAtRules(root) {
-  function findNodesBySelector(selector) {
+  function findRulesBySelector(selector) {
     const matches = [];
     root.walkRules(rule => {
       if (rule.selectors.includes(selector) && rule.parent.type === 'root') {
-        matches.push(...cloneNodes(rule.nodes))
+        matches.push(rule)
       }
     })
+
     return matches
   }
 
@@ -18,13 +19,18 @@ module.exports = function applyAtRules(root) {
 
     classes.forEach((className) => {
       const selector = `.${className}`
-      const matches = findNodesBySelector(escapeSelector(selector))
+      const matches = findRulesBySelector(escapeSelector(selector))
 
       if (!matches.length) {
         throw atRule.error(`Unkown selector ${selector}`)
       }
 
-      atRule.before(matches)
+      if (matches.length > 1) {
+        throw atRule.error(`\`@apply\` cannot be used with ${selector} because ${selector} is included in multiple rulesets`)
+      }
+
+
+      atRule.before(cloneNodes(matches[0].nodes))
     })
 
     atRule.remove()

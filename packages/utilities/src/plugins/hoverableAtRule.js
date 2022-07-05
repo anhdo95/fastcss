@@ -6,7 +6,6 @@ module.exports = function hoverableAtRule(root) {
       rule.selectors = [
         rule.selector,
         `.hover\\:${rule.selector.slice(1)}:hover`,
-        `.hover\\:${rule.selector.slice(1)}:focus`,
       ]
     })
 

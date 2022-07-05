@@ -9,6 +9,7 @@ const customMedia = require("./src/plugins/customMedia.js");
 const preflightAtRule = require('./src/plugins/preflightAtRule')
 const applyAtRule = require('./src/plugins/applyAtRule')
 const hoverableAtRule = require('./src/plugins/hoverableAtRule')
+const focusableAtRule = require('./src/plugins/focusableAtRule')
 const responsiveAtRule = require('./src/plugins/responsiveAtRule');
 
 const from = "./css/main.css";
@@ -22,6 +23,7 @@ fs.readFile(from, function (err, styles) {
     customMedia,
     utilities,
     hoverableAtRule,
+    focusableAtRule,
     responsiveAtRule,
     applyAtRule,
     postcssPresetEnv,
