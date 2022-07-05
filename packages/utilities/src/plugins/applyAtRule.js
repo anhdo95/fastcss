@@ -1,11 +1,11 @@
 const postcss = require('postcss')
-const cloneNodes = require("../utils/cloneNodes");
-const escapeSelector = require('../utils/escapeSelector');
+const cloneNodes = require('../utils/cloneNodes')
+const escapeSelector = require('../utils/escapeSelector')
 
 module.exports = function applyAtRules(root) {
   function findRulesBySelector(selector) {
-    const matches = [];
-    root.walkRules(rule => {
+    const matches = []
+    root.walkRules((rule) => {
       if (rule.selectors.includes(selector) && rule.parent.type === 'root') {
         matches.push(rule)
       }
@@ -14,11 +14,12 @@ module.exports = function applyAtRules(root) {
     return matches
   }
 
-  root.walkAtRules('apply', atRule => {
+  root.walkAtRules('apply', (atRule) => {
     const classes = postcss.list.space(atRule.params)
 
     classes.forEach((className) => {
-      const selector = `.${className}`
+      const isImportant = className.startsWith('!')
+      const selector = `.${isImportant ? className.slice(1) : className}`
       const matches = findRulesBySelector(escapeSelector(selector))
 
       if (!matches.length) {
@@ -26,10 +27,14 @@ module.exports = function applyAtRules(root) {
       }
 
       if (matches.length > 1) {
-        throw atRule.error(`\`@apply\` cannot be used with ${selector} because ${selector} is included in multiple rulesets`)
+        throw atRule.error(
+          `\`@apply\` cannot be used with ${selector} because ${selector} is included in multiple rulesets`
+        )
       }
 
-      const decls = matches[0].nodes.map(decl => decl.clone({ important: false }))
+      const decls = matches[0].nodes.map((decl) =>
+        decl.clone({ important: isImportant })
+      )
       atRule.before(cloneNodes(decls))
     })
 

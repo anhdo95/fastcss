@@ -9,7 +9,7 @@ body {
 }
 
 a {
-  @apply text-green-dark;
+  @apply !text-green-dark;
 }
 
 button {

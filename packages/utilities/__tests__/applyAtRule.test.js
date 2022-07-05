@@ -55,6 +55,32 @@ describe('applyAtRule', () => {
       })
   })
 
+  it.only('applied rules can be made !important', async () => {
+    const input = cw(`
+      .container {
+        max-width: 100%;
+      }
+
+      .main {
+        @apply !container;
+      }
+    `)
+
+    const output = cw(`
+      .container {
+        max-width: 100%;
+      }
+
+      .main {
+        max-width: 100% !important;
+      }
+    `)
+
+    return run(input).then((result) => {
+      expect(result.css).toBe(output)
+    })
+  })
+
   it('it fails if the class does not exist', async () => {
     const input = cw(`
       .container {
