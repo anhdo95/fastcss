@@ -29,8 +29,8 @@ module.exports = function applyAtRules(root) {
         throw atRule.error(`\`@apply\` cannot be used with ${selector} because ${selector} is included in multiple rulesets`)
       }
 
-
-      atRule.before(cloneNodes(matches[0].nodes))
+      const decls = matches[0].nodes.map(decl => decl.clone({ important: false }))
+      atRule.before(cloneNodes(decls))
     })
 
     atRule.remove()

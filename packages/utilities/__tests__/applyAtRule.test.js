@@ -86,4 +86,30 @@ describe('applyAtRule', () => {
       expect(error).toMatchObject({ name: 'CssSyntaxError' })
     })
   })
+
+  it('it removes important from applied classes', async () => {
+    const input = cw(`
+      .container {
+        max-width: 100% !important;
+      }
+
+      .main {
+        @apply container;
+      }
+    `)
+
+    const output = cw(`
+      .container {
+        max-width: 100% !important;
+      }
+
+      .main {
+        max-width: 100%;
+      }
+    `)
+
+    return run(input).then((result) => {
+      expect(result.css).toBe(output)
+    })
+  })
 })
