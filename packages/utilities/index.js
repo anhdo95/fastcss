@@ -4,9 +4,8 @@ const postcss = require("postcss");
 const postcssPresetEnv = require("postcss-preset-env");
 
 const defaultConfig = require("./src/default.config.js");
-const utilities = require("./src/plugins/utilitiesAtRule");
+const useAtRule = require("./src/plugins/useAtRule");
 const customMedia = require("./src/plugins/customMedia.js");
-const preflightAtRule = require('./src/plugins/preflightAtRule')
 const applyAtRule = require('./src/plugins/applyAtRule')
 const hoverableAtRule = require('./src/plugins/hoverableAtRule')
 const responsiveAtRule = require('./src/plugins/responsiveAtRule');
@@ -18,9 +17,8 @@ const toMap = "./dist/main.css.map";
 fs.readFile(from, function (err, styles) {
   const opts = { from, to, map: { inline: false }, config: defaultConfig };
   const plugins = [
-    preflightAtRule,
     customMedia,
-    utilities,
+    useAtRule,
     hoverableAtRule,
     responsiveAtRule,
     applyAtRule,
