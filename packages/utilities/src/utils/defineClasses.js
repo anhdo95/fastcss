@@ -1,6 +1,6 @@
 const postcss = require('postcss')
 const _ = require('lodash')
-const escapeSelector = require('../utils/escapeSelector')
+const escapeSelector = require('./escapeSelector')
 
 module.exports = function defineClasses(classes) {
   function defineClass(className, properties) {

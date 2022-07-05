@@ -2,7 +2,7 @@ const postcss = require('postcss')
 const fs = require('fs')
 const path = require('path')
 
-module.exports = function substitutePreflight(root) {
+module.exports = function preflight(root) {
   root.walkAtRules('use', (atRule) => {
     if (atRule.params === 'preflight') {
       const preflightPath = path.resolve(__dirname, '../../css/preflight.css')

@@ -2,11 +2,11 @@ const postcss = require('postcss')
 const cloneNodes = require("../utils/cloneNodes");
 const escapeSelector = require('../utils/escapeSelector');
 
-module.exports = function substituteApplyAtRules(root) {
+module.exports = function applyAtRules(root) {
   function findNodesBySelector(selector) {
     const matches = [];
     root.walkRules(rule => {
-      if (rule.selector === selector) {
+      if (rule.selectors.includes(selector) && rule.parent.type === 'root') {
         matches.push(...cloneNodes(rule.nodes))
       }
     })

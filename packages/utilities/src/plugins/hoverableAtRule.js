@@ -1,6 +1,6 @@
 const cloneNodes = require("../utils/cloneNodes");
 
-module.exports = function substituteHoverable(root) {
+module.exports = function hoverableAtRule(root) {
   root.walkAtRules("hoverable", (atRule) => {
     atRule.walkRules(rule => {
       rule.selectors = [

@@ -8,9 +8,11 @@
     "serve": "serve -p 8080 public",
     "build": "node index.js",
     "postbuild": "yarn format:fix",
-    "format:fix": "stylelint dist/**/*.css --fix"
+    "format:fix": "stylelint dist/**/*.css --fix",
+    "test": "jest"
   },
   "devDependencies": {
+    "jest": "^28.1.2",
     "lodash": "^4.17.21",
     "postcss": "^8.4.14",
     "postcss-preset-env": "^7.7.2",

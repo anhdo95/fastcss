@@ -5,7 +5,7 @@ const backgroundColors = require('../generators/backgroundColors')
 const sizing = require('../generators/sizing')
 const spacing = require('../generators/spacing')
 
-module.exports = function generateUtilities(root, opts) {
+module.exports = function utilitiesAtRule(root, { opts }) {
   root.walkAtRules('use', atRule => {
     if (atRule.params === 'utilities') {
       const utilities = [
