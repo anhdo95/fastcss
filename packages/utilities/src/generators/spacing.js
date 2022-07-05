@@ -1,6 +1,6 @@
 const defineClasses = require('../utils/defineClasses')
 
-module.exports = function spacing({ config: { spacing } }) {
+module.exports = function spacing({ spacing }) {
   return defineClasses(
     Object.keys(spacing.common).reduce((classes, size) => {
       return {

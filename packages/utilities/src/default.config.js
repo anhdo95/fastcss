@@ -81,5 +81,13 @@ module.exports = {
       '6': '1.5rem',
       '8': '2rem',
     },
+  },
+
+  modules: {
+    backgroundColor: ['responsive', 'hover'],
+    flex: ['responsive'],
+    sizing: ['responsive'],
+    spacing: ['responsive'],
+    textColors: ['responsive', 'hover'],
   }
 }
