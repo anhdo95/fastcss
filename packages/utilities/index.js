@@ -18,12 +18,12 @@ const toMap = "./dist/main.css.map";
 fs.readFile(from, function (err, styles) {
   const opts = { from, to, map: { inline: false }, config: defaultConfig };
   const plugins = [
-    utilities,
-    customMedia,
     preflightAtRule,
-    applyAtRule,
+    customMedia,
+    utilities,
     hoverableAtRule,
     responsiveAtRule,
+    applyAtRule,
     postcssPresetEnv,
   ]
 
