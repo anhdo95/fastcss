@@ -1,6 +1,6 @@
 const defineClasses = require('../utils/defineClasses')
 
-module.exports = function sizing({ config: { sizing } }) {
+module.exports = function sizing({ sizing }) {
   return defineClasses(
     Object.keys(sizing.common).reduce((classes, size) => {
       return {

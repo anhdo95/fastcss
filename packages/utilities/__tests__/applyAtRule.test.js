@@ -55,7 +55,7 @@ describe('applyAtRule', () => {
       })
   })
 
-  it.only('applied rules can be made !important', async () => {
+  it('applied rules can be made !important', async () => {
     const input = cw(`
       .container {
         max-width: 100%;

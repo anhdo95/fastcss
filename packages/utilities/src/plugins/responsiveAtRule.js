@@ -14,7 +14,7 @@ module.exports = function responsiveAtRule(root, { opts: { config } }) {
     const mediaAtRule = postcss
       .atRule({
         name: "media",
-        params: `(--${screen})`,
+        params: `(min-width: ${config.screens[screen]})`,
       })
       .append(
         rules.map((rule) =>
