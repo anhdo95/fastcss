@@ -89,5 +89,18 @@ module.exports = {
     sizing: ['responsive'],
     spacing: ['responsive'],
     textColors: ['responsive', 'hover'],
-  }
+  },
+
+  plugins: [function({ addUtilities }) {
+    addUtilities(
+      {
+        '.flex-center': {
+          display: 'flex',
+          'justify-content': 'center',
+          'align-items': 'center',
+        },
+      },
+      { variants: ['responsive'] }
+    )
+  }]
 }

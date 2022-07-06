@@ -59,11 +59,6 @@ module.exports = function flex(opts) {
     "justify-around": {
       justifyContent: "space-around",
     },
-    "flex-center": {
-      display: "flex",
-      "justify-content": "center",
-      "align-items": "center",
-    },
     "flex-auto": {
       flex: "auto",
     },
