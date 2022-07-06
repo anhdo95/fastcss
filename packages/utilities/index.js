@@ -5,7 +5,6 @@ const postcssPresetEnv = require("postcss-preset-env");
 
 const defaultConfig = require("./src/default.config.js");
 const useAtRule = require("./src/plugins/useAtRule");
-const customMedia = require("./src/plugins/customMedia.js");
 const applyAtRule = require('./src/plugins/applyAtRule')
 const variantsAtRule = require('./src/plugins/variantsAtRule')
 const responsiveAtRule = require('./src/plugins/responsiveAtRule');
@@ -17,7 +16,6 @@ const toMap = "./dist/main.css.map";
 fs.readFile(from, function (err, styles) {
   const opts = { from, to, map: { inline: false }, config: defaultConfig };
   const plugins = [
-    customMedia,
     useAtRule,
     variantsAtRule,
     responsiveAtRule,
