@@ -5,13 +5,21 @@ const generateModules = require('../utils/generateModules')
 const processPlugins = require('../utils/processPlugins')
 
 module.exports = function utilitiesAtRule(root, { opts }) {
-  const [pluginUtilities] = processPlugins(opts.config)
+  const [pluginComponents, pluginUtilities] = processPlugins(opts.config)
 
   root.walkAtRules('use', atRule => {
     if (atRule.params === 'preflight') {
       const preflightPath = path.resolve(__dirname, '../../css/preflight.css')
       const css = postcss.parse(fs.readFileSync(preflightPath, 'utf-8'))
       atRule.before(css)
+    }
+
+    if (atRule.params === 'components') {
+      const pluginComponentTree = postcss.root({
+        nodes: pluginComponents
+      })
+      pluginComponentTree.walk(node => node.source = atRule.source)
+      atRule.before(utilityTree)
     }
 
     if (atRule.params === 'utilities') {
