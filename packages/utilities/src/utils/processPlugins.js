@@ -20,6 +20,7 @@ module.exports = function processPlugins(config) {
 
   config.plugins.forEach((plugin) => {
     plugin({
+      config,
       addUtilities(utilities, opts = {}) {
         const defaultOpts = { variants: [] }
         defaults(opts, defaultOpts)

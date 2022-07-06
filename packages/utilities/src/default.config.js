@@ -91,16 +91,19 @@ module.exports = {
     textColors: ['responsive', 'hover'],
   },
 
-  plugins: [function({ addUtilities }) {
-    addUtilities(
-      {
-        '.flex-center': {
-          display: 'flex',
-          'justify-content': 'center',
-          'align-items': 'center',
+  plugins: [
+    require('./plugins/container'),
+    function({ addUtilities }) {
+      addUtilities(
+        {
+          '.flex-center': {
+            display: 'flex',
+            'justify-content': 'center',
+            'align-items': 'center',
+          },
         },
-      },
-      { variants: ['responsive'] }
-    )
-  }]
+        { variants: ['responsive'] }
+      )
+    }
+  ]
 }

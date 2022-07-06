@@ -19,7 +19,7 @@ module.exports = function utilitiesAtRule(root, { opts }) {
         nodes: pluginComponents
       })
       pluginComponentTree.walk(node => node.source = atRule.source)
-      atRule.before(utilityTree)
+      atRule.before(pluginComponentTree)
     }
 
     if (atRule.params === 'utilities') {

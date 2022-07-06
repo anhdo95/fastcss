@@ -1,4 +1,5 @@
 @use preflight;
+@use components;
 @use utilities;
 
 body {
