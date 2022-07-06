@@ -1,17 +1,11 @@
 const postcss = require('postcss')
+const defineClass = require('../utils/defineClass')
 
 module.exports = function container({ addComponents, config }) {
-  function createContainer(width) {
-    return postcss
-      .rule({
-        selector: '.container',
-      })
-      .append(
-        postcss.decl({
-          prop: 'max-width',
-          value: width,
-        })
-      )
+  function defineContainer(width) {
+    return defineClass('container', {
+      'max-width': width,
+    })
   }
 
   const mediaRules = Object.keys(config.screens).map((screen) => {
@@ -22,11 +16,8 @@ module.exports = function container({ addComponents, config }) {
         name: 'media',
         params: `(min-width: ${width})`,
       })
-      .append(createContainer(width))
+      .append(defineContainer(width))
   })
 
-  addComponents([
-    createContainer('100%'),
-    ...mediaRules
-  ])
+  addComponents([defineContainer('100%'), ...mediaRules])
 }
