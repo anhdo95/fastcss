@@ -15,10 +15,12 @@ function parseStyles(styles) {
 }
 
 module.exports = function processPlugins(config) {
+  const pluginComponents = []
   const pluginUtilities = []
 
   config.plugins.forEach((plugin) => {
     plugin({
+      config,
       addUtilities(utilities, opts = {}) {
         const defaultOpts = { variants: [] }
         defaults(opts, defaultOpts)
@@ -29,8 +31,15 @@ module.exports = function processPlugins(config) {
 
         pluginUtilities.push(wrapWithVariants(opts.variants, styles.nodes))
       },
+
+      addComponents(components) {
+        const styles = postcss.root({
+          nodes: parseStyles(components)
+        })
+        pluginComponents.push(styles)
+      }
     })
   })
 
-  return [pluginUtilities]
+  return [pluginComponents, pluginUtilities]
 }
