@@ -1,7 +1,6 @@
 const fs = require('fs')
 const path = require('path')
 const postcss = require('postcss')
-const responsive = require('../directives/responsive')
 const generateModules = require('../utils/generateModules')
 
 module.exports = function utilitiesAtRule(root, { opts }) {

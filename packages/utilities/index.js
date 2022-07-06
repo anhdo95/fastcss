@@ -7,7 +7,7 @@ const defaultConfig = require("./src/default.config.js");
 const useAtRule = require("./src/plugins/useAtRule");
 const customMedia = require("./src/plugins/customMedia.js");
 const applyAtRule = require('./src/plugins/applyAtRule')
-const hoverableAtRule = require('./src/plugins/hoverableAtRule')
+const variantsAtRule = require('./src/plugins/variantsAtRule')
 const responsiveAtRule = require('./src/plugins/responsiveAtRule');
 
 const from = "./css/main.css";
@@ -19,7 +19,7 @@ fs.readFile(from, function (err, styles) {
   const plugins = [
     customMedia,
     useAtRule,
-    hoverableAtRule,
+    variantsAtRule,
     responsiveAtRule,
     applyAtRule,
     postcssPresetEnv,
