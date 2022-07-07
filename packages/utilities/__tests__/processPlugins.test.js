@@ -36,8 +36,8 @@ describe('processPlugins', () => {
       }
     `).trim()
 
-    const [components] = run(input)
-    expect(css(components)).toBe(output)
+    const { pluginComponents } = run(input)
+    expect(css(pluginComponents)).toBe(output)
   })
 
   it('It can create components with objects-in-array syntax', () => {
@@ -76,7 +76,7 @@ describe('processPlugins', () => {
       }
     `).trim()
 
-    const [components] = run(input)
-    expect(css(components)).toBe(output)
+    const { pluginComponents } = run(input)
+    expect(css(pluginComponents)).toBe(output)
   })
 })

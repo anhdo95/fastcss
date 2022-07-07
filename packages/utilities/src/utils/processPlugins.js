@@ -2,6 +2,7 @@ const postcss = require('postcss')
 const Node = require('postcss/lib/node')
 const parseObjectStyles = require('./parseObjectStyles')
 const wrapWithVariants = require('./wrapWithVariants')
+const generateVariantFunction = require('./generateVariantFunction')
 const defaults = require('./defaults')
 
 function parseStyles(styles) {
@@ -17,6 +18,7 @@ function parseStyles(styles) {
 module.exports = function processPlugins(config) {
   const pluginComponents = []
   const pluginUtilities = []
+  const pluginVariantGenerators = {}
 
   config.plugins.forEach((plugin) => {
     plugin({
@@ -26,7 +28,7 @@ module.exports = function processPlugins(config) {
         defaults(opts, defaultOpts)
 
         const styles = postcss.root({
-          nodes: parseStyles(utilities)
+          nodes: parseStyles(utilities),
         })
 
         pluginUtilities.push(wrapWithVariants(opts.variants, styles.nodes))
@@ -34,12 +36,16 @@ module.exports = function processPlugins(config) {
 
       addComponents(components) {
         const styles = postcss.root({
-          nodes: parseStyles(components)
+          nodes: parseStyles(components),
         })
         pluginComponents.push(styles)
-      }
+      },
+
+      addVariant(name, generator) {
+        pluginVariantGenerators[name] = generateVariantFunction(generator)
+      },
     })
   })
 
-  return [pluginComponents, pluginUtilities]
+  return { pluginComponents, pluginUtilities, pluginVariantGenerators }
 }

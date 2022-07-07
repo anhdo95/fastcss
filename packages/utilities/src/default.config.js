@@ -88,12 +88,13 @@ module.exports = {
     flex: ['responsive'],
     sizing: ['responsive'],
     spacing: ['responsive'],
-    textColors: ['responsive', 'hover'],
+    textColors: ['responsive', 'hover', 'active', 'first-child'],
   },
 
   plugins: [
     require('./plugins/container'),
-    function({ addUtilities }) {
+
+    function({ addUtilities, addVariant }) {
       addUtilities(
         {
           '.flex-center': {
@@ -104,6 +105,10 @@ module.exports = {
         },
         { variants: ['responsive'] }
       )
-    }
+
+      addVariant('first-child', function generator({ className, separator }) {
+        return `.first-child${separator}${className}:first-child`
+      })
+    },
   ]
 }
