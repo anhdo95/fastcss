@@ -3,7 +3,7 @@ const plugin = require('../src/plugins/variantsAtRule')
 const cw = require('../src/utils/collapseWhitespaces')
 
 async function run(css, opts = { from: '' }) {
-  return postcss([plugin]).process(css, opts)
+  return postcss([plugin()]).process(css, opts)
 }
 
 describe('variantsAtRule', () => {
@@ -41,17 +41,35 @@ describe('variantsAtRule', () => {
     })
   })
 
-  it('it can generate hover and focus variants', async () => {
+  it('it can generate active variants', async () => {
     const input = `
-      @variants hover, focus {
+      @variants active {
         .text-green { color: green; }
       }
     `
 
     const output = cw(`
       .text-green { color: green; }
-      .focus\\:text-green:focus { color: green; }
+      .active\\:text-green:active { color: green; }
+    `)
+
+    return run(input).then((result) => {
+      expect(cw(result.css)).toBe(output)
+    })
+  })
+
+  it('it can generate hover, focus and active variants', async () => {
+    const input = `
+      @variants hover, focus, active {
+        .text-green { color: green; }
+      }
+    `
+
+    const output = cw(`
+      .text-green { color: green; }
       .hover\\:text-green:hover { color: green; }
+      .focus\\:text-green:focus { color: green; }
+      .active\\:text-green:active { color: green; }
     `)
 
     return run(input).then((result) => {
@@ -61,7 +79,7 @@ describe('variantsAtRule', () => {
 
   it('it wraps the output in @responsive at-rule if responsive is included as a variant', async () => {
     const input = `
-      @variants responsive, hover, focus {
+      @variants responsive, hover, focus, active {
         .text-green { color: green; }
       }
     `
@@ -69,8 +87,9 @@ describe('variantsAtRule', () => {
     const output = cw(`
       @responsive {
         .text-green { color: green; }
-        .focus\\:text-green:focus { color: green; }
         .hover\\:text-green:hover { color: green; }
+        .focus\\:text-green:focus { color: green; }
+        .active\\:text-green:active { color: green; }
       }
     `).trim()
 

@@ -9,6 +9,6 @@ module.exports = function generateVariantFunction(generator) {
       })
     })
 
-    atRule.after(cloned.nodes)
+    atRule.before(cloned.nodes)
   }
 }

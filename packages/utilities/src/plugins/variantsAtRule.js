@@ -13,7 +13,7 @@ const variantGenerators = {
   active: generateVariant('active'),
 }
 
-module.exports = function variantsAtRule(config, plugins) {
+module.exports = function variantsAtRule(config, plugins = {}) {
   return function (root) {
     root.walkAtRules('variants', (atRule) => {
       const generators = {

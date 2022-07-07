@@ -3,7 +3,7 @@ const path = require('path')
 const postcss = require('postcss')
 const generateModules = require('../utils/generateModules')
 
-module.exports = function utilitiesAtRule(config, plugins) {
+module.exports = function utilitiesAtRule(config, plugins = {}) {
   return function (root) {
     const { pluginComponents, pluginUtilities } = plugins
 
