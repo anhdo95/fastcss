@@ -3,7 +3,8 @@ const path = require("path");
 const postcss = require("postcss");
 const postcssPresetEnv = require("postcss-preset-env");
 
-const defaultConfig = require("./src/default.config.js");
+const config = require("./src/default.config.js");
+const processPlugins = require('./src/utils/processPlugins')
 const useAtRule = require("./src/plugins/useAtRule");
 const applyAtRule = require('./src/plugins/applyAtRule')
 const variantsAtRule = require('./src/plugins/variantsAtRule')
@@ -14,17 +15,16 @@ const to = "./dist/main.css";
 const toMap = "./dist/main.css.map";
 
 fs.readFile(from, function (err, styles) {
-  const opts = { from, to, map: { inline: false }, config: defaultConfig };
-  const plugins = [
-    useAtRule,
-    variantsAtRule,
-    responsiveAtRule,
-    applyAtRule,
-    postcssPresetEnv,
-  ]
+  const plugins = processPlugins(config)
 
-  postcss(plugins)
-    .process(styles, opts)
+  postcss([
+    useAtRule(config, plugins),
+    variantsAtRule(config, plugins),
+    responsiveAtRule(config),
+    applyAtRule(config),
+    postcssPresetEnv,
+  ])
+    .process(styles, { from, to, map: { inline: false } })
     .then((result) => {
       if (!fs.existsSync(to)) {
         fs.mkdirSync(path.dirname(to), { recursive: true });

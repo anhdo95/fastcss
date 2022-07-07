@@ -3,7 +3,7 @@ const plugin = require('../src/plugins/applyAtRule')
 const cw = require('../src/utils/collapseWhitespaces')
 
 async function run(css, opts = { from: '' }) {
-  return postcss([plugin]).process(css, opts)
+  return postcss([plugin()]).process(css, opts)
 }
 
 describe('applyAtRule', () => {
