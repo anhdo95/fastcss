@@ -1,14 +1,13 @@
-const defineClasses = require('../utils/defineClasses')
-
-module.exports = function backgroundColors({ colors }) {
-  return defineClasses(
+module.exports = function backgroundColors({ addUtilities, config: { colors, modules } }) {
+  addUtilities(
     Object.keys(colors).reduce((classes, color) => {
       return {
         ...classes,
-        [`bg-${color}`]: {
+        [`.bg-${color}`]: {
           'background-color': colors[color],
         },
       }
-    }, {})
+    }, {}),
+    modules.backgroundColors
   )
 }

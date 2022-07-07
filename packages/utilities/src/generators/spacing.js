@@ -1,33 +1,37 @@
-const defineClasses = require('../utils/defineClasses')
+const escapeSelector = require('../utils/escapeSelector')
 
-module.exports = function spacing({ spacing }) {
-  return defineClasses(
+module.exports = function spacing({
+  addUtilities,
+  config: { spacing, modules },
+}) {
+  addUtilities(
     Object.keys(spacing.common).reduce((classes, size) => {
       return {
         ...classes,
-        [`m-${size}`]: {
+        [`.m-${escapeSelector(size)}`]: {
           margin: spacing.common[size],
         },
-        [`mx-${size}`]: {
+        [`.mx-${escapeSelector(size)}`]: {
           'margin-left': spacing.common[size],
           'margin-right': spacing.common[size],
         },
-        [`my-${size}`]: {
+        [`.my-${escapeSelector(size)}`]: {
           'margin-top': spacing.common[size],
           'margin-bottom': spacing.common[size],
         },
-        [`p-${size}`]: {
+        [`.p-${escapeSelector(size)}`]: {
           padding: spacing.common[size],
         },
-        [`px-${size}`]: {
+        [`.px-${escapeSelector(size)}`]: {
           'padding-left': spacing.common[size],
           'padding-right': spacing.common[size],
         },
-        [`py-${size}`]: {
+        [`.py-${escapeSelector(size)}`]: {
           'padding-top': spacing.common[size],
           'padding-bottom': spacing.common[size],
         },
       }
-    }, {})
+    }, {}),
+    modules.spacing
   )
 }

@@ -1,14 +1,13 @@
-const defineClasses = require('../utils/defineClasses')
-
-module.exports = function textColors({ colors }) {
-  return defineClasses(
+module.exports = function textColors({ addUtilities, config: { colors, modules } }) {
+  addUtilities(
     Object.keys(colors).reduce((classes, color) => {
       return {
         ...classes,
-        [`text-${color}`]: {
+        [`.text-${color}`]: {
           color: colors[color],
         },
       }
-    }, {})
+    }, {}),
+    modules.textColors
   )
 }

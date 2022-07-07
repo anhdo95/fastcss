@@ -1,29 +1,33 @@
-const defineClasses = require('../utils/defineClasses')
+const escapeSelector = require('../utils/escapeSelector')
 
-module.exports = function sizing({ sizing }) {
-  return defineClasses(
+module.exports = function sizing({
+  addUtilities,
+  config: { sizing, modules },
+}) {
+  addUtilities(
     Object.keys(sizing.common).reduce((classes, size) => {
       return {
         ...classes,
-        [`w-${size}`]: {
+        [`.w-${escapeSelector(size)}`]: {
           width: sizing.common[size],
         },
-        [`h-${size}`]: {
+        [`.h-${escapeSelector(size)}`]: {
           height: sizing.common[size],
         },
-        [`min-w-${size}`]: {
+        [`.min-w-${escapeSelector(size)}`]: {
           'min-width': sizing.common[size],
         },
-        [`min-h-${size}`]: {
+        [`.min-h-${escapeSelector(size)}`]: {
           'min-height': sizing.common[size],
         },
-        [`max-w-${size}`]: {
+        [`.max-w-${escapeSelector(size)}`]: {
           'max-width': sizing.common[size],
         },
-        [`max-h-${size}`]: {
+        [`.max-h-${escapeSelector(size)}`]: {
           'max-height': sizing.common[size],
         },
       }
-    }, {})
+    }, {}),
+    modules.sizing
   )
 }
