@@ -1,3 +1,4 @@
-node_modules
 dist
-compile
+node_modules
+
+public/main.css
