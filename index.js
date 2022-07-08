@@ -26,6 +26,22 @@ fs.readFile(from, function (err, styles) {
     responsiveAtRule(config),
     applyAtRule(config),
     postcssPresetEnv,
+    function (root) {
+      root.rawCache = {
+        colon: ': ',
+        indent: '  ',
+        beforeDecl: '\n',
+        beforeRule: '\n',
+        beforeOpen: ' ',
+        beforeClose: '\n',
+        beforeComment: '\n',
+        after: '\n',
+        emptyBody: '',
+        commentLeft: ' ',
+        commentRight: ' ',
+        semicolon: false
+      }
+    },
   ])
     .process(styles, { from, to, map: { inline: false } })
     .then((result) => {
