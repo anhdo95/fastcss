@@ -1,8 +1,9 @@
 const postcss = require('postcss')
 const cloneNodes = require('../utils/cloneNodes')
 const escapeSelector = require('../utils/escapeSelector')
+const prefixSelector = require('../utils/prefixSelector')
 
-module.exports = function applyAtRules() {
+module.exports = function applyAtRules(config) {
   return function (root) {
     function findRulesBySelector(selector) {
       const matches = []
@@ -21,7 +22,9 @@ module.exports = function applyAtRules() {
       classes.forEach((className) => {
         const isImportant = className.startsWith('!')
         const selector = `.${isImportant ? className.slice(1) : className}`
-        const matches = findRulesBySelector(escapeSelector(selector))
+        const matches = findRulesBySelector(
+          prefixSelector(config.options.prefix, escapeSelector(selector))
+        )
 
         if (!matches.length) {
           throw atRule.error(`Unkown selector ${selector}`)

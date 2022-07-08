@@ -110,5 +110,9 @@ module.exports = {
         return `.first-child${separator}${className}:first-child`
       })
     },
-  ]
+  ],
+
+  options: {
+    prefix: 'tw-'
+  }
 }

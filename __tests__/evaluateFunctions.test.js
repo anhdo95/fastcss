@@ -61,7 +61,7 @@ describe('evaluateFunctions', () => {
     .gradient {
       background-image: linear-gradient(
         to top,
-        #249e9a,
+        #eefff1,
         #9eebe4
       );
     }
