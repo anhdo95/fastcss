@@ -7,6 +7,7 @@ const config = require("./src/default.config.js");
 const corePlugins = require("./src/core/plugins")
 const processPlugins = require('./src/utils/processPlugins')
 const useAtRule = require("./src/plugins/useAtRule");
+const evaluateFunctions = require("./src/plugins/evaluateFunctions");
 const applyAtRule = require('./src/plugins/applyAtRule')
 const variantsAtRule = require('./src/plugins/variantsAtRule')
 const responsiveAtRule = require('./src/plugins/responsiveAtRule');
@@ -20,6 +21,7 @@ fs.readFile(from, function (err, styles) {
 
   postcss([
     useAtRule(config, plugins),
+    evaluateFunctions(config),
     variantsAtRule(config, plugins),
     responsiveAtRule(config),
     applyAtRule(config),
