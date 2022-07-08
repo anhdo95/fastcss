@@ -5,7 +5,7 @@ const processPlugins = require('../src/utils/processPlugins')
 
 async function run(css, plugins = {}, opts = { from: '' }) {
   if (Object.keys(plugins).length) {
-    plugins = processPlugins({ plugins })
+    plugins = processPlugins(plugins)
   }
 
   return postcss([plugin({}, plugins)]).process(css, opts)

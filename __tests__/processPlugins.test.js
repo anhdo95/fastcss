@@ -3,7 +3,7 @@ const processPlugins = require('../src/utils/processPlugins')
 const cw = require('../src/utils/collapseWhitespaces')
 
 function run(plugins) {
-  return processPlugins({ plugins })
+  return processPlugins(plugins)
 }
 
 function css(nodes) {

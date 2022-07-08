@@ -1,7 +1,6 @@
 const fs = require('fs')
 const path = require('path')
 const postcss = require('postcss')
-const generateModules = require('../utils/generateModules')
 
 module.exports = function utilitiesAtRule(config, plugins = {}) {
   return function (root) {
@@ -28,18 +27,10 @@ module.exports = function utilitiesAtRule(config, plugins = {}) {
       }
 
       if (atRule.params === 'utilities') {
-        const utilityTree = postcss.root({
-          nodes: generateModules(config),
-        })
-
         const pluginUtilityTree = postcss.root({
           nodes: pluginUtilities,
         })
-
-        utilityTree.walk((node) => (node.source = atRule.source))
         pluginUtilityTree.walk((node) => (node.source = atRule.source))
-
-        atRule.before(utilityTree)
         atRule.before(pluginUtilityTree)
       }
 

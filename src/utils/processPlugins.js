@@ -4,6 +4,7 @@ const parseObjectStyles = require('./parseObjectStyles')
 const wrapWithVariants = require('./wrapWithVariants')
 const generateVariantFunction = require('./generateVariantFunction')
 const defaults = require('./defaults')
+const escapeSelector = require('./escapeSelector')
 
 function parseStyles(styles) {
   if (!Array.isArray(styles)) {
@@ -15,23 +16,25 @@ function parseStyles(styles) {
   )
 }
 
-module.exports = function processPlugins(config) {
+module.exports = function processPlugins(plugins, config) {
   const pluginComponents = []
   const pluginUtilities = []
   const pluginVariantGenerators = {}
 
-  config.plugins.forEach((plugin) => {
+  plugins.forEach((plugin) => {
     plugin({
       config,
       addUtilities(utilities, opts = {}) {
         const defaultOpts = { variants: [] }
-        defaults(opts, defaultOpts)
+        const options = Array.isArray(opts)
+          ? { ...defaultOpts, variants: opts }
+          : defaults(opts, defaultOpts)
 
         const styles = postcss.root({
           nodes: parseStyles(utilities),
         })
 
-        pluginUtilities.push(wrapWithVariants(opts.variants, styles.nodes))
+        pluginUtilities.push(wrapWithVariants(options.variants, styles.nodes))
       },
 
       addComponents(components) {

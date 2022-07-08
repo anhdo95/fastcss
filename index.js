@@ -4,6 +4,7 @@ const postcss = require("postcss");
 const postcssPresetEnv = require("postcss-preset-env");
 
 const config = require("./src/default.config.js");
+const corePlugins = require("./src/core/plugins")
 const processPlugins = require('./src/utils/processPlugins')
 const useAtRule = require("./src/plugins/useAtRule");
 const applyAtRule = require('./src/plugins/applyAtRule')
@@ -15,7 +16,7 @@ const to = "./dist/main.css";
 const toMap = "./dist/main.css.map";
 
 fs.readFile(from, function (err, styles) {
-  const plugins = processPlugins(config)
+  const plugins = processPlugins([...corePlugins(config), ...config.plugins], config)
 
   postcss([
     useAtRule(config, plugins),
