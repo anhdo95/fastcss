@@ -1,8 +1,8 @@
-const flex = require('../generators/flex')
-const textColors = require('../generators/textColors')
-const backgroundColors = require('../generators/backgroundColors')
-const sizing = require('../generators/sizing')
-const spacing = require('../generators/spacing')
+const flex = require('../plugins/flex')
+const textColors = require('../plugins/textColors')
+const backgroundColors = require('../plugins/backgroundColors')
+const sizing = require('../plugins/sizing')
+const spacing = require('../plugins/spacing')
 
 module.exports = function plugins(config) {
   return [
