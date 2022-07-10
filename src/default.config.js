@@ -92,7 +92,7 @@ module.exports = {
   },
 
   plugins: [
-    require('./plugins/container'),
+    require('./libs/container'),
 
     function({ addUtilities, addVariant }) {
       addUtilities(

@@ -1,5 +1,5 @@
 const postcss = require('postcss')
-const plugin = require('../src/plugins/applyAtRule')
+const plugin = require('../src/libs/applyAtRule')
 const cw = require('../src/utils/collapseWhitespaces')
 
 async function run(css, opts = { from: '' }) {

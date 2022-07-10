@@ -6,11 +6,11 @@ const postcssPresetEnv = require("postcss-preset-env");
 const config = require("./src/default.config.js");
 const corePlugins = require("./src/core/plugins")
 const processPlugins = require('./src/utils/processPlugins')
-const useAtRule = require("./src/plugins/useAtRule");
-const evaluateFunctions = require("./src/plugins/evaluateFunctions");
-const applyAtRule = require('./src/plugins/applyAtRule')
-const variantsAtRule = require('./src/plugins/variantsAtRule')
-const responsiveAtRule = require('./src/plugins/responsiveAtRule');
+const useAtRule = require("./src/libs/useAtRule");
+const evaluateFunctions = require("./src/libs/evaluateFunctions");
+const applyAtRule = require('./src/libs/applyAtRule')
+const variantsAtRule = require('./src/libs/variantsAtRule')
+const responsiveAtRule = require('./src/libs/responsiveAtRule');
 
 const from = "./css/main.css";
 const to = "./dist/main.css";
