@@ -94,7 +94,7 @@ module.exports = {
   },
 
   plugins: [
-    require('./libs/container'),
+    require('./plugins/container'),
 
     function({ addUtilities, addVariant }) {
       addUtilities(
