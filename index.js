@@ -3,8 +3,8 @@ const path = require("path");
 const postcss = require("postcss");
 const postcssPresetEnv = require("postcss-preset-env");
 
-const config = require("./src/default.config.js");
 const corePlugins = require("./src/core/plugins")
+const resolveConfig = require('./src/utils/resolveConfig')
 const processPlugins = require('./src/utils/processPlugins')
 const useAtRule = require("./src/libs/useAtRule");
 const evaluateFunctions = require("./src/libs/evaluateFunctions");
@@ -17,6 +17,17 @@ const to = "./dist/main.css";
 const toMap = "./dist/main.css.map";
 
 fs.readFile(from, function (err, styles) {
+  function getConfig() {
+    if (!fs.existsSync('./fast.config.js')) {
+      return resolveConfig([require('./src/default.config.js')])
+    }
+
+    return resolveConfig([
+      require('./fast.config.js'),
+      require('./src/default.config.js')
+    ])
+  }
+  const config = getConfig()
   const plugins = processPlugins([...corePlugins(config), ...config.plugins], config)
 
   postcss([
