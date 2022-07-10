@@ -17,6 +17,7 @@ function parseStyles(styles) {
 }
 
 module.exports = function processPlugins(plugins, config) {
+  const pluginBases = []
   const pluginComponents = []
   const pluginUtilities = []
   const pluginVariantGenerators = {}
@@ -24,6 +25,11 @@ module.exports = function processPlugins(plugins, config) {
   plugins.forEach((plugin) => {
     plugin({
       config,
+
+      addBase(base) {
+        pluginBases.push(...parseStyles(base))
+      },
+
       addUtilities(utilities, opts = {}) {
         const defaultOpts = { respectPrefix: true, variants: [] }
         const options = Array.isArray(opts)
@@ -56,5 +62,5 @@ module.exports = function processPlugins(plugins, config) {
     })
   })
 
-  return { pluginComponents, pluginUtilities, pluginVariantGenerators }
+  return { pluginBases, pluginComponents, pluginUtilities, pluginVariantGenerators }
 }

@@ -1,13 +1,15 @@
-module.exports = function backgroundColors({ addUtilities, config: { colors, modules } }) {
-  addUtilities(
-    Object.keys(colors).reduce((classes, color) => {
-      return {
-        ...classes,
-        [`.bg-${color}`]: {
-          'background-color': colors[color],
-        },
-      }
-    }, {}),
-    modules.backgroundColors
-  )
+module.exports = function backgroundColors({ values, variants }) {
+  return function ({ addUtilities }) {
+    addUtilities(
+      Object.keys(values).reduce((classes, color) => {
+        return {
+          ...classes,
+          [`.bg-${color}`]: {
+            'background-color': values[color],
+          },
+        }
+      }, {}),
+      variants
+    )
+  }
 }
