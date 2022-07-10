@@ -1,9 +1,9 @@
 const postcss = require('postcss')
-const plugin = require('../src/plugins/applyAtRule')
+const plugin = require('../src/libs/applyAtRule')
 const cw = require('../src/utils/collapseWhitespaces')
 
 async function run(css, opts = { from: '' }) {
-  return postcss([plugin()]).process(css, opts)
+  return postcss([plugin({ prefix: '' })]).process(css, opts)
 }
 
 describe('applyAtRule', () => {

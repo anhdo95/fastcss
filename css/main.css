@@ -1,4 +1,4 @@
-@use preflight;
+@use base;
 @use components;
 @use utilities;
 
@@ -26,7 +26,7 @@ button {
 .gradient {
   background-image: linear-gradient(
     to top,
-    config('colors.green-dark'),
-    config('colors.teal-light')
+    config('theme.colors.green-dark'),
+    config('theme.colors.teal-light')
   );
 }

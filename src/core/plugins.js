@@ -1,17 +1,32 @@
-const flex = require('../generators/flex')
-const textColors = require('../generators/textColors')
-const backgroundColors = require('../generators/backgroundColors')
-const sizing = require('../generators/sizing')
-const spacing = require('../generators/spacing')
+const preflight = require('../plugins/preflight')
+const flex = require('../plugins/flex')
+const textColors = require('../plugins/textColors')
+const backgroundColors = require('../plugins/backgroundColors')
+const width = require('../plugins/width')
+const height = require('../plugins/height')
+const margin = require('../plugins/margin')
+const padding = require('../plugins/padding')
+
+function loadPlugins({ theme, variants, corePlugins }, plugins) {
+  return Object.keys(plugins)
+    .filter((pluginName) => corePlugins[pluginName] !== false)
+    .map((pluginName) =>
+      plugins[pluginName]({
+        values: theme[pluginName],
+        variants: variants[pluginName],
+      })
+    )
+}
 
 module.exports = function plugins(config) {
-  return [
-    { name: 'backgroundColor', generator: backgroundColors },
-    { name: 'flex', generator: flex },
-    { name: 'sizing', generator: sizing },
-    { name: 'spacing', generator: spacing },
-    { name: 'textColors', generator: textColors },
-  ]
-    .filter(({ name }) => config.modules[name])
-    .map(({ generator }) => generator)
+  return loadPlugins(config, {
+    preflight,
+    textColors,
+    backgroundColors,
+    flex,
+    width,
+    height,
+    margin,
+    padding,
+  })
 }

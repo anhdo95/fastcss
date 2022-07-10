@@ -1,5 +1,5 @@
 const postcss = require('postcss')
-const plugin = require('../src/plugins/variantsAtRule')
+const plugin = require('../src/libs/variantsAtRule')
 const cw = require('../src/utils/collapseWhitespaces')
 const processPlugins = require('../src/utils/processPlugins')
 
