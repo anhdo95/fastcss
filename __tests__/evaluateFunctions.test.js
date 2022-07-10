@@ -1,5 +1,5 @@
 const postcss = require('postcss')
-const plugin = require('../src/plugins/evaluateFunctions')
+const plugin = require('../src/libs/evaluateFunctions')
 const cw = require('../src/utils/collapseWhitespaces')
 
 function run(css, config = {}, opts = { from: '' }) {

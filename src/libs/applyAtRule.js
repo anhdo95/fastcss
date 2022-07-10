@@ -23,7 +23,7 @@ module.exports = function applyAtRules(config) {
         const isImportant = className.startsWith('!')
         const selector = `.${isImportant ? className.slice(1) : className}`
         const matches = findRulesBySelector(
-          prefixSelector(config.options.prefix, escapeSelector(selector))
+          prefixSelector(config.prefix, escapeSelector(selector))
         )
 
         if (!matches.length) {

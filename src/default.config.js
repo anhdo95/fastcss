@@ -1,4 +1,6 @@
 module.exports = {
+  prefix: 'tw-',
+
   screens: {
     xs: '445px',
     sm:  '768px',
@@ -111,8 +113,4 @@ module.exports = {
       })
     },
   ],
-
-  options: {
-    prefix: 'tw-'
-  }
 }

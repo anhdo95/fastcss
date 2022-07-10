@@ -36,7 +36,7 @@ module.exports = function processPlugins(plugins, config) {
 
         if (options.respectPrefix) {
           styles.walkRules(rule => {
-            rule.selector = prefixSelector(config.options.prefix, rule.selector)
+            rule.selector = prefixSelector(config.prefix, rule.selector)
           })
         }
 
