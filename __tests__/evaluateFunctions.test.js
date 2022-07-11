@@ -9,8 +9,8 @@ function run(css, config = {}, opts = { from: '' }) {
 describe('evaluateFunctions', () => {
   it('it looks up values in the config using dot notation', async () => {
     const config = {
-      sizing: {
-        common: {
+      theme: {
+        width: {
           '2/5': '40%',
           '4/5': '80%',
           '5/6': 'calc(100% / 6 * 5)',
@@ -20,7 +20,7 @@ describe('evaluateFunctions', () => {
 
     const input = cw(`
       .container {
-        max-width: config('sizing.common.5/6');
+        max-width: config('theme.width.5/6');
       }
     `)
 

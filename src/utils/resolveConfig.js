@@ -29,15 +29,15 @@ function mergeWith(target, ...sources) {
 }
 
 function mergeExtensions({ extend, ...theme }) {
-  return mergeWith(theme, extend, (_, source, key) => {
+  return mergeWith(theme, extend, (_, extensions, key) => {
     return isFunction(theme[key])
       ? (mergedTheme) => ({
           ...theme[key](mergedTheme),
-          ...(extend[key] || {}),
+          ...extensions,
         })
       : {
           ...theme[key],
-          ...(extend[key] || {}),
+          ...extensions,
         }
   })
 }

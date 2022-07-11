@@ -113,6 +113,26 @@ describe('applyAtRule', () => {
     })
   })
 
+  it('it fails if the class matches with classes that include pseudo-selectors', async () => {
+    const input = cw(`
+      .text-red:hover {
+        color: red;
+      }
+
+      .main {
+        @apply text-red;
+      }
+    `)
+
+    return run(input)
+      .then((result) => {
+        throw result
+      })
+      .catch((error) => {
+        expect(error).toMatchObject({ name: 'CssSyntaxError' })
+      })
+  })
+
   it('it removes important from applied classes', async () => {
     const input = cw(`
       .container {
