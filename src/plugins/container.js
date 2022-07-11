@@ -9,8 +9,8 @@ module.exports = function container() {
       })
     }
 
-    const mediaRules = Object.keys(config.screens).map((screen) => {
-      const width = config.screens[screen]
+    const mediaRules = Object.keys(config.theme.screens).map((screen) => {
+      const width = config.theme.screens[screen]
 
       return postcss
         .atRule({

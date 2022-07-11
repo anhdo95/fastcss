@@ -1,4 +1,5 @@
 const preflight = require('../plugins/preflight')
+const container = require('../plugins/container')
 const flex = require('../plugins/flex')
 const textColors = require('../plugins/textColors')
 const backgroundColors = require('../plugins/backgroundColors')
@@ -21,6 +22,7 @@ function loadPlugins({ theme, variants, corePlugins }, plugins) {
 module.exports = function plugins(config) {
   return loadPlugins(config, {
     preflight,
+    container,
     textColors,
     backgroundColors,
     flex,

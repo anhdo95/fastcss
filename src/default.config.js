@@ -87,7 +87,7 @@ module.exports = {
 
     width(theme) {
       return {
-        ...theme('spacing'),
+        ...theme.spacing,
         48: '12rem',
         64: '16rem',
         '1/2': '50%',
@@ -108,7 +108,7 @@ module.exports = {
 
     height(theme) {
       return {
-        ...theme('spacing'),
+        ...theme.spacing,
         48: '12rem',
         64: '16rem',
         full: '100%',
@@ -117,11 +117,11 @@ module.exports = {
     },
 
     margin(theme) {
-      return theme('spacing')
+      return theme.spacing
     },
 
     padding(theme) {
-      return theme('spacing')
+      return theme.spacing
     },
   },
 
@@ -139,5 +139,5 @@ module.exports = {
     // flex: false,
   },
 
-  plugins: [require('./plugins/container')()],
+  plugins: [],
 }
