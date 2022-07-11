@@ -11,11 +11,11 @@ module.exports = function responsiveAtRule(config) {
       atRule.remove()
     })
 
-    Object.keys(config.screens).forEach((screen) => {
+    Object.keys(config.theme.screens).forEach((screen) => {
       const mediaAtRule = postcss
         .atRule({
           name: 'media',
-          params: `(min-width: ${config.screens[screen]})`,
+          params: `(min-width: ${config.theme.screens[screen]})`,
         })
         .append(
           rules.map((rule) =>
