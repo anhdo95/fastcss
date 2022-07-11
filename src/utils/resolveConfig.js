@@ -29,24 +29,27 @@ function mergeWith(target, ...sources) {
 }
 
 function mergeExtensions({ extend, ...theme }) {
-  return mergeWith(theme, extend, (_, extensions, key) => {
-    return isFunction(theme[key])
+  return mergeWith(theme, extend, (theme, extensions) => {
+    return isFunction(theme)
       ? (mergedTheme) => ({
-          ...theme[key](mergedTheme),
+          ...theme(mergedTheme),
           ...extensions,
         })
       : {
-          ...theme[key],
+          ...theme,
           ...extensions,
         }
   })
 }
 
 function resolveFunctionKeys(theme) {
-  return Object.keys(theme).reduce((resolved, key) => ({
-    ...resolved,
-    [key]: isFunction(theme[key]) ? theme[key](theme) : theme[key],
-  }), {})
+  return Object.keys(theme).reduce(
+    (resolved, key) => ({
+      ...resolved,
+      [key]: isFunction(theme[key]) ? theme[key](theme) : theme[key],
+    }),
+    {}
+  )
 }
 
 module.exports = function resolveConfig(configs) {

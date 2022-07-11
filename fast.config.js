@@ -13,10 +13,6 @@ module.exports = {
         container: '496px',
       },
 
-      maxWidth: {
-        container: '496px',
-      },
-
       height: {
         header: '54px',
       },
