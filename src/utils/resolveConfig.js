@@ -30,15 +30,17 @@ function mergeWith(target, ...sources) {
 
 function mergeExtensions({ extend, ...theme }) {
   return mergeWith(theme, extend, (theme, extensions) => {
-    return isFunction(theme)
-      ? (mergedTheme) => ({
-          ...theme(mergedTheme),
-          ...extensions,
-        })
-      : {
-          ...theme,
-          ...extensions,
-        }
+    if (isFunction(theme) || isFunction(extensions)) {
+      return (mergedTheme) => ({
+        ...(isFunction(theme) ? theme(mergedTheme) : theme),
+        ...(isFunction(extensions) ? extensions(mergedTheme) : extensions),
+      })
+    }
+
+    return {
+      ...theme,
+      ...extensions,
+    }
   })
 }
 

@@ -17,14 +17,12 @@ module.exports = {
         header: '54px',
       },
 
-      colors: {
-        ...genColors([
-          'dfdfdf',
-          'fcfbf8',
-          '9196a2',
-          '4dafa7',
-          'd9d9d9',
-        ]),
+      colors: genColors(['dfdfdf', 'fcfbf8', '9196a2', '4dafa7', 'd9d9d9']),
+
+      textColors(theme) {
+        return {
+          default: theme.colors['dfdfdf'],
+        }
       },
     },
   },
