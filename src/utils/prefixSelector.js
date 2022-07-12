@@ -3,7 +3,9 @@ const parser = require('postcss-selector-parser')
 module.exports = function prefixSelector(prefix, selector) {
   return parser((selectors) => {
     selectors.walkClasses((classSelector) => {
-      classSelector.value = `${prefix}${classSelector.value}`
+      classSelector.value = classSelector.value.startsWith('-')
+        ? `-${prefix}${classSelector.value.slice(1)}`
+        : `${prefix}${classSelector.value}`
     })
   }).processSync(selector)
 }

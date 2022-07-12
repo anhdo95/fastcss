@@ -1,5 +1,19 @@
 const defaults = require('./defaults')
 
+const utils = {
+  negative(scale) {
+    return Object.keys(scale)
+      .filter((key) => scale[key] != '0')
+      .reduce(
+        (negativeScale, key) => ({
+          ...negativeScale,
+          [`-${key}`]: `-${scale[key]}`,
+        }),
+        {}
+      )
+  },
+}
+
 function isFunction(fn) {
   return typeof fn === 'function'
 }
@@ -48,7 +62,7 @@ function resolveFunctionKeys(theme) {
   return Object.keys(theme).reduce(
     (resolved, key) => ({
       ...resolved,
-      [key]: isFunction(theme[key]) ? theme[key](theme) : theme[key],
+      [key]: isFunction(theme[key]) ? theme[key](theme, utils) : theme[key],
     }),
     {}
   )
@@ -60,7 +74,7 @@ module.exports = function resolveConfig(configs) {
       theme: resolveFunctionKeys(
         mergeExtensions(defaults(...configs.map(({ theme }) => theme)))
       ),
-      variants: defaults(...configs.map(({ variants }) => variants))
+      variants: defaults(...configs.map(({ variants }) => variants)),
     },
     ...configs
   )
