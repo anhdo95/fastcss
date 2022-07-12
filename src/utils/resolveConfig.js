@@ -60,6 +60,7 @@ module.exports = function resolveConfig(configs) {
       theme: resolveFunctionKeys(
         mergeExtensions(defaults(...configs.map(({ theme }) => theme)))
       ),
+      variants: defaults(...configs.map(({ variants }) => variants))
     },
     ...configs
   )

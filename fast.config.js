@@ -45,6 +45,14 @@ module.exports = {
       })
     },
   ],
+
+  corePlugins: {
+    flex: false
+  },
+
+  variants: {
+    textColors: ['responsive', 'hover', 'active', 'first-child']
+  }
 }
 
 function genColors(arr) {
