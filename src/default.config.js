@@ -116,8 +116,11 @@ module.exports = {
       }
     },
 
-    margin(theme) {
-      return theme.spacing
+    margin(theme, { negative }) {
+      return {
+        ...theme.spacing,
+        ...negative(theme.spacing)
+      }
     },
 
     padding(theme) {

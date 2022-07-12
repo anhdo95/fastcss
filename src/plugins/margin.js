@@ -1,19 +1,24 @@
 const escapeSelector = require('../utils/escapeSelector')
+const prefixNegativeModifier = require('../utils/prefixNegativeModifier')
 
 module.exports = function margin({ variants, values }) {
   return function ({ addUtilities }) {
+    const selector = (base, modifier) =>
+      `.${escapeSelector(prefixNegativeModifier(base, modifier))}`
+
     addUtilities(
       Object.keys(values).reduce((classes, size) => {
+        console.log(selector('m', size));
         return {
           ...classes,
-          [`.m-${escapeSelector(size)}`]: {
+          [selector('m', size)]: {
             margin: values[size],
           },
-          [`.mx-${escapeSelector(size)}`]: {
+          [selector('mx', size)]: {
             'margin-left': values[size],
             'margin-right': values[size],
           },
-          [`.my-${escapeSelector(size)}`]: {
+          [selector('my', size)]: {
             'margin-top': values[size],
             'margin-bottom': values[size],
           },
