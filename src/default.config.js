@@ -59,11 +59,11 @@ module.exports = {
     },
 
     textColors(theme) {
-      return theme.colors
+      return theme('colors')
     },
 
     backgroundColors(theme) {
-      return theme.colors
+      return theme('colors')
     },
 
     spacing: {
@@ -87,7 +87,7 @@ module.exports = {
 
     width(theme) {
       return {
-        ...theme.spacing,
+        ...theme('spacing'),
         48: '12rem',
         64: '16rem',
         '1/2': '50%',
@@ -108,7 +108,7 @@ module.exports = {
 
     height(theme) {
       return {
-        ...theme.spacing,
+        ...theme('spacing'),
         48: '12rem',
         64: '16rem',
         full: '100%',
@@ -118,13 +118,13 @@ module.exports = {
 
     margin(theme, { negative }) {
       return {
-        ...theme.spacing,
-        ...negative(theme.spacing)
+        ...theme('spacing'),
+        ...negative(theme('spacing'))
       }
     },
 
     padding(theme) {
-      return theme.spacing
+      return theme('spacing')
     },
   },
 
