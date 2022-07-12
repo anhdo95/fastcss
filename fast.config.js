@@ -21,7 +21,7 @@ module.exports = {
 
       textColors(theme) {
         return {
-          default: theme.colors['dfdfdf'],
+          default: theme('colors.dfdfdf'),
         }
       },
     },

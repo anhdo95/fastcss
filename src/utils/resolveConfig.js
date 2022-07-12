@@ -1,4 +1,5 @@
 const defaults = require('./defaults')
+const toPath = require('./toPath')
 
 const utils = {
   negative(scale) {
@@ -59,10 +60,24 @@ function mergeExtensions({ extend, ...theme }) {
 }
 
 function resolveFunctionKeys(theme) {
+  function resolveThemePath(key, defaultValue) {
+    const paths = toPath(key)
+
+    let index = 0
+    let val = theme
+
+    while (val !== undefined && val !== null && index < paths.length) {
+      val = val[paths[index++]]
+      val = isFunction(val) ? val(resolveThemePath) : val
+    }
+
+    return val === undefined ? defaultValue : val
+  }
+
   return Object.keys(theme).reduce(
     (resolved, key) => ({
       ...resolved,
-      [key]: isFunction(theme[key]) ? theme[key](theme, utils) : theme[key],
+      [key]: isFunction(theme[key]) ? theme[key](resolveThemePath, utils) : theme[key],
     }),
     {}
   )
@@ -72,9 +87,9 @@ module.exports = function resolveConfig(configs) {
   return defaults(
     {
       theme: resolveFunctionKeys(
-        mergeExtensions(defaults(...configs.map(({ theme }) => theme)))
+        mergeExtensions(defaults({}, ...configs.map(({ theme }) => theme)))
       ),
-      variants: defaults(...configs.map(({ variants }) => variants)),
+      variants: defaults({}, ...configs.map(({ variants }) => variants)),
     },
     ...configs
   )
