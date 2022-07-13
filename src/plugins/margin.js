@@ -8,7 +8,6 @@ module.exports = function margin({ variants, values }) {
 
     addUtilities(
       Object.keys(values).reduce((classes, size) => {
-        console.log(selector('m', size));
         return {
           ...classes,
           [selector('m', size)]: {

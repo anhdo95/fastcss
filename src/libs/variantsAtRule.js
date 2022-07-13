@@ -8,9 +8,17 @@ function generateVariant(variant) {
 }
 
 const variantGenerators = {
+  'group-hover': generateVariantFunction(({ className, separator }) => {
+    return `.group:hover .group-hover${separator}${className}`
+  }),
   hover: generateVariant('hover'),
   focus: generateVariant('focus'),
   active: generateVariant('active'),
+  disabled: generateVariant('disabled'),
+  even: generateVariant('even'),
+  odd: generateVariant('odd'),
+  'first-child': generateVariant('first-child'),
+  'last-child': generateVariant('last-child'),
 }
 
 module.exports = function variantsAtRule(config, plugins = {}) {
@@ -29,6 +37,8 @@ module.exports = function variantsAtRule(config, plugins = {}) {
       }
 
       atRule.before(atRule.clone().nodes)
+
+      console.log('variants :>> ', variants);
 
       variants.forEach((variant) => {
         if (generators[variant]) {

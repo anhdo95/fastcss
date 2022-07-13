@@ -51,7 +51,7 @@ module.exports = {
   },
 
   variants: {
-    textColors: ['responsive', 'hover', 'active', 'first-child']
+    textColors: ['responsive', 'hover', 'active', 'first-child', 'group-hover']
   }
 }
 

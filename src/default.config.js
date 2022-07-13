@@ -129,7 +129,7 @@ module.exports = {
   },
 
   variants: {
-    textColors: ['responsive', 'hover', 'active'],
+    textColors: ['responsive', 'hover', 'active', 'group-hover'],
     backgroundColor: ['responsive', 'hover'],
     flex: ['responsive'],
     width: ['responsive'],
