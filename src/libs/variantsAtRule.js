@@ -1,5 +1,6 @@
 const postcss = require('postcss')
 const generateVariantFunction = require('../utils/generateVariantFunction')
+const prefixSelector = require('../utils/prefixSelector')
 
 function generateVariant(variant) {
   return generateVariantFunction(({ className, separator }) => {
@@ -7,9 +8,12 @@ function generateVariant(variant) {
   })
 }
 
-const variantGenerators = {
+const defaultVariantGenerators = (config) => ({
   'group-hover': generateVariantFunction(({ className, separator }) => {
-    return `.group:hover .group-hover${separator}${className}`
+    return `${prefixSelector(
+      config.prefix,
+      '.group:hover'
+    )} .group-hover${separator}${className}`
   }),
   hover: generateVariant('hover'),
   focus: generateVariant('focus'),
@@ -19,13 +23,13 @@ const variantGenerators = {
   odd: generateVariant('odd'),
   'first-child': generateVariant('first-child'),
   'last-child': generateVariant('last-child'),
-}
+})
 
 module.exports = function variantsAtRule(config, plugins = {}) {
   return function (root) {
     root.walkAtRules('variants', (atRule) => {
       const generators = {
-        ...variantGenerators,
+        ...defaultVariantGenerators(config),
         ...plugins.pluginVariantGenerators,
       }
       const variants = postcss.list.comma(atRule.params)
@@ -37,8 +41,6 @@ module.exports = function variantsAtRule(config, plugins = {}) {
       }
 
       atRule.before(atRule.clone().nodes)
-
-      console.log('variants :>> ', variants);
 
       variants.forEach((variant) => {
         if (generators[variant]) {
