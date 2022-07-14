@@ -119,7 +119,7 @@ module.exports = {
     margin(theme, { negative }) {
       return {
         ...theme('spacing'),
-        ...negative(theme('spacing'))
+        ...negative(theme('spacing')),
       }
     },
 
@@ -140,16 +140,32 @@ module.exports = {
       '-180': '-180deg',
       '-90': '-90deg',
       '-45': '-45deg',
-      '0': '0',
-      '45': '45deg',
-      '90': '90deg',
-      '180': '180deg',
+      0: '0',
+      45: '45deg',
+      90: '90deg',
+      180: '180deg',
     },
+
+    scale: {
+      0: '0',
+      50: '.5',
+      75: '.75',
+      90: '.9',
+      95: '.95',
+      100: '1',
+      105: '1.05',
+      110: '1.1',
+      125: '1.25',
+      150: '1.5',
+    },
+
+    display: {},
   },
 
   variants: {
     textColors: ['responsive', 'hover', 'active', 'group-hover'],
     backgroundColors: ['responsive', 'hover'],
+    display: ['responsive'],
     flex: ['responsive'],
     width: ['responsive'],
     height: ['responsive'],
@@ -158,6 +174,7 @@ module.exports = {
     transform: ['responsive'],
     translate: ['responsive', 'hover', 'focus'],
     rotate: ['responsive', 'hover', 'focus'],
+    scale: ['responsive', 'hover', 'focus'],
   },
 
   corePlugins: {

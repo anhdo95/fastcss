@@ -42,11 +42,13 @@ module.exports = function variantsAtRule(config, plugins = {}) {
 
       atRule.before(atRule.clone().nodes)
 
-      variants.forEach((variant) => {
-        if (generators[variant]) {
-          generators[variant](atRule)
-        }
-      })
+      variants
+        .filter((variant) => variant !== 'responsive')
+        .forEach((variant) => {
+          if (generators[variant]) {
+            generators[variant](atRule)
+          }
+        })
 
       atRule.remove()
     })

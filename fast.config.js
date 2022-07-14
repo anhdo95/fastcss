@@ -4,8 +4,8 @@ module.exports = {
   theme: {
     extend: {
       screens: {
-        '3xs': '375px', // => @media (min-width: 375px) { ... }
-        '2xs': '414px', // => @media (min-width: 414px) { ... }
+        'xxxs': '375px', // => @media (min-width: 375px) { ... }
+        'xxs': '414px', // => @media (min-width: 414px) { ... }
         xs: '496px', // => @media (min-width: 496px) { ... }
       },
 
@@ -28,31 +28,21 @@ module.exports = {
   },
 
   plugins: [
-    function ({ addUtilities, addVariant }) {
-      addUtilities(
-        {
-          '.flex-center': {
-            display: 'flex',
-            'justify-content': 'center',
-            'align-items': 'center',
-          },
-        },
-        { variants: ['responsive'] }
-      )
-
-      addVariant('first-child', function generator({ className, separator }) {
-        return `.first-child${separator}${className}:first-child`
-      })
-    },
+    // function customUtilities ({ addUtilities }) {
+    //   addUtilities(
+    //     {
+    //       '.d-none': {
+    //         display: 'none',
+    //       },
+    //     },
+    //     ['responsive']
+    //   )
+    // },
   ],
 
-  corePlugins: {
-    // flex: false
-  },
-
   variants: {
-    textColors: ['responsive', 'hover', 'active', 'first-child', 'group-hover']
-  }
+    textColors: ['responsive', 'hover', 'active', 'first-child', 'group-hover'],
+  },
 }
 
 function genColors(arr) {
