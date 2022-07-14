@@ -1,5 +1,6 @@
 const postcss = require('postcss')
 const Node = require('postcss/lib/node')
+const get = require('lodash/get')
 const parseObjectStyles = require('./parseObjectStyles')
 const wrapWithVariants = require('./wrapWithVariants')
 const generateVariantFunction = require('./generateVariantFunction')
@@ -23,10 +24,20 @@ module.exports = function processPlugins(plugins, config) {
   const pluginUtilities = []
   const pluginVariantGenerators = {}
 
+  function theme(key, defaultValue) {
+    return get(config, `theme.${key}`, defaultValue)
+  }
+
+  function variants(key) {
+    return get(config, `variants.${key}`)
+  }
+
   plugins.forEach((plugin) => {
     plugin({
       config,
       e: escapeSelector,
+      theme,
+      variants,
 
       addBase(base) {
         pluginBases.push(...parseStyles(base))
