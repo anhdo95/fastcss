@@ -1,7 +1,8 @@
 const escapeSelector = require('../utils/escapeSelector')
 
-module.exports = function width({ variants, values }) {
-  return function ({ addUtilities }) {
+module.exports = function () {
+  return function width({ addUtilities, theme, variants }) {
+    const values = theme('width')
     addUtilities(
       Object.keys(values).reduce((classes, size) => {
         return {
@@ -17,7 +18,7 @@ module.exports = function width({ variants, values }) {
           },
         }
       }, {}),
-      variants
+      variants('width')
     )
   }
 }

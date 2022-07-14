@@ -1,5 +1,6 @@
-module.exports = function textColors({ variants, values }) {
-  return function ({ addUtilities }) {
+module.exports = function () {
+  return function textColors({ addUtilities, theme, variants }) {
+    const values = theme('textColors')
     addUtilities(
       Object.keys(values).reduce((classes, color) => {
         return {
@@ -9,7 +10,7 @@ module.exports = function textColors({ variants, values }) {
           },
         }
       }, {}),
-      variants
+      variants('textColors')
     )
   }
 }

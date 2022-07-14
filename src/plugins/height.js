@@ -1,7 +1,8 @@
 const escapeSelector = require('../utils/escapeSelector')
 
-module.exports = function height({ variants, values }) {
-  return function ({ addUtilities }) {
+module.exports = function () {
+  return function height({ addUtilities, theme, variants }) {
+    const values = theme('height')
     addUtilities(
       Object.keys(values).reduce((classes, size) => {
         return {
@@ -17,7 +18,7 @@ module.exports = function height({ variants, values }) {
           },
         }
       }, {}),
-      variants
+      variants('height')
     )
   }
 }
