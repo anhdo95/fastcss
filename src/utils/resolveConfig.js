@@ -68,7 +68,7 @@ function resolveFunctionKeys(theme) {
 
     while (val !== undefined && val !== null && index < paths.length) {
       val = val[paths[index++]]
-      val = isFunction(val) ? val(resolveThemePath) : val
+      val = isFunction(val) ? val(resolveThemePath, utils) : val
     }
 
     return val === undefined ? defaultValue : val

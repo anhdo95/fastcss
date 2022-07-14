@@ -1,5 +1,5 @@
-module.exports = function flex({ variants }) {
-  return function ({ addUtilities }) {
+module.exports = function () {
+  return function flex({ addUtilities, variants }) {
     addUtilities(
       {
         '.flex': {
@@ -114,7 +114,7 @@ module.exports = function flex({ variants }) {
           'flex-shrink': '0',
         },
       },
-      variants
+      variants('flex')
     )
   }
 }

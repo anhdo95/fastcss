@@ -1,8 +1,8 @@
 const postcss = require('postcss')
 const defineClass = require('../utils/defineClass')
 
-module.exports = function container() {
-  return function ({ addComponents, config }) {
+module.exports = function () {
+  return function container({ addComponents, config }) {
     function defineContainer(width) {
       return defineClass('container', {
         'max-width': width,

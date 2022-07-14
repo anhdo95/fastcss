@@ -1,7 +1,8 @@
 const escapeSelector = require('../utils/escapeSelector')
 
-module.exports = function padding({ variants, values }) {
-  return function ({ addUtilities }) {
+module.exports = function () {
+  return function padding({ addUtilities, theme, variants }) {
+    const values = theme('padding')
     addUtilities(
       Object.keys(values).reduce((classes, size) => {
         return {
@@ -19,7 +20,7 @@ module.exports = function padding({ variants, values }) {
           },
         }
       }, {}),
-      variants
+      variants('padding')
     )
   }
 }

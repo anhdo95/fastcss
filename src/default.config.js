@@ -1,5 +1,5 @@
 module.exports = {
-  prefix: 'tw-',
+  prefix: '',
 
   theme: {
     screens: {
@@ -119,23 +119,62 @@ module.exports = {
     margin(theme, { negative }) {
       return {
         ...theme('spacing'),
-        ...negative(theme('spacing'))
+        ...negative(theme('spacing')),
       }
     },
 
     padding(theme) {
       return theme('spacing')
     },
+
+    translate: (theme, { negative }) => ({
+      ...theme('spacing'),
+      ...negative(theme('spacing')),
+      '-full': '-100%',
+      '-1/2': '-50%',
+      '1/2': '50%',
+      full: '100%',
+    }),
+
+    rotate: {
+      '-180': '-180deg',
+      '-90': '-90deg',
+      '-45': '-45deg',
+      0: '0',
+      45: '45deg',
+      90: '90deg',
+      180: '180deg',
+    },
+
+    scale: {
+      0: '0',
+      50: '.5',
+      75: '.75',
+      90: '.9',
+      95: '.95',
+      100: '1',
+      105: '1.05',
+      110: '1.1',
+      125: '1.25',
+      150: '1.5',
+    },
+
+    display: {},
   },
 
   variants: {
-    textColors: ['responsive', 'hover', 'active'],
-    backgroundColor: ['responsive', 'hover'],
+    textColors: ['responsive', 'hover', 'active', 'group-hover'],
+    backgroundColors: ['responsive', 'hover'],
+    display: ['responsive'],
     flex: ['responsive'],
     width: ['responsive'],
     height: ['responsive'],
     margin: ['responsive'],
     padding: ['responsive'],
+    transform: ['responsive'],
+    translate: ['responsive', 'hover', 'focus'],
+    rotate: ['responsive', 'hover', 'focus'],
+    scale: ['responsive', 'hover', 'focus'],
   },
 
   corePlugins: {

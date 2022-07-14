@@ -1,5 +1,6 @@
-module.exports = function backgroundColors({ values, variants }) {
-  return function ({ addUtilities }) {
+module.exports = function () {
+  return function backgroundColors({ addUtilities, theme, variants }) {
+    const values = theme('backgroundColors')
     addUtilities(
       Object.keys(values).reduce((classes, color) => {
         return {
@@ -9,7 +10,7 @@ module.exports = function backgroundColors({ values, variants }) {
           },
         }
       }, {}),
-      variants
+      variants('backgroundColors')
     )
   }
 }
