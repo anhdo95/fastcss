@@ -1,5 +1,5 @@
 module.exports = {
-  prefix: 'tw-',
+  // prefix: 'tw-',
 
   theme: {
     extend: {
@@ -47,7 +47,7 @@ module.exports = {
   ],
 
   corePlugins: {
-    flex: false
+    // flex: false
   },
 
   variants: {

@@ -7,6 +7,8 @@ const width = require('../plugins/width')
 const height = require('../plugins/height')
 const margin = require('../plugins/margin')
 const padding = require('../plugins/padding')
+const translate = require('../plugins/translate')
+const transform = require('../plugins/transform')
 
 function loadPlugins({ theme, variants, corePlugins }, plugins) {
   return Object.keys(plugins)
@@ -30,5 +32,7 @@ module.exports = function plugins(config) {
     height,
     margin,
     padding,
+    transform,
+    translate,
   })
 }

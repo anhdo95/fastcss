@@ -5,6 +5,7 @@ const wrapWithVariants = require('./wrapWithVariants')
 const generateVariantFunction = require('./generateVariantFunction')
 const defaults = require('./defaults')
 const prefixSelector = require('./prefixSelector')
+const escapeSelector = require('./escapeSelector')
 
 function parseStyles(styles) {
   if (!Array.isArray(styles)) {
@@ -25,6 +26,7 @@ module.exports = function processPlugins(plugins, config) {
   plugins.forEach((plugin) => {
     plugin({
       config,
+      e: escapeSelector,
 
       addBase(base) {
         pluginBases.push(...parseStyles(base))

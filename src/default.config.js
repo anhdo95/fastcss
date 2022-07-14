@@ -1,5 +1,5 @@
 module.exports = {
-  prefix: 'tw-',
+  prefix: '',
 
   theme: {
     screens: {
@@ -126,6 +126,15 @@ module.exports = {
     padding(theme) {
       return theme('spacing')
     },
+
+    translate: (theme, { negative }) => ({
+      ...theme('spacing'),
+      ...negative(theme('spacing')),
+      '-full': '-100%',
+      '-1/2': '-50%',
+      '1/2': '50%',
+      full: '100%',
+    })
   },
 
   variants: {
@@ -136,6 +145,8 @@ module.exports = {
     height: ['responsive'],
     margin: ['responsive'],
     padding: ['responsive'],
+    transform: ['responsive'],
+    translate: ['responsive'],
   },
 
   corePlugins: {
