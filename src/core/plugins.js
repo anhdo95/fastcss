@@ -7,18 +7,19 @@ const width = require('../plugins/width')
 const height = require('../plugins/height')
 const margin = require('../plugins/margin')
 const padding = require('../plugins/padding')
-const translate = require('../plugins/translate')
 const transform = require('../plugins/transform')
+const translate = require('../plugins/translate')
+const rotate = require('../plugins/rotate')
 
 function loadPlugins({ theme, variants, corePlugins }, plugins) {
   return Object.keys(plugins)
     .filter((pluginName) => corePlugins[pluginName] !== false)
-    .map((pluginName) =>
-      plugins[pluginName]({
+    .map((pluginName) => {
+      return plugins[pluginName]({
         values: theme[pluginName],
         variants: variants[pluginName],
       })
-    )
+    })
 }
 
 module.exports = function plugins(config) {
@@ -34,5 +35,6 @@ module.exports = function plugins(config) {
     padding,
     transform,
     translate,
+    rotate,
   })
 }

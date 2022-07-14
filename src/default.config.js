@@ -134,19 +134,30 @@ module.exports = {
       '-1/2': '-50%',
       '1/2': '50%',
       full: '100%',
-    })
+    }),
+
+    rotate: {
+      '-180': '-180deg',
+      '-90': '-90deg',
+      '-45': '-45deg',
+      '0': '0',
+      '45': '45deg',
+      '90': '90deg',
+      '180': '180deg',
+    },
   },
 
   variants: {
     textColors: ['responsive', 'hover', 'active', 'group-hover'],
-    backgroundColor: ['responsive', 'hover'],
+    backgroundColors: ['responsive', 'hover'],
     flex: ['responsive'],
     width: ['responsive'],
     height: ['responsive'],
     margin: ['responsive'],
     padding: ['responsive'],
     transform: ['responsive'],
-    translate: ['responsive'],
+    translate: ['responsive', 'hover', 'focus'],
+    rotate: ['responsive', 'hover', 'focus'],
   },
 
   corePlugins: {
