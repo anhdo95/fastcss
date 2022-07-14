@@ -11,6 +11,10 @@ module.exports = function responsiveAtRule(config) {
       atRule.remove()
     })
 
+    if (!rules.length) {
+      return
+    }
+
     Object.keys(config.theme.screens).forEach((screen) => {
       const mediaAtRule = postcss
         .atRule({
