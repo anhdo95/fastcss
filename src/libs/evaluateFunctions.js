@@ -3,8 +3,8 @@ import functions from 'postcss-functions'
 export default function evaluateFunctions(config) {
   return functions({
     functions: {
-      config(path) {
-        let value = config
+      theme(path) {
+        let value = config.theme
 
         for (const k of path.replace(/['"]/g, '').split('.')) {
           value = value[k]
