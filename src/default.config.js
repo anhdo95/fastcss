@@ -127,6 +127,18 @@ module.exports = {
       return theme('spacing')
     },
 
+    borderWidth: {
+      default: '1px',
+      '0': '0',
+      '2': '2px',
+      '4': '4px',
+      '8': '8px',
+    },
+
+    borderColor(theme) {
+      return theme('colors')
+    },
+
     translate: (theme, { negative }) => ({
       ...theme('spacing'),
       ...negative(theme('spacing')),
@@ -169,6 +181,8 @@ module.exports = {
     height: ['responsive'],
     margin: ['responsive'],
     padding: ['responsive'],
+    borderWidth: ['responsive'],
+    borderColor: ['responsive'],
     transform: ['responsive'],
     translate: ['responsive', 'hover', 'focus'],
     rotate: ['responsive', 'hover', 'focus'],
