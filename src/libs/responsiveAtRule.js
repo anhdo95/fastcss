@@ -1,15 +1,19 @@
-const postcss = require('postcss')
-const cloneNodes = require('../utils/cloneNodes')
+import postcss from 'postcss'
+import cloneNodes from '../utils/cloneNodes'
 
-module.exports = function responsiveAtRule(config) {
+export default function responsiveAtRule(config) {
   return function(root) {
-    const rules = []
+    const responsive = postcss.root()
 
     root.walkAtRules('responsive', (atRule) => {
-      rules.push(...cloneNodes(atRule.nodes))
-      atRule.before(rules)
+      responsive.append(cloneNodes(atRule.nodes))
+      atRule.before(cloneNodes(atRule.nodes))
       atRule.remove()
     })
+
+    if (!responsive.nodes.length) {
+      return
+    }
 
     Object.keys(config.theme.screens).forEach((screen) => {
       const mediaAtRule = postcss
@@ -18,7 +22,7 @@ module.exports = function responsiveAtRule(config) {
           params: `(min-width: ${config.theme.screens[screen]})`,
         })
         .append(
-          rules.map((rule) =>
+          responsive.nodes.map((rule) =>
             rule.clone({
               selectors: rule.selectors.map(
                 (selector) => `.${screen}\\:${selector.slice(1)}`

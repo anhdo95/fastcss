@@ -1,6 +1,6 @@
-const parser = require('postcss-selector-parser')
+import parser from 'postcss-selector-parser'
 
-module.exports = function prefixSelector(prefix, selector) {
+export default function prefixSelector(prefix, selector) {
   return parser((selectors) => {
     selectors.walkClasses((classSelector) => {
       classSelector.value = classSelector.value.startsWith('-')

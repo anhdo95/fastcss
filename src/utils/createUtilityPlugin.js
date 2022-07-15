@@ -10,7 +10,7 @@ function className(prefixClass, key) {
   return `${prefixClass}-${key}`
 }
 
-module.exports = function createUtilityPlugin(themeKey, utilityVariations) {
+export default function createUtilityPlugin(themeKey, utilityVariations) {
   return function ({ addUtilities, e, theme, variants }) {
     const utilities = utilityVariations.map(([prefixClass, properties]) => {
       return Object.entries(theme(themeKey)).map(([key, value]) => {

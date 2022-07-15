@@ -1,10 +1,9 @@
-const escapeSelector = require('../utils/escapeSelector')
-const prefixNegativeModifier = require('../utils/prefixNegativeModifier')
+import prefixNegativeModifier from '../utils/prefixNegativeModifier'
 
-module.exports = function () {
-  return function margin({ addUtilities, theme, variants }) {
+export default function () {
+  return function margin({ addUtilities, theme, variants, e }) {
     const selector = (base, modifier) =>
-      `.${escapeSelector(prefixNegativeModifier(base, modifier))}`
+      `.${e(prefixNegativeModifier(base, modifier))}`
     const values = theme('margin')
 
     addUtilities(

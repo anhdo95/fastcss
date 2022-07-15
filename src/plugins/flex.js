@@ -1,13 +1,7 @@
-module.exports = function () {
+export default function () {
   return function flex({ addUtilities, variants }) {
     addUtilities(
       {
-        '.flex': {
-          display: 'flex',
-        },
-        '.inline-flex': {
-          display: 'inline-flex',
-        },
         '.flex-row': {
           'flex-direction': 'row',
         },

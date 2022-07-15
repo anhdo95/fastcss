@@ -1,7 +1,7 @@
-const postcss = require('postcss')
-const plugin = require('../src/libs/variantsAtRule')
-const cw = require('../src/utils/collapseWhitespaces')
-const processPlugins = require('../src/utils/processPlugins')
+import postcss from 'postcss'
+import plugin from '../src/libs/variantsAtRule'
+import cw from '../src/utils/collapseWhitespaces'
+import processPlugins from '../src/utils/processPlugins'
 
 async function run(css, plugins = {}, opts = { from: '' }) {
   if (Object.keys(plugins).length) {

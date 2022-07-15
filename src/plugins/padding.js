@@ -1,20 +1,18 @@
-const escapeSelector = require('../utils/escapeSelector')
-
-module.exports = function () {
-  return function padding({ addUtilities, theme, variants }) {
+export default function () {
+  return function padding({ addUtilities, theme, variants, e }) {
     const values = theme('padding')
     addUtilities(
       Object.keys(values).reduce((classes, size) => {
         return {
           ...classes,
-          [`.p-${escapeSelector(size)}`]: {
+          [`.p-${e(size)}`]: {
             padding: values[size],
           },
-          [`.px-${escapeSelector(size)}`]: {
+          [`.px-${e(size)}`]: {
             'padding-left': values[size],
             'padding-right': values[size],
           },
-          [`.py-${escapeSelector(size)}`]: {
+          [`.py-${e(size)}`]: {
             'padding-top': values[size],
             'padding-bottom': values[size],
           },

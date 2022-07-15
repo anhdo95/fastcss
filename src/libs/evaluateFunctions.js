@@ -1,6 +1,6 @@
-const functions = require('postcss-functions')
+import functions from 'postcss-functions'
 
-module.exports = function evaluateFunctions(config) {
+export default function evaluateFunctions(config) {
   return functions({
     functions: {
       config(path) {

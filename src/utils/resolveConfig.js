@@ -1,5 +1,5 @@
-const defaults = require('./defaults')
-const toPath = require('./toPath')
+import defaults from './defaults'
+import toPath from './toPath'
 
 const utils = {
   negative(scale) {
@@ -83,7 +83,7 @@ function resolveFunctionKeys(theme) {
   )
 }
 
-module.exports = function resolveConfig(configs) {
+export default function resolveConfig(configs) {
   return defaults(
     {
       theme: resolveFunctionKeys(

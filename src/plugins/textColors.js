@@ -1,4 +1,4 @@
-module.exports = function () {
+export default function () {
   return function textColors({ addUtilities, theme, variants }) {
     const values = theme('textColors')
     addUtilities(

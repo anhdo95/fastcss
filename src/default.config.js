@@ -158,8 +158,6 @@ module.exports = {
       125: '1.25',
       150: '1.5',
     },
-
-    display: {},
   },
 
   variants: {

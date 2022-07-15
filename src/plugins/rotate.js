@@ -1,5 +1,5 @@
-const createUtilityPlugin = require('../utils/createUtilityPlugin')
+import createUtilityPlugin from '../utils/createUtilityPlugin'
 
-module.exports = function rotate() {
+export default function rotate() {
   return createUtilityPlugin('rotate', [['rotate', ['--transform-rotate']]])
 }

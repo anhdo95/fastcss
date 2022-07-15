@@ -1,8 +1,8 @@
-const postcss = require('postcss')
-const _ = require('lodash')
-const escapeSelector = require('./escapeSelector')
+import postcss from 'postcss'
+import _ from 'lodash'
+import escapeSelector from './escapeSelector'
 
-module.exports = function defineClass(className, properties) {
+export default function defineClass(className, properties) {
   const decls = _.map(properties, (value, prop) => {
     return postcss.decl({
       prop: _.kebabCase(prop),

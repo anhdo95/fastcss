@@ -1,6 +1,6 @@
-const postcss = require('postcss')
-const generateVariantFunction = require('../utils/generateVariantFunction')
-const prefixSelector = require('../utils/prefixSelector')
+import postcss from 'postcss'
+import generateVariantFunction from '../utils/generateVariantFunction'
+import prefixSelector from '../utils/prefixSelector'
 
 function generateVariant(variant) {
   return generateVariantFunction(({ className, separator }) => {
@@ -9,6 +9,9 @@ function generateVariant(variant) {
 }
 
 const defaultVariantGenerators = (config) => ({
+  default: generateVariantFunction(({ className }) => {
+    return `.${className}`
+  }),
   'group-hover': generateVariantFunction(({ className, separator }) => {
     return `${prefixSelector(
       config.prefix,
@@ -25,12 +28,16 @@ const defaultVariantGenerators = (config) => ({
   'last-child': generateVariant('last-child'),
 })
 
-module.exports = function variantsAtRule(config, plugins = {}) {
+function ensureIncludesDefault(variants) {
+  return variants.includes('default') ? variants : ['default', ...variants]
+}
+
+export default function variantsAtRule(config, plugins = {}) {
   return function (root) {
     root.walkAtRules('variants', (atRule) => {
       const generators = {
         ...defaultVariantGenerators(config),
-        ...plugins.pluginVariantGenerators,
+        ...plugins.variantGenerators,
       }
       const variants = postcss.list.comma(atRule.params)
 
@@ -40,15 +47,13 @@ module.exports = function variantsAtRule(config, plugins = {}) {
         responsiveParent.append(atRule)
       }
 
-      atRule.before(atRule.clone().nodes)
-
-      variants
-        .filter((variant) => variant !== 'responsive')
-        .forEach((variant) => {
-          if (generators[variant]) {
-            generators[variant](atRule)
-          }
-        })
+      ensureIncludesDefault(
+        variants.filter((variant) => variant !== 'responsive')
+      ).forEach((variant) => {
+        if (generators[variant]) {
+          generators[variant](atRule)
+        }
+      })
 
       atRule.remove()
     })

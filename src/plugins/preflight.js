@@ -1,8 +1,8 @@
-const fs = require('fs')
-const path = require('path')
-const postcss = require('postcss')
+import fs from 'fs'
+import path from 'path'
+import postcss from 'postcss'
 
-module.exports = function () {
+export default function () {
   return function preflight ({ addBase }) {
     const preflightStyles = postcss.parse(fs.readFileSync(
       path.resolve(__dirname, '../../css/preflight.css'),

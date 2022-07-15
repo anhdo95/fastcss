@@ -1,7 +1,7 @@
-const postcss = require('postcss')
-const postcssJs = require('postcss-js')
+import postcss from 'postcss'
+import postcssJs from 'postcss-js'
 
-module.exports = function parseObjectStyles(styles) {
+export default function parseObjectStyles(styles) {
   if (!Array.isArray(styles)) {
     return parseObjectStyles([styles])
   }
