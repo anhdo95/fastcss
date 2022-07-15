@@ -9,6 +9,9 @@ function generateVariant(variant) {
 }
 
 const defaultVariantGenerators = (config) => ({
+  default: generateVariantFunction(({ className }) => {
+    return `.${className}`
+  }),
   'group-hover': generateVariantFunction(({ className, separator }) => {
     return `${prefixSelector(
       config.prefix,
@@ -25,6 +28,10 @@ const defaultVariantGenerators = (config) => ({
   'last-child': generateVariant('last-child'),
 })
 
+function ensureIncludesDefault(variants) {
+  return variants.includes('default') ? variants : ['default', ...variants]
+}
+
 export default function variantsAtRule(config, plugins = {}) {
   return function (root) {
     root.walkAtRules('variants', (atRule) => {
@@ -40,15 +47,13 @@ export default function variantsAtRule(config, plugins = {}) {
         responsiveParent.append(atRule)
       }
 
-      atRule.before(atRule.clone().nodes)
-
-      variants
-        .filter((variant) => variant !== 'responsive')
-        .forEach((variant) => {
-          if (generators[variant]) {
-            generators[variant](atRule)
-          }
-        })
+      ensureIncludesDefault(
+        variants.filter((variant) => variant !== 'responsive')
+      ).forEach((variant) => {
+        if (generators[variant]) {
+          generators[variant](atRule)
+        }
+      })
 
       atRule.remove()
     })
