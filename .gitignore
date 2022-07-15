@@ -2,4 +2,6 @@ dist
 lib
 node_modules
 
-public/main.css
+public/fast.css
+
+.vscode/

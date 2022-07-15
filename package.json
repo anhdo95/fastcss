@@ -4,7 +4,7 @@
   "main": "lib/index.js",
   "license": "MIT",
   "scripts": {
-    "preserve": "cp dist/main.css public",
+    "preserve": "yarn build && cp dist/fast.css public",
     "serve": "serve -p 8080 public",
     "prebuild": "rm -rf dist",
     "build": "yarn swcify && node -r @swc/register scripts/build.js",
