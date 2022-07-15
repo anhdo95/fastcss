@@ -1,4 +1,4 @@
-module.exports = function defaults(target, ...sources) {
+export default function defaults(target, ...sources) {
   for (const source of sources)
     for (const k in source) {
       if (!target.hasOwnProperty(k)) {

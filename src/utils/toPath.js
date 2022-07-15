@@ -1,3 +1,3 @@
-module.exports = function toPath(key) {
+export default function toPath(key) {
   return key.split('.')
 }

@@ -21,7 +21,7 @@ function loadPlugins({ corePlugins }, plugins) {
     })
 }
 
-module.exports = function plugins(config) {
+export default function plugins(config) {
   return loadPlugins(config, {
     preflight,
     container,

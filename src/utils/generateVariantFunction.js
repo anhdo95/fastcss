@@ -1,4 +1,4 @@
-module.exports = function generateVariantFunction(generator) {
+export default function generateVariantFunction(generator) {
   return (atRule) => {
     const cloned = atRule.clone()
 

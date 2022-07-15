@@ -1,7 +1,7 @@
 import postcss from 'postcss'
 import defineClass from '../utils/defineClass'
 
-module.exports = function () {
+export default function () {
   return function container({ addComponents, config }) {
     function defineContainer(width) {
       return defineClass('container', {

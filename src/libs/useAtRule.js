@@ -6,7 +6,7 @@ function updateSource(nodes, atRule) {
   return tree
 }
 
-module.exports = function utilitiesAtRule(config, plugins = {}) {
+export default function utilitiesAtRule(config, plugins = {}) {
   return function (root) {
     const { pluginBases, pluginComponents, pluginUtilities } = plugins
 

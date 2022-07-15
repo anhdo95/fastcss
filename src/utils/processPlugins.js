@@ -18,7 +18,7 @@ function parseStyles(styles) {
   )
 }
 
-module.exports = function processPlugins(plugins, config) {
+export default function processPlugins(plugins, config) {
   const pluginBases = []
   const pluginComponents = []
   const pluginUtilities = []

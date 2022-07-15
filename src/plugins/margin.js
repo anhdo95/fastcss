@@ -1,6 +1,6 @@
 import prefixNegativeModifier from '../utils/prefixNegativeModifier'
 
-module.exports = function () {
+export default function () {
   return function margin({ addUtilities, theme, variants, e }) {
     const selector = (base, modifier) =>
       `.${e(prefixNegativeModifier(base, modifier))}`

@@ -3,7 +3,7 @@ import cloneNodes from '../utils/cloneNodes'
 import escapeSelector from '../utils/escapeSelector'
 import prefixSelector from '../utils/prefixSelector'
 
-module.exports = function applyAtRules(config) {
+export default function applyAtRules(config) {
   return function (root) {
     function findRulesBySelector(selector) {
       const matches = []

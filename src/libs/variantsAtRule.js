@@ -25,7 +25,7 @@ const defaultVariantGenerators = (config) => ({
   'last-child': generateVariant('last-child'),
 })
 
-module.exports = function variantsAtRule(config, plugins = {}) {
+export default function variantsAtRule(config, plugins = {}) {
   return function (root) {
     root.walkAtRules('variants', (atRule) => {
       const generators = {

@@ -83,7 +83,7 @@ function resolveFunctionKeys(theme) {
   )
 }
 
-module.exports = function resolveConfig(configs) {
+export default function resolveConfig(configs) {
   return defaults(
     {
       theme: resolveFunctionKeys(

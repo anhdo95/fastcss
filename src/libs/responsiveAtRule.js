@@ -1,7 +1,7 @@
 import postcss from 'postcss'
 import cloneNodes from '../utils/cloneNodes'
 
-module.exports = function responsiveAtRule(config) {
+export default function responsiveAtRule(config) {
   return function(root) {
     const rules = []
 

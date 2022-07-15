@@ -1,4 +1,4 @@
-module.exports = function () {
+export default function () {
   return function backgroundColors({ addUtilities, theme, variants }) {
     const values = theme('backgroundColors')
     addUtilities(

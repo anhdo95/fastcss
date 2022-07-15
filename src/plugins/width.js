@@ -1,4 +1,4 @@
-module.exports = function () {
+export default function () {
   return function width({ addUtilities, theme, variants, e }) {
     const values = theme('width')
     addUtilities(
