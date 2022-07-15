@@ -19,7 +19,7 @@ module.exports = {
 
       colors: genColors(['dfdfdf', 'fcfbf8', '9196a2', '4dafa7', 'd9d9d9']),
 
-      textColors(theme) {
+      textColor(theme) {
         return {
           default: theme('colors.dfdfdf'),
         }
@@ -41,7 +41,7 @@ module.exports = {
   ],
 
   variants: {
-    textColors: ['responsive', 'hover', 'active', 'first-child', 'group-hover'],
+    textColor: ['responsive', 'hover', 'active', 'first-child', 'group-hover'],
   },
 }
 

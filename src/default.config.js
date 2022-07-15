@@ -58,11 +58,11 @@ module.exports = {
       'pink-lightest': '#fdf2f5',
     },
 
-    textColors(theme) {
+    textColor(theme) {
       return theme('colors')
     },
 
-    backgroundColors(theme) {
+    backgroundColor(theme) {
       return theme('colors')
     },
 
@@ -173,8 +173,8 @@ module.exports = {
   },
 
   variants: {
-    textColors: ['responsive', 'hover', 'active', 'group-hover'],
-    backgroundColors: ['responsive', 'hover'],
+    textColor: ['responsive', 'hover', 'active', 'group-hover'],
+    backgroundColor: ['responsive', 'hover'],
     display: ['responsive'],
     flex: ['responsive'],
     width: ['responsive'],

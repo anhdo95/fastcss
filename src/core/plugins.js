@@ -2,8 +2,8 @@ import preflight from '../plugins/preflight'
 import container from '../plugins/container'
 import display from '../plugins/display'
 import flex from '../plugins/flex'
-import textColors from '../plugins/textColors'
-import backgroundColors from '../plugins/backgroundColors'
+import textColor from '../plugins/textColor'
+import backgroundColor from '../plugins/backgroundColor'
 import width from '../plugins/width'
 import height from '../plugins/height'
 import margin from '../plugins/margin'
@@ -27,8 +27,8 @@ export default function plugins(config) {
   return loadPlugins(config, {
     preflight,
     container,
-    textColors,
-    backgroundColors,
+    textColor,
+    backgroundColor,
     display,
     flex,
     width,
