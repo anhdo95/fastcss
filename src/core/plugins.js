@@ -10,6 +10,8 @@ import margin from '../plugins/margin'
 import padding from '../plugins/padding'
 import borderWidth from '../plugins/borderWidth'
 import borderColor from '../plugins/borderColor'
+import divideWidth from '../plugins/divideWidth'
+import divideColor from '../plugins/divideColor'
 import transform from '../plugins/transform'
 import translate from '../plugins/translate'
 import rotate from '../plugins/rotate'
@@ -37,6 +39,8 @@ export default function plugins(config) {
     padding,
     borderWidth,
     borderColor,
+    divideWidth,
+    divideColor,
     transform,
     translate,
     rotate,

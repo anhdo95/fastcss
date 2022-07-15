@@ -136,7 +136,18 @@ module.exports = {
     },
 
     borderColor(theme) {
-      return theme('colors')
+      return {
+        ...theme('colors'),
+        default: theme('colors.grey-300', 'currentColor'),
+      }
+    },
+
+    divideWidth(theme) {
+      return theme('borderWidth')
+    },
+
+    divideColor(theme) {
+      return theme('borderColor')
     },
 
     translate: (theme, { negative }) => ({
@@ -183,6 +194,8 @@ module.exports = {
     padding: ['responsive'],
     borderWidth: ['responsive'],
     borderColor: ['responsive'],
+    divideWidth: ['responsive'],
+    divideColor: ['responsive'],
     transform: ['responsive'],
     translate: ['responsive', 'hover', 'focus'],
     rotate: ['responsive', 'hover', 'focus'],
