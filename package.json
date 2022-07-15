@@ -7,8 +7,10 @@
     "preserve": "cp dist/main.css public",
     "serve": "serve -p 8080 public",
     "prebuild": "rm -rf dist",
-    "build": "yarn prepare && node -r @swc/register scripts/build.js",
-    "prepare": "swc src -d lib",
+    "build": "yarn swcify && node -r @swc/register scripts/build.js",
+    "build:debug": "yarn swcify -s && node -r @swc/register scripts/build.js",
+    "preswcify": "rm -rf lib",
+    "swcify": "swc src -d lib",
     "test": "jest"
   },
   "devDependencies": {

@@ -10,6 +10,7 @@ import evaluateFunctions from './libs/evaluateFunctions'
 import applyAtRule from './libs/applyAtRule'
 import variantsAtRule from './libs/variantsAtRule'
 import responsiveAtRule from './libs/responsiveAtRule'
+import formatNodes from './libs/formatCSS'
 
 export default postcss.plugin('fast', () => {
   function getConfig() {
@@ -34,22 +35,7 @@ export default postcss.plugin('fast', () => {
     variantsAtRule(config, plugins),
     responsiveAtRule(config),
     applyAtRule(config),
+    formatNodes,
     postcssPresetEnv,
-    function (root) {
-      root.rawCache = {
-        colon: ': ',
-        indent: '  ',
-        beforeDecl: '\n',
-        beforeRule: '\n',
-        beforeOpen: ' ',
-        beforeClose: '\n',
-        beforeComment: '\n',
-        after: '\n',
-        emptyBody: '',
-        commentLeft: ' ',
-        commentRight: ' ',
-        semicolon: false,
-      }
-    },
   ])
 })
