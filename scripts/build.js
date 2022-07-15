@@ -1,7 +1,7 @@
-const fs = require('fs')
-const path = require('path')
-const postcss = require('postcss')
-const fast = require('..')
+import fs from 'fs'
+import path from 'path'
+import postcss from 'postcss'
+import fast from '..'
 
 function build(filename) {
   return new Promise((resolve, reject) => {

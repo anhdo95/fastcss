@@ -11,7 +11,7 @@ import applyAtRule from './libs/applyAtRule'
 import variantsAtRule from './libs/variantsAtRule'
 import responsiveAtRule from './libs/responsiveAtRule'
 
-module.exports = postcss.plugin('fast', () => {
+export default postcss.plugin('fast', () => {
   function getConfig() {
     if (!fs.existsSync('./fast.config.js')) {
       return resolveConfig([require('./default.config.js')])

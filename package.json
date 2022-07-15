@@ -7,13 +7,14 @@
     "preserve": "cp dist/main.css public",
     "serve": "serve -p 8080 public",
     "prebuild": "rm -rf dist",
-    "build": "yarn prepare && node scripts/build.js",
+    "build": "yarn prepare && node -r @swc/register scripts/build.js",
     "prepare": "swc src -d lib",
     "test": "jest"
   },
   "devDependencies": {
     "@swc/cli": "^0.1.57",
     "@swc/core": "^1.2.215",
+    "@swc/register": "^0.1.10",
     "jest": "^28.1.2",
     "lodash": "^4.17.21",
     "postcss": "^8.4.14",
