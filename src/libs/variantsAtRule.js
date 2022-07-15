@@ -30,7 +30,7 @@ export default function variantsAtRule(config, plugins = {}) {
     root.walkAtRules('variants', (atRule) => {
       const generators = {
         ...defaultVariantGenerators(config),
-        ...plugins.pluginVariantGenerators,
+        ...plugins.variantGenerators,
       }
       const variants = postcss.list.comma(atRule.params)
 

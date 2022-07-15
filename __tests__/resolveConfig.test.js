@@ -1,4 +1,4 @@
-const resolveConfig = require('../src/utils/resolveConfig')
+import resolveConfig from '../src/utils/resolveConfig'
 
 describe('resolveConfig', () => {
   it('theme key is merged instead of replaced', () => {

@@ -1,9 +1,9 @@
-const postcss = require('postcss')
-const processPlugins = require('../src/utils/processPlugins')
-const cw = require('../src/utils/collapseWhitespaces')
+import postcss from 'postcss'
+import processPlugins from '../src/utils/processPlugins'
+import cw from '../src/utils/collapseWhitespaces'
 
 function run(plugins) {
-  return processPlugins(plugins)
+  return processPlugins(plugins, { prefix: '' })
 }
 
 function css(nodes) {
@@ -11,7 +11,7 @@ function css(nodes) {
 }
 
 describe('processPlugins', () => {
-  it('It can create components with object syntax', () => {
+  it('it can create components with object syntax', () => {
     const input = [
       function ({ addComponents }) {
         addComponents({
@@ -36,11 +36,11 @@ describe('processPlugins', () => {
       }
     `).trim()
 
-    const { pluginComponents } = run(input)
-    expect(css(pluginComponents)).toBe(output)
+    const { components } = run(input)
+    expect(css(components)).toBe(output)
   })
 
-  it('It can create components with objects-in-array syntax', () => {
+  it('it can create components with objects-in-array syntax', () => {
     const input = [
       function ({ addComponents }) {
         addComponents([
@@ -76,7 +76,7 @@ describe('processPlugins', () => {
       }
     `).trim()
 
-    const { pluginComponents } = run(input)
-    expect(css(pluginComponents)).toBe(output)
+    const { components } = run(input)
+    expect(css(components)).toBe(output)
   })
 })

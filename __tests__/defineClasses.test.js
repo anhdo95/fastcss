@@ -1,5 +1,5 @@
-const defineClasses = require('../src/utils/defineClasses')
-const cw = require('../src/utils/collapseWhitespaces')
+import defineClasses from '../src/utils/defineClasses'
+import cw from '../src/utils/collapseWhitespaces'
 
 describe('defineClasses', () => {
   it('generates a set of helper classes from a config', () => {

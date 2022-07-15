@@ -19,7 +19,7 @@ function parseStyles(styles) {
 }
 
 export default function processPlugins(plugins, config) {
-  const pluginBases = []
+  const pluginBaseStyles = []
   const pluginComponents = []
   const pluginUtilities = []
   const pluginVariantGenerators = {}
@@ -39,8 +39,8 @@ export default function processPlugins(plugins, config) {
       theme,
       variants,
 
-      addBase(base) {
-        pluginBases.push(...parseStyles(base))
+      addBase(baseStyles) {
+        pluginBaseStyles.push(...parseStyles(baseStyles))
       },
 
       addUtilities(utilities, opts = {}) {
@@ -54,7 +54,7 @@ export default function processPlugins(plugins, config) {
         })
 
         if (options.respectPrefix) {
-          styles.walkRules(rule => {
+          styles.walkRules((rule) => {
             rule.selector = prefixSelector(config.prefix, rule.selector)
           })
         }
@@ -62,10 +62,19 @@ export default function processPlugins(plugins, config) {
         pluginUtilities.push(wrapWithVariants(options.variants, styles.nodes))
       },
 
-      addComponents(components) {
+      addComponents(components, opts = {}) {
+        const options = defaults(opts, { respectPrefix: true })
+
         const styles = postcss.root({
           nodes: parseStyles(components),
         })
+
+        if (options.respectPrefix) {
+          styles.walkRules((rule) => {
+            rule.selector = prefixSelector(config.prefix, rule.selector)
+          })
+        }
+
         pluginComponents.push(styles)
       },
 
@@ -75,5 +84,10 @@ export default function processPlugins(plugins, config) {
     })
   })
 
-  return { pluginBases, pluginComponents, pluginUtilities, pluginVariantGenerators }
+  return {
+    base: pluginBaseStyles,
+    components: pluginComponents,
+    utilities: pluginUtilities,
+    variantGenerators: pluginVariantGenerators,
+  }
 }

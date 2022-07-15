@@ -8,19 +8,19 @@ function updateSource(nodes, atRule) {
 
 export default function utilitiesAtRule(config, plugins = {}) {
   return function (root) {
-    const { pluginBases, pluginComponents, pluginUtilities } = plugins
+    const { base, components, utilities } = plugins
 
     root.walkAtRules('use', (atRule) => {
       if (atRule.params === 'base') {
-        atRule.before(updateSource(pluginBases, atRule))
+        atRule.before(updateSource(base, atRule))
       }
 
       if (atRule.params === 'components') {
-        atRule.before(updateSource(pluginComponents, atRule))
+        atRule.before(updateSource(components, atRule))
       }
 
       if (atRule.params === 'utilities') {
-        atRule.before(updateSource(pluginUtilities, atRule))
+        atRule.before(updateSource(utilities, atRule))
       }
 
       atRule.remove()

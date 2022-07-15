@@ -1,6 +1,6 @@
-const postcss = require('postcss')
-const plugin = require('../src/libs/evaluateFunctions')
-const cw = require('../src/utils/collapseWhitespaces')
+import postcss from 'postcss'
+import plugin from '../src/libs/evaluateFunctions'
+import cw from '../src/utils/collapseWhitespaces'
 
 function run(css, config = {}, opts = { from: '' }) {
   return postcss([plugin(config)]).process(css, opts)
