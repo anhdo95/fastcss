@@ -1,4 +1,4 @@
-const functions = require('postcss-functions')
+import functions from 'postcss-functions'
 
 module.exports = function evaluateFunctions(config) {
   return functions({

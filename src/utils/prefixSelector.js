@@ -1,4 +1,4 @@
-const parser = require('postcss-selector-parser')
+import parser from 'postcss-selector-parser'
 
 module.exports = function prefixSelector(prefix, selector) {
   return parser((selectors) => {

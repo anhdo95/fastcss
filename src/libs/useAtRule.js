@@ -1,4 +1,4 @@
-const postcss = require('postcss')
+import postcss from 'postcss'
 
 function updateSource(nodes, atRule) {
   const tree = Array.isArray(nodes) ? postcss.root({ nodes }) : nodes

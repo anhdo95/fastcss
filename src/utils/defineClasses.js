@@ -1,5 +1,5 @@
-const _ = require('lodash')
-const defineClass = require('./defineClass')
+import _ from 'lodash'
+import defineClass from './defineClass'
 
 module.exports = function defineClasses(classes) {
   const rules = _.map(classes, (properties, className) => {

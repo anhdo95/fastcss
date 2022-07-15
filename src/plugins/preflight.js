@@ -1,6 +1,6 @@
-const fs = require('fs')
-const path = require('path')
-const postcss = require('postcss')
+import fs from 'fs'
+import path from 'path'
+import postcss from 'postcss'
 
 module.exports = function () {
   return function preflight ({ addBase }) {

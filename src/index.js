@@ -1,15 +1,15 @@
-const fs = require('fs')
-const postcss = require('postcss')
-const postcssPresetEnv = require('postcss-preset-env')
+import fs from 'fs'
+import postcss from 'postcss'
+import postcssPresetEnv from 'postcss-preset-env'
 
-const corePlugins = require('./core/plugins')
-const resolveConfig = require('./utils/resolveConfig')
-const processPlugins = require('./utils/processPlugins')
-const useAtRule = require('./libs/useAtRule')
-const evaluateFunctions = require('./libs/evaluateFunctions')
-const applyAtRule = require('./libs/applyAtRule')
-const variantsAtRule = require('./libs/variantsAtRule')
-const responsiveAtRule = require('./libs/responsiveAtRule')
+import corePlugins from './core/plugins'
+import resolveConfig from './utils/resolveConfig'
+import processPlugins from './utils/processPlugins'
+import useAtRule from './libs/useAtRule'
+import evaluateFunctions from './libs/evaluateFunctions'
+import applyAtRule from './libs/applyAtRule'
+import variantsAtRule from './libs/variantsAtRule'
+import responsiveAtRule from './libs/responsiveAtRule'
 
 module.exports = postcss.plugin('fast', () => {
   function getConfig() {

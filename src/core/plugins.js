@@ -1,17 +1,17 @@
-const preflight = require('../plugins/preflight')
-const container = require('../plugins/container')
-const display = require('../plugins/display')
-const flex = require('../plugins/flex')
-const textColors = require('../plugins/textColors')
-const backgroundColors = require('../plugins/backgroundColors')
-const width = require('../plugins/width')
-const height = require('../plugins/height')
-const margin = require('../plugins/margin')
-const padding = require('../plugins/padding')
-const transform = require('../plugins/transform')
-const translate = require('../plugins/translate')
-const rotate = require('../plugins/rotate')
-const scale = require('../plugins/scale')
+import preflight from '../plugins/preflight'
+import container from '../plugins/container'
+import display from '../plugins/display'
+import flex from '../plugins/flex'
+import textColors from '../plugins/textColors'
+import backgroundColors from '../plugins/backgroundColors'
+import width from '../plugins/width'
+import height from '../plugins/height'
+import margin from '../plugins/margin'
+import padding from '../plugins/padding'
+import transform from '../plugins/transform'
+import translate from '../plugins/translate'
+import rotate from '../plugins/rotate'
+import scale from '../plugins/scale'
 
 function loadPlugins({ corePlugins }, plugins) {
   return Object.keys(plugins)

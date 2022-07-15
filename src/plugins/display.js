@@ -1,5 +1,3 @@
-const escapeSelector = require('../utils/escapeSelector')
-
 module.exports = function () {
   return function display({ addUtilities, variants }) {
     addUtilities(

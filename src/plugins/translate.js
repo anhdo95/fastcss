@@ -1,4 +1,4 @@
-const createUtilityPlugin = require('../utils/createUtilityPlugin')
+import createUtilityPlugin from '../utils/createUtilityPlugin'
 
 module.exports = function translate() {
   return createUtilityPlugin('translate', [

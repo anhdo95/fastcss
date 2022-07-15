@@ -1,5 +1,5 @@
-const postcss = require('postcss')
-const cloneNodes = require('./cloneNodes')
+import postcss from 'postcss'
+import cloneNodes from './cloneNodes'
 
 module.exports = function wrapWithVariants(variants, rules) {
   return postcss.atRule({

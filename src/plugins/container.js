@@ -1,5 +1,5 @@
-const postcss = require('postcss')
-const defineClass = require('../utils/defineClass')
+import postcss from 'postcss'
+import defineClass from '../utils/defineClass'
 
 module.exports = function () {
   return function container({ addComponents, config }) {

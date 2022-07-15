@@ -1,6 +1,6 @@
-const postcss = require('postcss')
-const generateVariantFunction = require('../utils/generateVariantFunction')
-const prefixSelector = require('../utils/prefixSelector')
+import postcss from 'postcss'
+import generateVariantFunction from '../utils/generateVariantFunction'
+import prefixSelector from '../utils/prefixSelector'
 
 function generateVariant(variant) {
   return generateVariantFunction(({ className, separator }) => {

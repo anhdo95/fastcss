@@ -1,7 +1,7 @@
-const postcss = require('postcss')
-const cloneNodes = require('../utils/cloneNodes')
-const escapeSelector = require('../utils/escapeSelector')
-const prefixSelector = require('../utils/prefixSelector')
+import postcss from 'postcss'
+import cloneNodes from '../utils/cloneNodes'
+import escapeSelector from '../utils/escapeSelector'
+import prefixSelector from '../utils/prefixSelector'
 
 module.exports = function applyAtRules(config) {
   return function (root) {

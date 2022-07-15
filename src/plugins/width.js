@@ -1,19 +1,17 @@
-const escapeSelector = require('../utils/escapeSelector')
-
 module.exports = function () {
-  return function width({ addUtilities, theme, variants }) {
+  return function width({ addUtilities, theme, variants, e }) {
     const values = theme('width')
     addUtilities(
       Object.keys(values).reduce((classes, size) => {
         return {
           ...classes,
-          [`.w-${escapeSelector(size)}`]: {
+          [`.w-${e(size)}`]: {
             width: values[size],
           },
-          [`.min-w-${escapeSelector(size)}`]: {
+          [`.min-w-${e(size)}`]: {
             'min-width': values[size],
           },
-          [`.max-w-${escapeSelector(size)}`]: {
+          [`.max-w-${e(size)}`]: {
             'max-width': values[size],
           },
         }

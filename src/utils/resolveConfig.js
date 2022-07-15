@@ -1,5 +1,5 @@
-const defaults = require('./defaults')
-const toPath = require('./toPath')
+import defaults from './defaults'
+import toPath from './toPath'
 
 const utils = {
   negative(scale) {
