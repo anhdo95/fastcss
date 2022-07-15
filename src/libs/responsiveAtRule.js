@@ -3,15 +3,15 @@ import cloneNodes from '../utils/cloneNodes'
 
 export default function responsiveAtRule(config) {
   return function(root) {
-    const rules = []
+    const responsive = postcss.root()
 
     root.walkAtRules('responsive', (atRule) => {
-      rules.push(...cloneNodes(atRule.nodes))
-      atRule.before(rules)
+      responsive.append(cloneNodes(atRule.nodes))
+      atRule.before(cloneNodes(atRule.nodes))
       atRule.remove()
     })
 
-    if (!rules.length) {
+    if (!responsive.nodes.length) {
       return
     }
 
@@ -22,7 +22,7 @@ export default function responsiveAtRule(config) {
           params: `(min-width: ${config.theme.screens[screen]})`,
         })
         .append(
-          rules.map((rule) =>
+          responsive.nodes.map((rule) =>
             rule.clone({
               selectors: rule.selectors.map(
                 (selector) => `.${screen}\\:${selector.slice(1)}`
