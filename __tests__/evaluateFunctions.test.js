@@ -20,7 +20,7 @@ describe('evaluateFunctions', () => {
 
     const input = cw(`
       .container {
-        max-width: config('theme.width.5/6');
+        max-width: theme('width.5/6');
       }
     `)
 
@@ -37,13 +37,15 @@ describe('evaluateFunctions', () => {
 
   it('quotes are optional around the lookup path', async () => {
     const config = {
-      colors: {
-        'green-lightest': '#eefff1',
-        'teal-dark': '#249e9a',
-        teal: '#4dc0b5',
-        'teal-light': '#9eebe4',
-        'teal-lightest': '#eefffd',
-        'blue-dark': '#3687c8',
+      theme: {
+        colors: {
+          'green-lightest': '#eefff1',
+          'teal-dark': '#249e9a',
+          teal: '#4dc0b5',
+          'teal-light': '#9eebe4',
+          'teal-lightest': '#eefffd',
+          'blue-dark': '#3687c8',
+        },
       },
     }
 
@@ -51,8 +53,8 @@ describe('evaluateFunctions', () => {
       .gradient {
         background-image: linear-gradient(
           to top,
-          config(colors.green-lightest),
-          config(colors.teal-light)
+          theme('colors.green-lightest'),
+          theme('colors.teal-light')
         );
       }
     `)

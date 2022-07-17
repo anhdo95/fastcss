@@ -17,8 +17,20 @@ export default function () {
             'margin-left': values[size],
             'margin-right': values[size],
           },
+          [selector('ml', size)]: {
+            'margin-left': values[size],
+          },
+          [selector('mr', size)]: {
+            'margin-right': values[size],
+          },
           [selector('my', size)]: {
             'margin-top': values[size],
+            'margin-bottom': values[size],
+          },
+          [selector('mt', size)]: {
+            'margin-top': values[size],
+          },
+          [selector('mb', size)]: {
             'margin-bottom': values[size],
           },
         }

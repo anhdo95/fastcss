@@ -25,7 +25,7 @@ describe('resolveConfig', () => {
         },
       },
       variants: {
-        textColors: ['hover'],
+        textColor: ['hover'],
       },
     }
 
@@ -45,7 +45,7 @@ describe('resolveConfig', () => {
         },
       },
       variants: {
-        textColors: ['hover'],
+        textColor: ['hover'],
       },
     })
   })
@@ -53,15 +53,15 @@ describe('resolveConfig', () => {
   it('theme key is merged instead of replaced', () => {
     const userConfig = {
       variants: {
-        textColors: [],
-        backgroundColors: ['responsive'],
+        textColor: [],
+        backgroundColor: ['responsive'],
       },
     }
 
     const defaultConfig = {
       theme: {},
       variants: {
-        textColors: ['hover'],
+        textColor: ['hover'],
         width: ['responsive'],
         height: ['responsive'],
       },
@@ -72,8 +72,8 @@ describe('resolveConfig', () => {
     expect(resolved).toEqual({
       theme: {},
       variants: {
-        textColors: [],
-        backgroundColors: ['responsive'],
+        textColor: [],
+        backgroundColor: ['responsive'],
         width: ['responsive'],
         height: ['responsive'],
       },
@@ -83,15 +83,15 @@ describe('resolveConfig', () => {
   it('variants key is merged instead of replaced', () => {
     const userConfig = {
       variants: {
-        textColors: [],
-        backgroundColors: ['responsive'],
+        textColor: [],
+        backgroundColor: ['responsive'],
       },
     }
 
     const defaultConfig = {
       theme: {},
       variants: {
-        textColors: ['hover'],
+        textColor: ['hover'],
         width: ['responsive'],
         height: ['responsive'],
       },
@@ -102,8 +102,8 @@ describe('resolveConfig', () => {
     expect(resolved).toEqual({
       theme: {},
       variants: {
-        textColors: [],
-        backgroundColors: ['responsive'],
+        textColor: [],
+        backgroundColor: ['responsive'],
         width: ['responsive'],
         height: ['responsive'],
       },
@@ -113,7 +113,7 @@ describe('resolveConfig', () => {
   it('theme function can resolve function values', () => {
     const userConfig = {
       theme: {
-        textColors(theme) {
+        textColor(theme) {
           return {
             default: theme("colors.grey-700"),
             ...theme('colors'),
@@ -142,7 +142,7 @@ describe('resolveConfig', () => {
           'grey-600': '#919eab',
           white: '#fff',
         },
-        textColors: {
+        textColor: {
           default: '#647382',
           'grey-700': '#647382',
           'grey-600': '#919eab',
@@ -156,9 +156,9 @@ describe('resolveConfig', () => {
   it('theme function can resolve deep function values', () => {
     const userConfig = {
       theme: {
-        backgroundColors(theme) {
+        backgroundColor(theme) {
           return {
-            default: theme("textColors.grey-700"),
+            default: theme("textColor.grey-700"),
             ...theme('colors'),
           }
         },
@@ -172,7 +172,7 @@ describe('resolveConfig', () => {
           'grey-600': '#919eab',
           white: '#fff',
         },
-        textColors(theme) {
+        textColor(theme) {
           return theme('colors')
         }
       },
@@ -188,12 +188,12 @@ describe('resolveConfig', () => {
           'grey-600': '#919eab',
           white: '#fff',
         },
-        textColors: {
+        textColor: {
           'grey-700': '#647382',
           'grey-600': '#919eab',
           white: '#fff',
         },
-        backgroundColors: {
+        backgroundColor: {
           default: '#647382',
           'grey-700': '#647382',
           'grey-600': '#919eab',

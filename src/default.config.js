@@ -58,11 +58,11 @@ module.exports = {
       'pink-lightest': '#fdf2f5',
     },
 
-    textColors(theme) {
+    textColor(theme) {
       return theme('colors')
     },
 
-    backgroundColors(theme) {
+    backgroundColor(theme) {
       return theme('colors')
     },
 
@@ -127,6 +127,29 @@ module.exports = {
       return theme('spacing')
     },
 
+    borderWidth: {
+      default: '1px',
+      '0': '0',
+      '2': '2px',
+      '4': '4px',
+      '8': '8px',
+    },
+
+    borderColor(theme) {
+      return {
+        ...theme('colors'),
+        default: theme('colors.grey-300', 'currentColor'),
+      }
+    },
+
+    divideWidth(theme) {
+      return theme('borderWidth')
+    },
+
+    divideColor(theme) {
+      return theme('borderColor')
+    },
+
     translate: (theme, { negative }) => ({
       ...theme('spacing'),
       ...negative(theme('spacing')),
@@ -161,14 +184,18 @@ module.exports = {
   },
 
   variants: {
-    textColors: ['responsive', 'hover', 'active', 'group-hover'],
-    backgroundColors: ['responsive', 'hover'],
+    textColor: ['responsive', 'hover', 'active', 'group-hover'],
+    backgroundColor: ['responsive', 'hover'],
     display: ['responsive'],
     flex: ['responsive'],
     width: ['responsive'],
     height: ['responsive'],
     margin: ['responsive'],
     padding: ['responsive'],
+    borderWidth: ['responsive'],
+    borderColor: ['responsive'],
+    divideWidth: ['responsive'],
+    divideColor: ['responsive'],
     transform: ['responsive'],
     translate: ['responsive', 'hover', 'focus'],
     rotate: ['responsive', 'hover', 'focus'],

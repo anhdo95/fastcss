@@ -1,6 +1,6 @@
 export default function () {
-  return function backgroundColors({ addUtilities, theme, variants }) {
-    const values = theme('backgroundColors')
+  return function backgroundColor({ addUtilities, theme, variants }) {
+    const values = theme('backgroundColor')
     addUtilities(
       Object.keys(values).reduce((classes, color) => {
         return {
@@ -10,7 +10,7 @@ export default function () {
           },
         }
       }, {}),
-      variants('backgroundColors')
+      variants('backgroundColor')
     )
   }
 }

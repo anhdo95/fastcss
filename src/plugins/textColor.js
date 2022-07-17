@@ -1,6 +1,6 @@
 export default function () {
-  return function textColors({ addUtilities, theme, variants }) {
-    const values = theme('textColors')
+  return function textColor({ addUtilities, theme, variants }) {
+    const values = theme('textColor')
     addUtilities(
       Object.keys(values).reduce((classes, color) => {
         return {
@@ -10,7 +10,7 @@ export default function () {
           },
         }
       }, {}),
-      variants('textColors')
+      variants('textColor')
     )
   }
 }

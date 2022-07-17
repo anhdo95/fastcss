@@ -19,7 +19,7 @@ module.exports = {
 
       colors: genColors(['dfdfdf', 'fcfbf8', '9196a2', '4dafa7', 'd9d9d9']),
 
-      textColors(theme) {
+      textColor(theme) {
         return {
           default: theme('colors.dfdfdf'),
         }
@@ -28,20 +28,33 @@ module.exports = {
   },
 
   plugins: [
-    // function customUtilities ({ addUtilities }) {
-    //   addUtilities(
-    //     {
-    //       '.d-none': {
-    //         display: 'none',
-    //       },
-    //     },
-    //     ['responsive']
-    //   )
-    // },
+    function customUtilities ({ addUtilities, addComponents }) {
+      addComponents({
+        '.card': {
+          'min-width': '33.33333%',
+          'max-width': '50%',
+          'margin-top': '0.5rem',
+          'margin-bottom': '0.5rem',
+          'padding-top': '0.5rem',
+          'padding-bottom': '0.5rem',
+        }
+      })
+
+      addUtilities(
+        {
+          '.flex-center': {
+            display: 'flex',
+            'justify-content': 'center',
+            'align-items': 'center',
+          },
+        },
+        ['responsive']
+      )
+    },
   ],
 
   variants: {
-    textColors: ['responsive', 'hover', 'active', 'first-child', 'group-hover'],
+    textColor: ['responsive', 'hover', 'active', 'first-child', 'group-hover'],
   },
 }
 
