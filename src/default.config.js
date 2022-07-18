@@ -1,5 +1,6 @@
 module.exports = {
   prefix: '',
+  important: false,
 
   theme: {
     screens: {

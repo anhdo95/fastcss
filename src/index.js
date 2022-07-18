@@ -13,6 +13,7 @@ import applyAtRule from './libs/applyAtRule'
 import variantsAtRule from './libs/variantsAtRule'
 import responsiveAtRule from './libs/responsiveAtRule'
 import formatNodes from './libs/formatCSS'
+import applyImportant from './libs/applyImportant'
 
 let previousConfig = null,
     processedPlugins = null
@@ -63,6 +64,7 @@ module.exports = () => {
       variantsAtRule(config, processedPlugins),
       responsiveAtRule(config),
       applyAtRule(config),
+      applyImportant(config),
       formatNodes,
       postcssPresetEnv,
     ],
