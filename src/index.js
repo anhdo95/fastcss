@@ -1,7 +1,10 @@
 import fs from 'fs'
+import path from 'path'
+import hash from 'object-hash'
 import postcssPresetEnv from 'postcss-preset-env'
 
 import corePlugins from './core/plugins'
+import registerConfigAsDependency from './utils/registerConfigAsDependency'
 import resolveConfig from './utils/resolveConfig'
 import processPlugins from './utils/processPlugins'
 import useAtRule from './libs/useAtRule'
@@ -11,30 +14,53 @@ import variantsAtRule from './libs/variantsAtRule'
 import responsiveAtRule from './libs/responsiveAtRule'
 import formatNodes from './libs/formatCSS'
 
+let previousConfig = null,
+    processedPlugins = null
+
 module.exports = () => {
-  function getConfig() {
-    if (!fs.existsSync('./fast.config.js')) {
+  function resolveConfigPath() {
+    try {
+      const defaultConfigPath = path.resolve('./fast.config.js')
+      fs.accessSync(defaultConfigPath)
+      return defaultConfigPath
+    } catch (error) {
+      return undefined
+    }
+  }
+
+  function getConfig(configPath) {
+    if (!configPath) {
       return resolveConfig([require('./default.config.js')])
     }
 
-    return resolveConfig([
-      require('../fast.config.js'),
-      require('./default.config.js'),
-    ])
+    return resolveConfig([require(configPath), require('./default.config.js')])
   }
 
-  const config = getConfig()
-  const plugins = processPlugins(
-    [...corePlugins(config), ...config.plugins],
-    config
-  )
+  const plugins = []
+  const resolvedConfigPath = resolveConfigPath()
+
+  if (resolvedConfigPath) {
+    plugins.push(registerConfigAsDependency(resolvedConfigPath))
+  }
+
+  const config = getConfig(resolvedConfigPath)
+  const configChanged = hash(config) !== hash(previousConfig)
+  previousConfig = config
+
+  if (configChanged) {
+    processedPlugins = processPlugins(
+      [...corePlugins(config), ...config.plugins],
+      config
+    )
+  }
 
   return {
     postcssPlugin: 'fastcss',
     plugins: [
-      useAtRule(config, plugins),
+      ...plugins,
+      useAtRule(config, processedPlugins),
       evaluateFunctions(config),
-      variantsAtRule(config, plugins),
+      variantsAtRule(config, processedPlugins),
       responsiveAtRule(config),
       applyAtRule(config),
       formatNodes,
