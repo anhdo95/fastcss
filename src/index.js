@@ -1,5 +1,4 @@
 import fs from 'fs'
-import postcss from 'postcss'
 import postcssPresetEnv from 'postcss-preset-env'
 
 import corePlugins from './core/plugins'
@@ -12,7 +11,7 @@ import variantsAtRule from './libs/variantsAtRule'
 import responsiveAtRule from './libs/responsiveAtRule'
 import formatNodes from './libs/formatCSS'
 
-export default postcss.plugin('fast', () => {
+module.exports = () => {
   function getConfig() {
     if (!fs.existsSync('./fast.config.js')) {
       return resolveConfig([require('./default.config.js')])
@@ -23,19 +22,25 @@ export default postcss.plugin('fast', () => {
       require('./default.config.js'),
     ])
   }
+
   const config = getConfig()
   const plugins = processPlugins(
     [...corePlugins(config), ...config.plugins],
     config
   )
 
-  return postcss([
-    useAtRule(config, plugins),
-    evaluateFunctions(config),
-    variantsAtRule(config, plugins),
-    responsiveAtRule(config),
-    applyAtRule(config),
-    formatNodes,
-    postcssPresetEnv,
-  ])
-})
+  return {
+    postcssPlugin: 'fastcss',
+    plugins: [
+      useAtRule(config, plugins),
+      evaluateFunctions(config),
+      variantsAtRule(config, plugins),
+      responsiveAtRule(config),
+      applyAtRule(config),
+      formatNodes,
+      postcssPresetEnv,
+    ],
+  }
+}
+
+module.exports.postcss = true
