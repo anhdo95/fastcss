@@ -1,5 +1,6 @@
 import fs from 'fs'
 import path from 'path'
+import hash from 'object-hash'
 import postcssPresetEnv from 'postcss-preset-env'
 
 import corePlugins from './core/plugins'
@@ -12,6 +13,9 @@ import applyAtRule from './libs/applyAtRule'
 import variantsAtRule from './libs/variantsAtRule'
 import responsiveAtRule from './libs/responsiveAtRule'
 import formatNodes from './libs/formatCSS'
+
+let previousConfig = null,
+    processedPlugins = null
 
 module.exports = () => {
   function resolveConfigPath() {
@@ -29,10 +33,7 @@ module.exports = () => {
       return resolveConfig([require('./default.config.js')])
     }
 
-    return resolveConfig([
-      require(configPath),
-      require('./default.config.js'),
-    ])
+    return resolveConfig([require(configPath), require('./default.config.js')])
   }
 
   const plugins = []
@@ -43,10 +44,15 @@ module.exports = () => {
   }
 
   const config = getConfig(resolvedConfigPath)
-  const processedPlugins = processPlugins(
-    [...corePlugins(config), ...config.plugins],
-    config
-  )
+  const configChanged = hash(config) !== hash(previousConfig)
+  previousConfig = config
+
+  if (configChanged) {
+    processedPlugins = processPlugins(
+      [...corePlugins(config), ...config.plugins],
+      config
+    )
+  }
 
   return {
     postcssPlugin: 'fastcss',
