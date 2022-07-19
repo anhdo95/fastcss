@@ -1,3 +1,5 @@
+import withAlphaVariable from '../utils/withAlphaVariable'
+
 export default function () {
   return function textColor({ addUtilities, theme, variants }) {
     const values = theme('textColor')
@@ -5,9 +7,11 @@ export default function () {
       Object.keys(values).reduce((classes, color) => {
         return {
           ...classes,
-          [`.text-${color}`]: {
+          [`.text-${color}`]: withAlphaVariable({
             color: values[color],
-          },
+            property: 'color',
+            variable: '--text-opacity',
+          }),
         }
       }, {}),
       variants('textColor')
