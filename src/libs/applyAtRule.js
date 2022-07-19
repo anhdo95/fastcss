@@ -17,11 +17,17 @@ export default function applyAtRules(config) {
     }
 
     root.walkAtRules('apply', (atRule) => {
+      const parent = atRule.parent;
       const classes = postcss.list.space(atRule.params)
 
       classes.forEach((className) => {
         const isImportant = className.startsWith('!')
         const selector = `.${isImportant ? className.slice(1) : className}`
+
+        if (parent.selector === selector) {
+          throw parent.error(`You cannot @apply \`${selector}\` here because it creates a circular dependency`);
+        }
+
         const matches = findRulesBySelector(
           prefixSelector(config.prefix, escapeSelector(selector))
         )

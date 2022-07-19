@@ -88,9 +88,33 @@ describe('applyAtRule', () => {
       }
     `)
 
-    return run(input).catch((error) => {
-      expect(error).toMatchObject({ name: 'CssSyntaxError' })
-    })
+    return run(input)
+      .then((result) => {
+        throw result
+      })
+      .catch((error) => {
+        expect(error).toMatchObject({ name: 'CssSyntaxError' })
+      })
+  })
+
+  it("it fails if the class has the same name as the parent's applied selector", async () => {
+    const input = cw(`
+      .container {
+        max-width: 100%;
+      }
+
+      .container {
+        @apply container;
+      }
+    `)
+
+    return run(input)
+      .then((result) => {
+        throw result
+      })
+      .catch((error) => {
+        expect(error).toMatchObject({ name: 'CssSyntaxError' })
+      })
   })
 
   it('it fails if the class has mutliple rulesets', async () => {
@@ -108,9 +132,13 @@ describe('applyAtRule', () => {
       }
     `)
 
-    return run(input).catch((error) => {
-      expect(error).toMatchObject({ name: 'CssSyntaxError' })
-    })
+    return run(input)
+      .then((result) => {
+        throw result
+      })
+      .catch((error) => {
+        expect(error).toMatchObject({ name: 'CssSyntaxError' })
+      })
   })
 
   it('it fails if the class matches with classes that include pseudo-selectors', async () => {
