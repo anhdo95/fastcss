@@ -4,7 +4,11 @@ export default function () {
 
     addUtilities(
       Object.keys(values).reduce((classes, size) => {
-        const modifier = size === 'default' ? '' : `-${e(size)}`
+        if (size === 'default') {
+          return classes
+        }
+
+        const modifier = `-${e(size)}`
         return {
           ...classes,
           [`.border${modifier}`]: {

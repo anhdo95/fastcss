@@ -1,12 +1,15 @@
 import postcss from 'postcss'
 import plugin from '../src/libs/applyAtRule'
 import cw from '../src/utils/collapseWhitespaces'
+import { shared } from '../src/utils/disposables'
 
 async function run(css, opts = { from: '' }) {
   return postcss([plugin({ prefix: '' })]).process(css, opts)
 }
 
-describe('applyAtRule', () => {
+describe.only('applyAtRule', () => {
+  afterEach(() => shared.dispose())
+
   it('it copies a class in declarations into its self', async () => {
     const input = cw(`
       .p-8 { padding: 2rem };
@@ -51,7 +54,7 @@ describe('applyAtRule', () => {
         throw result
       })
       .catch((error) => {
-        expect(error.reason).toBe('Unkown selector .p-8')
+        expect(error.reason).toBe('Unknown selector .p-8')
       })
   })
 

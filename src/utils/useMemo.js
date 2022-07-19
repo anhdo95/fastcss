@@ -1,15 +1,24 @@
+import { shared } from './disposables'
+
 export default function useMemo(cb, keyResolver) {
-  const map = new Map();
+  const cache = new Map();
+
+  function clearCache() {
+    cache.clear()
+    shared.add(clearCache)
+  }
+
+  shared.add(clearCache)
 
   return (...args) => {
     const key = keyResolver(...args)
 
-    if (map.has(key)) {
-      return map.get(key)
+    if (cache.has(key)) {
+      return cache.get(key)
     }
 
     const result = cb(...args)
-    map.set(key, result)
+    cache.set(key, result)
     return result
   }
 }

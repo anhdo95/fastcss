@@ -44,7 +44,7 @@ export default function applyAtRules(config) {
         )
 
         if (!matches.length) {
-          throw atRule.error(`Unkown selector ${selector}`)
+          throw atRule.error(`Unknown selector ${selector}`)
         }
 
         if (matches.length > 1) {

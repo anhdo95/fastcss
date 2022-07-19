@@ -14,6 +14,7 @@ import variantsAtRule from './libs/variantsAtRule'
 import responsiveAtRule from './libs/responsiveAtRule'
 import formatNodes from './libs/formatCSS'
 import applyImportant from './libs/applyImportant'
+import { shared } from './utils/disposables'
 
 let previousConfig = null,
     processedPlugins = null
@@ -34,6 +35,7 @@ module.exports = () => {
       return resolveConfig([require('./default.config.js')])
     }
 
+    delete require.cache[require.resolve(configPath)]
     return resolveConfig([require(configPath), require('./default.config.js')])
   }
 
@@ -49,6 +51,8 @@ module.exports = () => {
   previousConfig = config
 
   if (configChanged) {
+    shared.dispose()
+
     processedPlugins = processPlugins(
       [...corePlugins(config), ...config.plugins],
       config
