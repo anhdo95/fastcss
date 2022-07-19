@@ -17,15 +17,21 @@ export default function applyAtRules(config) {
     }
 
     root.walkAtRules('apply', (atRule) => {
-      const parent = atRule.parent;
-      const classes = postcss.list.space(atRule.params)
+      const parent = atRule.parent
 
-      classes.forEach((className) => {
+      // Extract any post-apply declarations and re-insert them after apply rules
+      const afterRule = parent.clone({ raws: {} })
+      afterRule.nodes = parent.nodes.slice(parent.index(atRule) + 1)
+      parent.nodes = parent.nodes.slice(0, parent.index(atRule) + 1)
+
+      postcss.list.space(atRule.params).forEach((className) => {
         const isImportant = className.startsWith('!')
         const selector = `.${isImportant ? className.slice(1) : className}`
 
         if (parent.selector === selector) {
-          throw parent.error(`You cannot @apply \`${selector}\` here because it creates a circular dependency`);
+          throw parent.error(
+            `You cannot @apply \`${selector}\` here because it creates a circular dependency`
+          )
         }
 
         const matches = findRulesBySelector(
@@ -45,9 +51,11 @@ export default function applyAtRules(config) {
         const decls = matches[0].nodes.map((decl) =>
           decl.clone({ important: isImportant })
         )
+
         atRule.before(cloneNodes(decls))
       })
 
+      parent.append(cloneNodes(afterRule.nodes))
       atRule.remove()
     })
   }
