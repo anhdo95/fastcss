@@ -1,12 +1,15 @@
 import postcss from 'postcss'
 import plugin from '../src/libs/applyAtRule'
 import cw from '../src/utils/collapseWhitespaces'
+import { shared } from '../src/utils/disposables'
 
 async function run(css, opts = { from: '' }) {
   return postcss([plugin({ prefix: '' })]).process(css, opts)
 }
 
-describe('applyAtRule', () => {
+describe.only('applyAtRule', () => {
+  afterEach(() => shared.dispose())
+
   it('it copies a class in declarations into its self', async () => {
     const input = cw(`
       .p-8 { padding: 2rem };
@@ -51,7 +54,7 @@ describe('applyAtRule', () => {
         throw result
       })
       .catch((error) => {
-        expect(error.reason).toBe('Unkown selector .p-8')
+        expect(error.reason).toBe('Unknown selector .p-8')
       })
   })
 
@@ -88,9 +91,33 @@ describe('applyAtRule', () => {
       }
     `)
 
-    return run(input).catch((error) => {
-      expect(error).toMatchObject({ name: 'CssSyntaxError' })
-    })
+    return run(input)
+      .then((result) => {
+        throw result
+      })
+      .catch((error) => {
+        expect(error).toMatchObject({ name: 'CssSyntaxError' })
+      })
+  })
+
+  it("it fails if the class has the same name as the parent's applied selector", async () => {
+    const input = cw(`
+      .container {
+        max-width: 100%;
+      }
+
+      .container {
+        @apply container;
+      }
+    `)
+
+    return run(input)
+      .then((result) => {
+        throw result
+      })
+      .catch((error) => {
+        expect(error).toMatchObject({ name: 'CssSyntaxError' })
+      })
   })
 
   it('it fails if the class has mutliple rulesets', async () => {
@@ -108,9 +135,13 @@ describe('applyAtRule', () => {
       }
     `)
 
-    return run(input).catch((error) => {
-      expect(error).toMatchObject({ name: 'CssSyntaxError' })
-    })
+    return run(input)
+      .then((result) => {
+        throw result
+      })
+      .catch((error) => {
+        expect(error).toMatchObject({ name: 'CssSyntaxError' })
+      })
   })
 
   it('it fails if the class matches with classes that include pseudo-selectors', async () => {
