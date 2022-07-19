@@ -2,19 +2,24 @@ import postcss from 'postcss'
 import cloneNodes from '../utils/cloneNodes'
 import escapeSelector from '../utils/escapeSelector'
 import prefixSelector from '../utils/prefixSelector'
+import useMemo from '../utils/useMemo'
+
+const findRulesBySelector = useMemo(
+  (root, selector) => {
+    const matches = []
+    root.walkRules((rule) => {
+      if (rule.selectors.includes(selector) && rule.parent.type === 'root') {
+        matches.push(rule)
+      }
+    })
+    return matches
+  },
+  (_, selector) => selector
+)
 
 export default function applyAtRules(config) {
   return function (root) {
-    function findRulesBySelector(selector) {
-      const matches = []
-      root.walkRules((rule) => {
-        if (rule.selectors.includes(selector) && rule.parent.type === 'root') {
-          matches.push(rule)
-        }
-      })
-
-      return matches
-    }
+    const getMatchedRules = (selector) => findRulesBySelector(root, selector)
 
     root.walkAtRules('apply', (atRule) => {
       const parent = atRule.parent
@@ -34,7 +39,7 @@ export default function applyAtRules(config) {
           )
         }
 
-        const matches = findRulesBySelector(
+        const matches = getMatchedRules(
           prefixSelector(config.prefix, escapeSelector(selector))
         )
 
