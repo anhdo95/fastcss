@@ -3,7 +3,9 @@ import container from '../plugins/container'
 import display from '../plugins/display'
 import flex from '../plugins/flex'
 import textColor from '../plugins/textColor'
+import textOpacity from '../plugins/textOpacity'
 import backgroundColor from '../plugins/backgroundColor'
+import backgroundOpacity from '../plugins/backgroundOpacity'
 import width from '../plugins/width'
 import height from '../plugins/height'
 import margin from '../plugins/margin'
@@ -30,7 +32,9 @@ export default function plugins(config) {
     preflight,
     container,
     textColor,
+    textOpacity,
     backgroundColor,
+    backgroundOpacity,
     display,
     flex,
     width,

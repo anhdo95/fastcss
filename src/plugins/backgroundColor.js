@@ -1,3 +1,5 @@
+import withAlphaVariable from '../utils/withAlphaVariable'
+
 export default function () {
   return function backgroundColor({ addUtilities, theme, variants }) {
     const values = theme('backgroundColor')
@@ -5,9 +7,11 @@ export default function () {
       Object.keys(values).reduce((classes, color) => {
         return {
           ...classes,
-          [`.bg-${color}`]: {
-            'background-color': values[color],
-          },
+          [`.bg-${color}`]: withAlphaVariable({
+            color: values[color],
+            property: 'background-color',
+            variable: '--bg-opacity',
+          }),
         }
       }, {}),
       variants('backgroundColor')
