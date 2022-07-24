@@ -72,15 +72,44 @@ function trackModified(paths) {
 }
 
 function registerPlugins(fastConfig, plugins, context) {
+  const variantList = []
   const variantMap = new Map()
   const offsets = {
     base: 0n,
     components: 0n,
-    utilities: 0n
+    utilities: 0n,
   }
 
-  const pluginApi = buildPluginApi(fastConfig, context, { variantMap, offsets })
-  plugins.forEach(plugin => plugin(pluginApi))
+  const pluginApi = buildPluginApi(fastConfig, context, {
+    variantList,
+    variantMap,
+    offsets,
+  })
+  plugins.forEach((plugin) => plugin(pluginApi))
+
+  const highestOffset = Object.values(offsets).reduce((max, offset) =>
+    max < offset ? offset : max
+  )
+  let reservedBit = BigInt(highestOffset.toString(2).length)
+
+  context.layerOrder = {
+    base: (1n << reservedBit) << 0n,
+    components: (1n << reservedBit) << 1n,
+    utilities: (1n << reservedBit) << 2n,
+  }
+
+  reservedBit += 3n
+  context.variantOrder = variantList.reduce((orders, variant, index) => {
+    orders.set(variant, (1n << reservedBit) << BitInt(index))
+    return orders
+  }, new Map())
+
+  context.minimumScreen = [...context.variantOrder.values()].shift()
+
+  for (const [variant, generator] of variantMap.entries()) {
+    const sort = context.variantOrder.get(variant)
+    context.variantCache.set(variant, [sort, generator])
+  }
 }
 
 export default function setupContext(configPath) {

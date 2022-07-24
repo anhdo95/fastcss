@@ -39,7 +39,7 @@ function withIdentifiers(styles) {
   })
 }
 
-export default function buildPluginApi(config, context, { variantMap, offets }) {
+export default function buildPluginApi(config, context, { variantList, variantMap, offsets }) {
   function theme(key, defaultValue) {
     return get(config, `theme.${key}`, defaultValue)
   }
@@ -76,7 +76,7 @@ export default function buildPluginApi(config, context, { variantMap, offets }) 
 
         context.candidateRuleCache
           .get(prefixedIdentifier)
-          .push([{ sort: offets.base++, layer: 'base' }, rule])
+          .push([{ sort: offsets.base++, layer: 'base' }, rule])
       }
     },
 
@@ -100,7 +100,7 @@ export default function buildPluginApi(config, context, { variantMap, offets }) 
 
         context.candidateRuleCache
           .get(prefixedIdentifier)
-          .push([{ sort: offets.utilities++, layer: 'utilities', options }, utilities[identifier]])
+          .push([{ sort: offsets.utilities++, layer: 'utilities', options }, utilities[identifier]])
       }
     },
 
@@ -125,7 +125,7 @@ export default function buildPluginApi(config, context, { variantMap, offets }) 
 
         context.candidateRuleCache
           .get(prefixedIdentifier)
-          .push([{ sort: offets.utilities++, layer: 'utilities', options }, rule])
+          .push([{ sort: offsets.utilities++, layer: 'utilities', options }, rule])
       }
     },
 
@@ -150,11 +150,12 @@ export default function buildPluginApi(config, context, { variantMap, offets }) 
 
         context.candidateRuleCache
           .get(prefixedIdentifier)
-          .push([{ sort: offets.components++, layer: 'components', options }, rule])
+          .push([{ sort: offsets.components++, layer: 'components', options }, rule])
       }
     },
 
     addVariant(name, generator) {
+      variantList.push(name)
       variantMap.set(name, generator)
     },
   }
