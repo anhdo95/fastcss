@@ -3,6 +3,9 @@ import path from 'path'
 import hash from 'object-hash'
 import resolveConfig from './resolveConfig'
 
+const contextCache = new Map()
+const configContextCache = new Map()
+
 function resolveConfigPath(configPath) {
   // require('fastcss')('custom-config.js')
   if (typeof configPath === 'string') {
@@ -45,13 +48,54 @@ function getFastConfig(configPath) {
   return [defaultConfig, null, hash(defaultConfig)]
 }
 
+const pathModifiedCache = new Map()
+
+function trackModified(paths) {
+  let modified = false
+
+  for (const path of paths) {
+    const modifiedTime = fs.statSync(path).mtimeMs
+
+    if (!pathModifiedCache.has(path) || pathModifiedCache.get(path) < modifiedTime) {
+      modified = true
+    }
+
+    pathModifiedCache.set(path, modifiedTime)
+  }
+
+  return modified
+}
+
 export default function setupContext(configPath) {
   return (root, result) => {
     const [fastConfig, userConfigPath, fastConfigHash] =
       getFastConfig(configPath)
+    const isConfigFile = userConfigPath !== null
+    const contextDependencies = new Set()
+    const sourcePath = result.opts.from
 
-    console.log('fastConfig :>> ', fastConfig)
-    console.log('userConfigPath :>> ', userConfigPath)
-    console.log('fastConfigHash :>> ', fastConfigHash)
+    if (isConfigFile) {
+      contextDependencies.add(userConfigPath)
+    }
+
+    let foundFast = false
+    root.walkAtRules('fast', () => {
+      foundFast = true
+    })
+
+    if (foundFast) {
+      contextDependencies.add(sourcePath)
+    }
+
+    const contextDependenciesChanged = trackModified([...contextDependencies])
+
+    if (!contextDependenciesChanged) {
+      if (contextCache.has(sourcePath)) {
+        return contextCache.get(sourcePath)
+      }
+      if (configContextCache.has(fastConfigHash)) {
+        return configContextCache.get(fastConfigHash)
+      }
+    }
   }
 }
