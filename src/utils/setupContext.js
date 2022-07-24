@@ -2,6 +2,7 @@ import fs from 'fs'
 import path from 'path'
 import hash from 'object-hash'
 import resolveConfig from './resolveConfig'
+import buildPluginApi from './buildPluginApi'
 import plugins from '../core/plugins'
 
 const contextCache = new Map()
@@ -71,7 +72,15 @@ function trackModified(paths) {
 }
 
 function registerPlugins(fastConfig, plugins, context) {
-  console.log('plugins :>> ', plugins);
+  const variantMap = new Map()
+  const offsets = {
+    base: 0n,
+    components: 0n,
+    utilities: 0n
+  }
+
+  const pluginApi = buildPluginApi(fastConfig, context, { variantMap, offsets })
+  plugins.forEach(plugin => plugin(pluginApi))
 }
 
 export default function setupContext(configPath) {
