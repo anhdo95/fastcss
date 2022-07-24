@@ -19,35 +19,25 @@ import translate from '../plugins/translate'
 import rotate from '../plugins/rotate'
 import scale from '../plugins/scale'
 
-function loadPlugins({ corePlugins }, plugins) {
-  return Object.keys(plugins)
-    .filter((pluginName) => corePlugins[pluginName] !== false)
-    .map((pluginName) => {
-      return plugins[pluginName]()
-    })
-}
-
-export default function plugins(config) {
-  return loadPlugins(config, {
-    preflight,
-    container,
-    textColor,
-    textOpacity,
-    backgroundColor,
-    backgroundOpacity,
-    display,
-    flex,
-    width,
-    height,
-    margin,
-    padding,
-    borderWidth,
-    borderColor,
-    divideWidth,
-    divideColor,
-    transform,
-    translate,
-    rotate,
-    scale,
-  })
+export default {
+  preflight,
+  container,
+  textColor,
+  textOpacity,
+  backgroundColor,
+  backgroundOpacity,
+  display,
+  flex,
+  width,
+  height,
+  margin,
+  padding,
+  borderWidth,
+  borderColor,
+  divideWidth,
+  divideColor,
+  transform,
+  translate,
+  rotate,
+  scale,
 }

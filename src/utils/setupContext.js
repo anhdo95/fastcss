@@ -2,6 +2,7 @@ import fs from 'fs'
 import path from 'path'
 import hash from 'object-hash'
 import resolveConfig from './resolveConfig'
+import plugins from '../core/plugins'
 
 const contextCache = new Map()
 const configContextCache = new Map()
@@ -56,7 +57,10 @@ function trackModified(paths) {
   for (const path of paths) {
     const modifiedTime = fs.statSync(path).mtimeMs
 
-    if (!pathModifiedCache.has(path) || pathModifiedCache.get(path) < modifiedTime) {
+    if (
+      !pathModifiedCache.has(path) ||
+      pathModifiedCache.get(path) < modifiedTime
+    ) {
       modified = true
     }
 
@@ -64,6 +68,10 @@ function trackModified(paths) {
   }
 
   return modified
+}
+
+function registerPlugins(fastConfig, plugins, context) {
+  console.log('plugins :>> ', plugins);
 }
 
 export default function setupContext(configPath) {
@@ -97,5 +105,34 @@ export default function setupContext(configPath) {
         return configContextCache.get(fastConfigHash)
       }
     }
+
+    const context = {
+      fastConfig,
+      userConfigPath,
+      classCache: new Map(),
+      notClassCache: new Set(),
+      applyClassCache: new Map(),
+      ruleCache: new Set(),
+      candidateFiles: fastConfig.purge,
+      candidateRuleCache: new Map(),
+      stylesheetCache: new Map(),
+      variantCache: new Map(),
+    }
+
+    contextCache.set(sourcePath, context)
+    configContextCache.set(fastConfigHash, context)
+
+    const corePlugins = [
+      ...Object.entries(plugins).reduce((set, [name, plugin]) => {
+        if (fastConfig.corePlugins[name] !== false) {
+          set.add(plugin)
+        }
+        return set
+      }, new Set()),
+    ]
+
+    registerPlugins(fastConfig, corePlugins, context)
+
+    return context
   }
 }
