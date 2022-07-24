@@ -1,5 +1,6 @@
 import defaults from './defaults'
 import toPath from './toPath'
+import defaultConfig from '../../stubs/default.config'
 
 const utils = {
   negative(scale) {
@@ -83,14 +84,16 @@ function resolveFunctionKeys(theme) {
   )
 }
 
-export default function resolveConfig(configs) {
+export default function resolveConfig(config = {}) {
+  const allConfigs = [config, defaultConfig]
+
   return defaults(
     {
       theme: resolveFunctionKeys(
-        mergeExtensions(defaults({}, ...configs.map(({ theme }) => theme)))
+        mergeExtensions(defaults({}, ...allConfigs.map(({ theme }) => theme)))
       ),
-      variants: defaults({}, ...configs.map(({ variants }) => variants)),
+      variants: defaults({}, ...allConfigs.map(({ variants }) => variants)),
     },
-    ...configs
+    ...allConfigs
   )
 }
