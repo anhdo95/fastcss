@@ -1,3 +1,4 @@
+import { isFunction, isObject } from '.'
 import defaults from './defaults'
 import toPath from './toPath'
 import defaultConfig from '../../stubs/default.config'
@@ -14,14 +15,6 @@ const utils = {
         {}
       )
   },
-}
-
-function isFunction(fn) {
-  return typeof fn === 'function'
-}
-
-function isObject(obj) {
-  return obj !== null && typeof obj === 'object'
 }
 
 function mergeWith(target, ...sources) {
@@ -78,7 +71,9 @@ function resolveFunctionKeys(theme) {
   return Object.keys(theme).reduce(
     (resolved, key) => ({
       ...resolved,
-      [key]: isFunction(theme[key]) ? theme[key](resolveThemePath, utils) : theme[key],
+      [key]: isFunction(theme[key])
+        ? theme[key](resolveThemePath, utils)
+        : theme[key],
     }),
     {}
   )

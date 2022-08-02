@@ -35,6 +35,11 @@ function extractCandidates(node) {
 function withIdentifiers(styles) {
   return parseStyles(styles).flatMap((node) => {
     const candidates = extractCandidates(node)
+
+    if (!candidates.length) {
+      return [['*', node]]
+    }
+
     return candidates.map((c) => [c, node])
   })
 }
@@ -66,8 +71,8 @@ export default function buildPluginApi(config, context, { variantList, variantMa
     theme,
     variants,
 
-    matchBase(base) {
-      for (const identifier of base) {
+    addBase(base) {
+      for (const [identifier, rule] of withIdentifiers(base)) {
         const prefixedIdentifier = prefixIdentifier(identifier)
 
         if (!context.candidateRuleCache.has(prefixedIdentifier)) {
