@@ -1,5 +1,19 @@
-import createUtilityPlugin from '../utils/createUtilityPlugin'
+import { asValue, nameClass } from './utils'
 
-export default function backgroundOpacity() {
-  return createUtilityPlugin('backgroundOpacity', [['bg-opacity', ['--bg-opacity']]])
+export default function backgroundOpacity({ matchUtilities, theme, variants }) {
+  matchUtilities({
+    'bg-opacity'(modifier) {
+      const value = asValue(modifier, theme('backgroundOpacity'))
+
+      if (value === undefined) {
+        return []
+      }
+
+      return {
+        [nameClass('bg-opacity', modifier)]: {
+          '--fast-bg-opacity': value,
+        },
+      }
+    },
+  })
 }

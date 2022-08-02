@@ -1,30 +1,31 @@
-export default function () {
-  return function borderWidth({ addUtilities, theme, variants, e }) {
-    const values = theme('borderWidth')
+import { nameClass, asValue } from './utils'
 
-    addUtilities(
-      Object.keys(values).reduce((classes, size) => {
-        const modifier = size === 'default' ? '' : `-${e(size)}`
+export default function borderWidth({ matchUtilities, theme }) {
+  const borders = [
+    ['border', 'border-width'],
+    ['border-t', 'border-top-width'],
+    ['border-b', 'border-bottom-width'],
+    ['border-l', 'border-left-width'],
+    ['border-r', 'border-right-width'],
+  ]
+
+  matchUtilities(
+    borders.reduce((plugins, prefix, property) => {
+      plugins[prefix] = (modifier) => {
+        const value = asValue(modifier, theme('borderWidth'))
+
+        if (value === undefined) {
+          return []
+        }
+
         return {
-          ...classes,
-          [`.border${modifier}`]: {
-            'border-width': values[size],
-          },
-          [`.border-t${modifier}`]: {
-            'border-top-width': values[size],
-          },
-          [`.border-b${modifier}`]: {
-            'border-bottom-width': values[size],
-          },
-          [`.border-l${modifier}`]: {
-            'border-left-width': values[size],
-          },
-          [`.border-r${modifier}`]: {
-            'border-right-width': values[size],
+          [nameClass(prefix, modifier)]: {
+            [property]: value,
           },
         }
-      }, {}),
-      variants('borderWidth')
-    )
-  }
+      }
+
+      return plugins
+    }, {})
+  )
 }

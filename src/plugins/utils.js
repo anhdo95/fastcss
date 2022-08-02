@@ -1,9 +1,9 @@
-export function asClass(prefix, modifier) {
-  return `.${prefix}${modifier}`
+export function asClass(prefix) {
+  return `.${prefix}`
 }
 
 export function nameClass(prefix, modifier) {
-  if (modifier.test(/^default$/i)) {
+  if (/^default$/i.test(modifier)) {
     return asClass(prefix)
   }
 

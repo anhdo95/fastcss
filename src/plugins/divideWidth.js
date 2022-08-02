@@ -1,35 +1,60 @@
-export default function () {
-  return function divideWidth({ addUtilities, theme, variants, e }) {
-    const values = theme('divideWidth')
+import { nameClass, asValue } from './utils'
 
-    addUtilities(
-      [
-        Object.keys(values).reduce((classes, size) => {
-          const modifier = size === 'default' ? '' : `-${e(size)}`
-          return {
-            ...classes,
-            [`.divide-x${modifier} > :not([hidden]) ~ :not([hidden])`]: {
-              '--divide-x-reverse': '0',
-              'border-left-width': `calc(${values[size]} * (1 - var(--divide-x-reverse)))`,
-              'border-right-width': `calc(${values[size]} * var(--divide-x-reverse))`,
-            },
-            [`.divide-y${modifier} > :not([hidden]) ~ :not([hidden])`]: {
-              '--divide-y-reverse': '0',
-              'border-top-width': `calc(${values[size]} * (1 - var(--divide-y-reverse)))`,
-              'border-bottom-width': `calc(${values[size]} * var(--divide-y-reverse))`,
-            },
-          }
-        }, {}),
-        {
-          '.divide-x-reverse > :not([hidden]) ~ :not([hidden])': {
-            '--divide-x-reverse': '1',
-          },
-          '.divide-y-reverse > :not([hidden]) ~ :not([hidden])': {
-            '--divide-y-reverse': '1',
-          },
+export default function divideWidth({ matchUtilities, theme }) {
+  matchUtilities({
+    'divide-x'(modifier) {
+      if (modifier === 'DEFAULT') {
+        return []
+      }
+
+      const value = asValue(modifier, theme('divideWidth'))
+
+      if (value === undefined) {
+        return []
+      }
+
+      return {
+        [`${nameClass(
+          'divide-x',
+          modifier
+        )} > :not([hidden]) ~ :not([hidden])`]: {
+          '--divide-x-reverse': '0',
+          'border-left-width': `calc(${value} * (1 - var(--divide-x-reverse)))`,
+          'border-right-width': `calc(${value} * var(--divide-x-reverse))`,
         },
-      ],
-      variants('divideWidth')
-    )
-  }
+      }
+    },
+
+    'divide-y'(modifier) {
+      if (modifier === 'DEFAULT') {
+        return []
+      }
+
+      const value = asValue(modifier, theme('divideWidth'))
+
+      if (value === undefined) {
+        return []
+      }
+
+      return {
+        [`${nameClass(
+          'divide-y',
+          modifier
+        )} > :not([hidden]) ~ :not([hidden])`]: {
+          '--divide-y-reverse': '0',
+          'border-top-width': `calc(${values[size]} * (1 - var(--divide-y-reverse)))`,
+          'border-bottom-width': `calc(${values[size]} * var(--divide-y-reverse))`,
+        },
+      }
+    },
+  })
+
+  matchUtilities({
+    '.divide-x-reverse > :not([hidden]) ~ :not([hidden])': {
+      '--divide-x-reverse': '1',
+    },
+    '.divide-y-reverse > :not([hidden]) ~ :not([hidden])': {
+      '--divide-y-reverse': '1',
+    },
+  })
 }

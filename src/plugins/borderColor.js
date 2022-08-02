@@ -1,34 +1,26 @@
-export default function () {
-  return function borderColor({ addUtilities, theme, variants, e }) {
-    const values = theme('borderColor')
+import withAlphaVariable from '../utils/withAlphaVariable'
+import { nameClass, asValue } from './utils'
 
-    addUtilities(
-      Object.keys(values).reduce((classes, size) => {
-        if (size === 'default') {
-          return classes
-        }
+export default function borderColor({ matchUtilities, theme }) {
+  matchUtilities({
+    border(modifier) {
+      if (modifier === 'DEFAULT') {
+        return []
+      }
 
-        const modifier = `-${e(size)}`
-        return {
-          ...classes,
-          [`.border${modifier}`]: {
-            'border-color': values[size],
-          },
-          [`.border-t${modifier}`]: {
-            'border-top-color': values[size],
-          },
-          [`.border-b${modifier}`]: {
-            'border-bottom-color': values[size],
-          },
-          [`.border-l${modifier}`]: {
-            'border-left-color': values[size],
-          },
-          [`.border-r${modifier}`]: {
-            'border-right-color': values[size],
-          },
-        }
-      }, {}),
-      variants('borderColor')
-    )
-  }
+      const value = asValue(modifier, theme('borderColor'))
+
+      if (value === undefined) {
+        return []
+      }
+
+      return {
+        [nameClass('border', modifier)]: withAlphaVariable({
+          color: value,
+          property: 'border-color',
+          variable: '--fast-border-opacity',
+        }),
+      }
+    },
+  })
 }

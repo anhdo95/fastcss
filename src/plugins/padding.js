@@ -1,24 +1,49 @@
-export default function () {
-  return function padding({ addUtilities, theme, variants, e }) {
-    const values = theme('padding')
-    addUtilities(
-      Object.keys(values).reduce((classes, size) => {
-        return {
-          ...classes,
-          [`.p-${e(size)}`]: {
-            padding: values[size],
-          },
-          [`.px-${e(size)}`]: {
-            'padding-left': values[size],
-            'padding-right': values[size],
-          },
-          [`.py-${e(size)}`]: {
-            'padding-top': values[size],
-            'padding-bottom': values[size],
-          },
-        }
-      }, {}),
-      variants('padding')
-    )
-  }
+import { nameClass, asValue } from './utils'
+
+export default function padding({ matchUtilities, theme }) {
+  matchUtilities({
+    p(modifier) {
+      const value = asValue(modifier, theme('padding'))
+
+      if (value === undefined) {
+        return []
+      }
+
+      return {
+        [nameClass('p', modifier)]: {
+          padding: value,
+        },
+      }
+    },
+
+    px(modifier) {
+      const value = asValue(modifier, theme('padding'))
+
+      if (value === undefined) {
+        return []
+      }
+
+      return {
+        [nameClass('px', modifier)]: {
+          'padding-left': value,
+          'padding-right': value,
+        },
+      }
+    },
+
+    py(modifier) {
+      const value = asValue(modifier, theme('padding'))
+
+      if (value === undefined) {
+        return []
+      }
+
+      return {
+        [nameClass('py', modifier)]: {
+          'padding-top': value,
+          'padding-bottom': value,
+        },
+      }
+    },
+  })
 }

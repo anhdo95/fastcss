@@ -1,5 +1,6 @@
 module.exports = {
   prefix: '',
+  separator: ':',
   important: false,
   purge: [],
 
@@ -156,17 +157,17 @@ module.exports = {
     },
 
     borderWidth: {
-      default: '1px',
-      '0': '0',
-      '2': '2px',
-      '4': '4px',
-      '8': '8px',
+      DEFAULT: '1px',
+      0: '0',
+      2: '2px',
+      4: '4px',
+      8: '8px',
     },
 
     borderColor(theme) {
       return {
         ...theme('colors'),
-        default: theme('colors.grey-300', 'currentColor'),
+        DEFAULT: theme('colors.grey-300', 'currentColor'),
       }
     },
 
@@ -176,6 +177,13 @@ module.exports = {
 
     divideColor(theme) {
       return theme('borderColor')
+    },
+
+    flex: {
+      1: '1 1 0%',
+      auto: '1 1 auto',
+      initial: '0 1 auto',
+      none: 'none',
     },
 
     translate: (theme, { negative }) => ({
@@ -191,7 +199,17 @@ module.exports = {
       '-180': '-180deg',
       '-90': '-90deg',
       '-45': '-45deg',
-      0: '0',
+      '-12': '-12deg',
+      '-6': '-6deg',
+      '-3': '-3deg',
+      '-2': '-2deg',
+      '-1': '-1deg',
+      0: '0deg',
+      1: '1deg',
+      2: '2deg',
+      3: '3deg',
+      6: '6deg',
+      12: '12deg',
       45: '45deg',
       90: '90deg',
       180: '180deg',
