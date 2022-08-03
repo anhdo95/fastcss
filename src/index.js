@@ -19,7 +19,7 @@ module.exports = (configPath) => {
 
         return postcss([
           expandFastAtRules(context),
-          // evaluateFunctions(context),
+          evaluateFunctions(context.fastConfig),
           // variantsAtRule(context),
           // responsiveAtRule(context),
           // applyAtRule(context),
