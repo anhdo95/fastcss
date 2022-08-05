@@ -1,3 +1,4 @@
+import postcss from 'postcss'
 import { isFunction, isPlainObject } from '.'
 import parseObjectStyles from './parseObjectStyles'
 
@@ -66,6 +67,29 @@ function parseRule(rule, cache, options = {}) {
   return [cache.get(rule), options]
 }
 
+function applyVariant(variant, matches, context) {
+  if (matches.length === 0) {
+    return matches
+  }
+
+  const result = []
+
+  if (context.variantCache.has(variant)) {
+    const [variantSort, variantGenerator] = context.variantCache.get(variant)
+
+    for (const [{ sort, layer, options }, rule] of matches) {
+      // TODO: enable multiple variants on the same rule (focus:hover:visted:text-white)
+      const container = postcss.root({ nodes: [rule.clone()] })
+      variantGenerator({ container })
+
+      const withOffset = [{ sort: variantSort | sort, layer, options }, container.nodes[0]]
+      result.push(withOffset)
+    }
+  }
+
+  return result
+}
+
 function* resolveMatches(candidate, context) {
   const separator = context.fastConfig.separator
   let [classCandidate, ...variants] = candidate.split(separator).reverse()
@@ -80,7 +104,7 @@ function* resolveMatches(candidate, context) {
     classCandidate,
     context
   )) {
-    const matches = []
+    let matches = []
 
     for (const [sort, plugin] of plugins) {
       if (isFunction(plugin)) {
@@ -114,7 +138,7 @@ function* resolveMatches(candidate, context) {
     }
 
     for (const variant of variants) {
-      // matches = applyVariants(matches, context)
+      matches = applyVariant(variant, matches, context)
     }
 
     for (const match of matches) {

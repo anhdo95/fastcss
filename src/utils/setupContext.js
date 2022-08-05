@@ -100,7 +100,7 @@ function registerPlugins(fastConfig, plugins, context) {
 
   reservedBit += 3n
   context.variantOrder = variantList.reduce((orders, variant, index) => {
-    orders.set(variant, (1n << reservedBit) << BitInt(index))
+    orders.set(variant, (1n << reservedBit) << BigInt(index))
     return orders
   }, new Map())
 

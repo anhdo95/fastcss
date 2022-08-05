@@ -18,8 +18,37 @@ import transform from '../plugins/transform'
 import translate from '../plugins/translate'
 import rotate from '../plugins/rotate'
 import scale from '../plugins/scale'
+import { transformAllClasses } from '../utils/transform'
 
 export default {
+  pseudoClassVariants({ config, addVariant }) {
+    const pseudoVariants = [
+      ['first', 'first-child'],
+      ['last', 'last-child'],
+      ['even', 'nth-child(even)'],
+      ['odd', 'nth-child(odd)'],
+      'hover',
+      'focus',
+      'active',
+      'disabled',
+      'checked',
+      'visited',
+    ]
+
+    for (const variant of pseudoVariants) {
+      const [variantName, state] = Array.isArray(variant)
+        ? variant
+        : [variant, variant]
+
+      addVariant(
+        variantName,
+        transformAllClasses((className, { withPseudo }) => {
+          return withPseudo(`${variantName}${config.separator}${className}`, state)
+        })
+      )
+    }
+  },
+
   preflight,
   container,
   textColor,
