@@ -18,3 +18,13 @@ export function isPlainObject(obj) {
 export function bigSign(bigIntValue) {
   return (bigIntValue > 0n) - (bigIntValue < 0n)
 }
+
+export function extractApplyCandidates(params) {
+  const candidates = params.split(/[\s\t\n]+/g)
+
+  if (candidates[candidates.length - 1] === '!important') {
+    return [candidates.slice(0, -1), true]
+  }
+
+  return [candidates, false]
+}

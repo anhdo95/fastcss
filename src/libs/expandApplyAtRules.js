@@ -1,5 +1,5 @@
 import postcss from 'postcss'
-import { bigSign } from '../utils'
+import { bigSign, extractApplyCandidates } from '../utils'
 import { resolveMatches } from '../utils/generateRules'
 
 function partitionApplyParents(root) {
@@ -76,7 +76,7 @@ function processApply(root, context) {
   const applies = []
 
   root.walkAtRules('apply', (rule) => {
-    const candidates = postcss.list.space(rule.params)
+    const [candidates] = extractApplyCandidates(rule.params)
 
     candidates.forEach((candidate) => applyCandidates.add(candidate))
     applies.push(rule)
@@ -92,7 +92,7 @@ function processApply(root, context) {
     const candidates = perParentApplies.get(apply.parent) || []
     perParentApplies.set(apply.parent, candidates)
 
-    const applyCandidates = postcss.list.space(apply.params)
+    const [applyCandidates, important] = extractApplyCandidates(apply.params)
 
     for (const applyCandidate of applyCandidates) {
       if (!applyClassCache.has(applyCandidate)) {
@@ -100,18 +100,22 @@ function processApply(root, context) {
       }
 
       const rules = applyClassCache.get(applyCandidate)
-      candidates.push([applyCandidate, rules])
+      candidates.push([applyCandidate, important, rules])
     }
   }
 
   for (const [parent, candidates] of perParentApplies) {
     const siblings = []
 
-    for (const [candidate, rules] of candidates) {
+    for (const [candidate, important, rules] of candidates) {
       for (const [meta, rule] of rules) {
         const root = postcss.root({ nodes: [rule] })
         root.walkRules((rule) => {
           rule.selector = parent.selector
+
+          rule.walkDecls((decl) => {
+            decl.important = important
+          })
         })
 
         siblings.push([meta, root.nodes[0]])
