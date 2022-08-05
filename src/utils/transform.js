@@ -15,11 +15,17 @@ export function updateAllClasses(selector, updateClass) {
   return parser.processSync(selector)
 }
 
-export function transformAllClasses(transformClass) {
+export function transformAllClasses(transformClass, wrap = null) {
   return ({ container }) => {
     container.walkRules(rule => {
       rule.selector = updateAllClasses(rule.selector, transformClass)
       return rule
     })
+
+    if (wrap) {
+      const wrapper = wrap()
+      wrapper.append(container.nodes)
+      container.append(wrapper)
+    }
   }
 }

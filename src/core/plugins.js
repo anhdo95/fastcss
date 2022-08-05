@@ -19,6 +19,7 @@ import translate from '../plugins/translate'
 import rotate from '../plugins/rotate'
 import scale from '../plugins/scale'
 import { transformAllClasses } from '../utils/transform'
+import buildMediaAtRule from '../utils/buildMediaAtRule'
 
 export default {
   pseudoClassVariants({ config, addVariant }) {
@@ -43,8 +44,27 @@ export default {
       addVariant(
         variantName,
         transformAllClasses((className, { withPseudo }) => {
-          return withPseudo(`${variantName}${config.separator}${className}`, state)
+          return withPseudo(
+            `${variantName}${config.separator}${className}`,
+            state
+          )
         })
+      )
+    }
+  },
+
+  screenVariants({ config, addVariant }) {
+    const screens = config.theme.screens
+
+    for (const screen in screens) {
+      const size = screens[screen]
+
+      addVariant(
+        screen,
+        transformAllClasses(
+          (className) => `${screen}${config.separator}${className}`,
+          () => buildMediaAtRule(size)
+        )
       )
     }
   },
