@@ -90,7 +90,7 @@ function applyVariant(variant, matches, context) {
   return result
 }
 
-function* resolveMatches(candidate, context) {
+export function* resolveMatches(candidate, context) {
   const separator = context.fastConfig.separator
   let [classCandidate, ...variants] = candidate.split(separator).reverse()
   let important = false
