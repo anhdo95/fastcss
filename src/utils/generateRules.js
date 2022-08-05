@@ -1,6 +1,7 @@
 import postcss from 'postcss'
 import { isFunction, isPlainObject } from '.'
 import parseObjectStyles from './parseObjectStyles'
+import prefixSelector from './prefixSelector'
 
 function* permutateCandidate(candidate, lastIndex = Infinity) {
   if (lastIndex < 0) {
@@ -39,7 +40,7 @@ function* resolveMatchedPlugins(classCandidate, context) {
   const prefixLength = prefix.length
   let negative = false
 
-  if (classCandidate[prefixLength] === '-') {
+  if (classCandidate.startsWith('-')) {
     negative = true
     classCandidate = prefix + classCandidate.slice(prefixLength + 1)
   }
@@ -67,6 +68,20 @@ function parseRule(rule, cache, options = {}) {
   return [cache.get(rule), options]
 }
 
+function applyPrefix(matches, context) {
+  if (!matches.length || context.fastConfig.prefix === '') {
+    return matches
+  }
+
+  for (const [_, rule] of matches) {
+    if (rule.type === 'rule') {
+      rule.selector = prefixSelector(context.fastConfig.prefix, rule.selector)
+    }
+  }
+
+  return matches
+}
+
 function applyVariant(variant, matches, context) {
   if (matches.length === 0) {
     return matches
@@ -82,7 +97,10 @@ function applyVariant(variant, matches, context) {
       const container = postcss.root({ nodes: [rule.clone()] })
       variantGenerator({ container })
 
-      const withOffset = [{ sort: variantSort | sort, layer, options }, container.nodes[0]]
+      const withOffset = [
+        { sort: variantSort | sort, layer, options },
+        container.nodes[0],
+      ]
       result.push(withOffset)
     }
   }
@@ -131,7 +149,7 @@ export function* resolveMatches(candidate, context) {
       }
     }
 
-    // matches = applyPrefix(matches, context)
+    matches = applyPrefix(matches, context)
 
     if (important) {
       // matches = applyImportant(matches, context)
