@@ -3,7 +3,7 @@ import postcssPresetEnv from 'postcss-preset-env'
 
 import expandFastAtRules from './libs/expandFastAtRules'
 import evaluateFunctions from './libs/evaluateFunctions'
-import applyAtRule from './libs/applyAtRule'
+import expandApplyAtRules from './libs/expandApplyAtRules'
 import variantsAtRule from './libs/variantsAtRule'
 import responsiveAtRule from './libs/responsiveAtRule'
 import formatNodes from './libs/formatCSS'
@@ -20,9 +20,8 @@ module.exports = (configPath) => {
         return postcss([
           expandFastAtRules(context),
           evaluateFunctions(context.fastConfig),
-          // variantsAtRule(context),
+          expandApplyAtRules(context),
           // responsiveAtRule(context),
-          // applyAtRule(context),
           // applyImportant(context),
           formatNodes,
           postcssPresetEnv,
