@@ -5,7 +5,7 @@ import expandFastAtRules from './libs/expandFastAtRules'
 import evaluateFunctions from './libs/evaluateFunctions'
 import expandApplyAtRules from './libs/expandApplyAtRules'
 import formatNodes from './libs/formatCSS'
-import collapseAdjectRules from './libs/collapseAdjectRules'
+import collapseAdjacentRules from './libs/collapseAdjacentRules'
 import setupContext from './utils/setupContext'
 
 module.exports = (configPath) => {
