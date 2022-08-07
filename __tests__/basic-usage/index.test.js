@@ -10,7 +10,7 @@ function run(css, config = {}) {
   return postcss([fast(config)]).process(css, { from: '' })
 }
 
-describe.only('basic-usage', () => {
+describe('basic-usage', () => {
   test('it generates used utilities', () => {
     const config = {
       purge: [htmlPath],

@@ -21,8 +21,8 @@
   --fast-bg-opacity: 0.4;
 }
 
-.flex {
-  display: flex;
+.hidden {
+  display: none;
 }
 
 .flex-auto {
@@ -112,6 +112,10 @@
 }
 
 @media (min-width: 992px) {
+  .md\:flex {
+    display: flex;
+  }
+
   .md\:w-24 {
     width: 6rem;
   }

@@ -1,18 +1,30 @@
+const comparableNodes = {
+  atrule: ['name', 'params'],
+  rule: ['selector']
+}
+
 export default function collapseAdjacentRules() {
   return function (root) {
     let currentRule = null
 
-    root.walkRules((rule) => {
-      if (currentRule === null) {
-        currentRule = rule
+    root.each((node) => {
+      if (!comparableNodes.hasOwnProperty(node.type)) {
+        currentRule = null
         return
       }
 
-      if (currentRule.selector === rule.selector) {
-        currentRule.append(rule.nodes)
-        rule.remove()
+      if (currentRule === null) {
+        currentRule = node
+        return
+      }
+
+      const properties = comparableNodes[node.type]
+
+      if (properties.every(prop => currentRule[prop] === node[prop])) {
+        currentRule.append(node.nodes)
+        node.remove()
       } else {
-        currentRule = rule
+        currentRule = node
       }
     })
   }
