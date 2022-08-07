@@ -1,5 +1,4 @@
 import postcss from 'postcss'
-import postcssPresetEnv from 'postcss-preset-env'
 
 import expandFastAtRules from './libs/expandFastAtRules'
 import evaluateFunctions from './libs/evaluateFunctions'
@@ -21,7 +20,6 @@ module.exports = (pathOrConfig) => {
           evaluateFunctions(context.fastConfig),
           collapseAdjacentRules(context),
           formatNodes,
-          postcssPresetEnv,
         ]).process(root, { from: undefined })
       }
     ],

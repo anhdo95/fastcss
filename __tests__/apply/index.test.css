@@ -1,12 +1,10 @@
 .card {
+  display: flex;
+  align-items: center;
   margin-left: auto !important;
   margin-right: auto !important;
   padding-left: 1rem !important;
   padding-right: 1rem !important;
-}
-.card {
-  display: flex;
-  align-items: center;
   --fast-text-opacity: 1;
   color: rgba(0, 0, 0, var(--fast-text-opacity));
   --fast-bg-opacity: 1;

@@ -2,22 +2,17 @@ export default function collapseAdjacentRules() {
   return function (root) {
     let currentRule = null
 
-    root.each((node) => {
-      if (node.type !== 'rule') {
-        currentRule = null
-        return
-      }
-
+    root.walkRules((rule) => {
       if (currentRule === null) {
-        currentRule = node
+        currentRule = rule
         return
       }
 
-      if (currentRule.selector === node.selector) {
-        currentRule.append(node.nodes)
-        node.remove()
+      if (currentRule.selector === rule.selector) {
+        currentRule.append(rule.nodes)
+        rule.remove()
       } else {
-        currentRule = node
+        currentRule = rule
       }
     })
   }
