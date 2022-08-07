@@ -1,4 +1,4 @@
-export default function display({ addUtilities, variants }) {
+export default function display({ addUtilities }) {
   addUtilities({
     '.block': {
       display: 'block',
@@ -48,5 +48,5 @@ export default function display({ addUtilities, variants }) {
     '.hidden': {
       display: 'none',
     },
-  }, variants('display'))
+  })
 }

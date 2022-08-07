@@ -1,5 +1,7 @@
+import escapeSelector from "../utils/escapeSelector"
+
 export function asClass(prefix) {
-  return `.${prefix}`
+  return escapeSelector(`.${prefix}`)
 }
 
 export function nameClass(prefix, modifier) {

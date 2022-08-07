@@ -1,12 +1,8 @@
 import { nameClass, asValue } from './utils'
 
-export default function divideWidth({ matchUtilities, theme }) {
+export default function divideWidth({ matchUtilities, addUtilities, theme }) {
   matchUtilities({
     'divide-x'(modifier) {
-      if (modifier === 'DEFAULT') {
-        return []
-      }
-
       const value = asValue(modifier, theme('divideWidth'))
 
       if (value === undefined) {
@@ -26,10 +22,6 @@ export default function divideWidth({ matchUtilities, theme }) {
     },
 
     'divide-y'(modifier) {
-      if (modifier === 'DEFAULT') {
-        return []
-      }
-
       const value = asValue(modifier, theme('divideWidth'))
 
       if (value === undefined) {
@@ -49,7 +41,7 @@ export default function divideWidth({ matchUtilities, theme }) {
     },
   })
 
-  matchUtilities({
+  addUtilities({
     '.divide-x-reverse > :not([hidden]) ~ :not([hidden])': {
       '--divide-x-reverse': '1',
     },

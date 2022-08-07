@@ -1,6 +1,6 @@
 import { asValue, nameClass } from './utils'
 
-export default function backgroundOpacity({ matchUtilities, theme, variants }) {
+export default function backgroundOpacity({ matchUtilities, theme }) {
   matchUtilities({
     'bg-opacity'(modifier) {
       const value = asValue(modifier, theme('backgroundOpacity'))

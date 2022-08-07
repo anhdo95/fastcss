@@ -10,7 +10,7 @@ export default function borderWidth({ matchUtilities, theme }) {
   ]
 
   matchUtilities(
-    borders.reduce((plugins, prefix, property) => {
+    borders.reduce((plugins, [prefix, property]) => {
       plugins[prefix] = (modifier) => {
         const value = asValue(modifier, theme('borderWidth'))
 

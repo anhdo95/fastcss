@@ -1,6 +1,6 @@
 import { nameClass, asValue } from './utils'
 
-export default function textOpacity({ matchUtilities }) {
+export default function textOpacity({ matchUtilities, theme }) {
   matchUtilities({
     'text-opacity'(modifier) {
       const value = asValue(modifier, theme('textOpacity'))

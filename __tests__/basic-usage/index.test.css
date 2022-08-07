@@ -1,0 +1,118 @@
+.text-red {
+  --fast-text-opacity: 1;
+  color: rgba(242, 84, 81, var(--fast-text-opacity));
+}
+
+.text-grey-900 {
+  --fast-text-opacity: 1;
+  color: rgba(33, 43, 53, var(--fast-text-opacity));
+}
+
+.text-opacity-10 {
+  --fast-text-opacity: 0.1;
+}
+
+.bg-purple-light {
+  --fast-bg-opacity: 1;
+  background-color: rgba(206, 179, 255, var(--fast-bg-opacity));
+}
+
+.bg-opacity-40 {
+  --fast-bg-opacity: 0.4;
+}
+
+.flex {
+  display: flex;
+}
+
+.flex-auto {
+  flex: 1 1 auto;
+}
+
+.w-12 {
+  width: 3rem;
+}
+
+.h-32 {
+  height: 8rem;
+}
+
+.mx-4 {
+  margin-left: 1rem;
+  margin-right: 1rem;
+}
+
+.-mx-6 {
+  margin-left: -1.5rem;
+  margin-right: -1.5rem;
+}
+
+.p-2 {
+  padding: 0.5rem;
+}
+
+.border {
+  border-width: 1px;
+}
+
+.border-2 {
+  border-width: 2px;
+}
+
+.border-green {
+  --fast-border-opacity: 1;
+  border-color: rgba(87, 208, 111, var(--fast-border-opacity));
+}
+
+.divide-x > :not([hidden]) ~ :not([hidden]) {
+  --divide-x-reverse: 0;
+  border-left-width: calc(1px * (1 - var(--divide-x-reverse)));
+  border-right-width: calc(1px * var(--divide-x-reverse));
+}
+
+.divide-x-reverse > :not([hidden]) ~ :not([hidden]) {
+  --divide-x-reverse: 1;
+}
+
+.divide-green > :not([hidden]) ~ :not([hidden]) {
+  border-color: #57d06f;
+}
+
+.transform {
+  --fast-translate-x: 0;
+  --fast-translate-y: 0;
+  --fast-rotate: 0;
+  --fast-scale-x: 1;
+  --fast-scale-y: 1;
+  transform: translateX(var(--fast-translate-x)) translateY(var(--fast-translate-y)) rotate(var(--fast-rotate)) scaleX(var(--fast-scale-x)) scaleY(var(--fast-scale-y));
+}
+
+.translate-x-1\/2 {
+  --fast-translate-x: 50%;
+}
+
+.rotate-90 {
+  --fast-rotate: 90deg;
+}
+
+.scale-150 {
+  --fast-scale-x: 1.5;
+  --fast-scale-y: 1.5;
+}
+
+.hover\:text-orange-light:hover {
+  --fast-text-opacity: 1;
+  color: rgba(255, 214, 133, var(--fast-text-opacity));
+}
+
+@media (min-width: 768px) {
+  .sm\:h-64 {
+    height: 16rem;
+  }
+}
+
+@media (min-width: 992px) {
+  .md\:w-24 {
+    width: 6rem;
+  }
+}
