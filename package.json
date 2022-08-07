@@ -30,7 +30,14 @@
     "postcss-js": "^4.0.0",
     "postcss-preset-env": "^7.7.2",
     "postcss-selector-parser": "^6.0.10",
+    "prettier": "^2.7.1",
     "rimraf": "^3.0.2",
     "serve": "^13.0.2"
+  },
+  "jest": {
+    "testTimeout": 30000,
+    "setupFilesAfterEnv": [
+      "<rootDir>/jest/customMatchers.js"
+    ]
   }
 }
