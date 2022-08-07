@@ -8,12 +8,12 @@ import formatNodes from './libs/formatCSS'
 import collapseAdjacentRules from './libs/collapseAdjacentRules'
 import setupContext from './utils/setupContext'
 
-module.exports = (configPath) => {
+module.exports = (pathOrConfig) => {
   return {
     postcssPlugin: 'fastcss',
     plugins: [
       function (root, result) {
-        const context = setupContext(configPath)(root, result)
+        const context = setupContext(pathOrConfig)(root, result)
 
         return postcss([
           expandFastAtRules(context),

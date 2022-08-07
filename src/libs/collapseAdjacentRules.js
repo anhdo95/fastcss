@@ -1,6 +1,6 @@
 export default function collapseAdjacentRules() {
   return function (root) {
-    let currentRule
+    let currentRule = null
 
     root.each((node) => {
       if (node.type !== 'rule') {

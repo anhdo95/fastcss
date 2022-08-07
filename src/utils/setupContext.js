@@ -4,14 +4,19 @@ import hash from 'object-hash'
 import resolveConfig from './resolveConfig'
 import buildPluginApi from './buildPluginApi'
 import plugins from '../core/plugins'
+import { isObject } from '.'
 
 const contextCache = new Map()
 const configContextCache = new Map()
 
-function resolveConfigPath(configPath) {
+function resolveConfigPath(pathOrConfig) {
   // require('fastcss')('custom-config.js')
-  if (typeof configPath === 'string') {
-    return path.resolve(configPath)
+  if (typeof pathOrConfig === 'string') {
+    return path.resolve(pathOrConfig)
+  }
+
+  if (isObject(pathOrConfig)) {
+    return null
   }
 
   try {
@@ -25,8 +30,8 @@ function resolveConfigPath(configPath) {
 
 const configPathCache = new Map()
 
-function getFastConfig(configPath) {
-  const userConfigPath = resolveConfigPath(configPath)
+function getFastConfig(pathOrConfig) {
+  const userConfigPath = resolveConfigPath(pathOrConfig)
 
   if (userConfigPath !== null) {
     const [prevConfig, prevModifiedTime = -Infinity, prevConfigHash] =
@@ -46,8 +51,8 @@ function getFastConfig(configPath) {
     return [newConfig, userConfigPath, newHash]
   }
 
-  const defaultConfig = resolveConfig()
-  return [defaultConfig, null, hash(defaultConfig)]
+  const newConfig = resolveConfig(pathOrConfig)
+  return [newConfig, null, hash(newConfig)]
 }
 
 const pathModifiedCache = new Map()
@@ -56,6 +61,8 @@ function trackModified(paths) {
   let modified = false
 
   for (const path of paths) {
+    if (!path) continue
+
     const modifiedTime = fs.statSync(path).mtimeMs
 
     if (
@@ -112,10 +119,10 @@ function registerPlugins(fastConfig, plugins, context) {
   }
 }
 
-export default function setupContext(configPath) {
+export default function setupContext(pathOrConfig) {
   return (root, result) => {
     const [fastConfig, userConfigPath, fastConfigHash] =
-      getFastConfig(configPath)
+      getFastConfig(pathOrConfig)
     const isConfigFile = userConfigPath !== null
     const contextDependencies = new Set()
     const sourcePath = result.opts.from
@@ -155,7 +162,7 @@ export default function setupContext(configPath) {
       changedFiles: new Set(),
       candidateFiles: fastConfig.purge,
       candidateRuleCache: new Map(),
-      stylesheetCache: new Map(),
+      stylesheetCache: null,
       variantCache: new Map(),
     }
 
