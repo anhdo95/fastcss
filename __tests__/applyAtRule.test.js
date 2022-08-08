@@ -7,7 +7,7 @@ async function run(css, opts = { from: '' }) {
   return postcss([plugin({ prefix: '' })]).process(css, opts)
 }
 
-describe.only('applyAtRule', () => {
+describe('applyAtRule', () => {
   afterEach(() => shared.dispose())
 
   it('it copies a class in declarations into its self', async () => {

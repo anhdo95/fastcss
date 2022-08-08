@@ -10,7 +10,7 @@ function run(css, config = {}) {
   return postcss([fast(config)]).process(css, { from: '' })
 }
 
-describe.only('variants', () => {
+describe('variants', () => {
   test('it generates used utilities with variants', () => {
     const config = {
       purge: [htmlPath],
