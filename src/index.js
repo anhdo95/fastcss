@@ -11,8 +11,22 @@ module.exports = (pathOrConfig) => {
   return {
     postcssPlugin: 'fastcss',
     plugins: [
+      function (root) {
+        console.log('\n')
+        console.time('JIT TOTAL')
+        return root
+      },
       function (root, result) {
         const context = setupContext(pathOrConfig)(root, result)
+
+        if (context.userConfigPath !== null) {
+          result.messages.push({
+            type: 'dependency',
+            plugin: 'fastcss',
+            parent: result.opts.from,
+            file: context.userConfigPath,
+          })
+        }
 
         return postcss([
           expandFastAtRules(context),
@@ -21,7 +35,12 @@ module.exports = (pathOrConfig) => {
           collapseAdjacentRules(context),
           formatNodes,
         ]).process(root, { from: undefined })
-      }
+      },
+      function (root) {
+        console.timeEnd('JIT TOTAL')
+        console.log('\n')
+        return root
+      },
     ],
   }
 }
