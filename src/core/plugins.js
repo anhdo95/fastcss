@@ -2,6 +2,9 @@ import preflight from '../plugins/preflight'
 import container from '../plugins/container'
 import display from '../plugins/display'
 import flex from '../plugins/flex'
+import flexDirection from '../plugins/flexDirection'
+import alignItems from '../plugins/alignItems'
+import justifyContent from '../plugins/justifyContent'
 import textColor from '../plugins/textColor'
 import textOpacity from '../plugins/textOpacity'
 import backgroundColor from '../plugins/backgroundColor'
@@ -77,6 +80,9 @@ export default {
   backgroundOpacity,
   display,
   flex,
+  flexDirection,
+  alignItems,
+  justifyContent,
   width,
   height,
   margin,
