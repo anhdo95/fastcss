@@ -2,6 +2,9 @@ import preflight from '../plugins/preflight'
 import container from '../plugins/container'
 import display from '../plugins/display'
 import flex from '../plugins/flex'
+import flexDirection from '../plugins/flexDirection'
+import alignItems from '../plugins/alignItems'
+import justifyContent from '../plugins/justifyContent'
 import textColor from '../plugins/textColor'
 import textOpacity from '../plugins/textOpacity'
 import backgroundColor from '../plugins/backgroundColor'
@@ -18,36 +21,78 @@ import transform from '../plugins/transform'
 import translate from '../plugins/translate'
 import rotate from '../plugins/rotate'
 import scale from '../plugins/scale'
+import { transformAllClasses } from '../utils/transform'
+import buildMediaAtRule from '../utils/buildMediaAtRule'
 
-function loadPlugins({ corePlugins }, plugins) {
-  return Object.keys(plugins)
-    .filter((pluginName) => corePlugins[pluginName] !== false)
-    .map((pluginName) => {
-      return plugins[pluginName]()
-    })
-}
+export default {
+  pseudoClassVariants({ config, addVariant }) {
+    const pseudoVariants = [
+      ['first', 'first-child'],
+      ['last', 'last-child'],
+      ['even', 'nth-child(even)'],
+      ['odd', 'nth-child(odd)'],
+      'hover',
+      'focus',
+      'active',
+      'disabled',
+      'checked',
+      'visited',
+    ]
 
-export default function plugins(config) {
-  return loadPlugins(config, {
-    preflight,
-    container,
-    textColor,
-    textOpacity,
-    backgroundColor,
-    backgroundOpacity,
-    display,
-    flex,
-    width,
-    height,
-    margin,
-    padding,
-    borderWidth,
-    borderColor,
-    divideWidth,
-    divideColor,
-    transform,
-    translate,
-    rotate,
-    scale,
-  })
+    for (const variant of pseudoVariants) {
+      const [variantName, state] = Array.isArray(variant)
+        ? variant
+        : [variant, variant]
+
+      addVariant(
+        variantName,
+        transformAllClasses((className, { withPseudo }) => {
+          return withPseudo(
+            `${variantName}${config.separator}${className}`,
+            state
+          )
+        })
+      )
+    }
+  },
+
+  screenVariants({ config, addVariant }) {
+    const screens = config.theme.screens
+
+    for (const screen in screens) {
+      const size = screens[screen]
+
+      addVariant(
+        screen,
+        transformAllClasses(
+          (className) => `${screen}${config.separator}${className}`,
+          () => buildMediaAtRule(size)
+        )
+      )
+    }
+  },
+
+  preflight,
+  container,
+  textColor,
+  textOpacity,
+  backgroundColor,
+  backgroundOpacity,
+  display,
+  flex,
+  flexDirection,
+  alignItems,
+  justifyContent,
+  width,
+  height,
+  margin,
+  padding,
+  borderWidth,
+  borderColor,
+  divideWidth,
+  divideColor,
+  transform,
+  translate,
+  rotate,
+  scale,
 }

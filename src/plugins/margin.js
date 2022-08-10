@@ -1,41 +1,49 @@
-import prefixNegativeModifier from '../utils/prefixNegativeModifier'
+import { nameClass, asValue } from './utils'
 
-export default function () {
-  return function margin({ addUtilities, theme, variants, e }) {
-    const selector = (base, modifier) =>
-      `.${e(prefixNegativeModifier(base, modifier))}`
-    const values = theme('margin')
+export default function margin({ matchUtilities, theme }) {
+  matchUtilities({
+    m(modifier) {
+      const value = asValue(modifier, theme('margin'))
 
-    addUtilities(
-      Object.keys(values).reduce((classes, size) => {
-        return {
-          ...classes,
-          [selector('m', size)]: {
-            margin: values[size],
-          },
-          [selector('mx', size)]: {
-            'margin-left': values[size],
-            'margin-right': values[size],
-          },
-          [selector('ml', size)]: {
-            'margin-left': values[size],
-          },
-          [selector('mr', size)]: {
-            'margin-right': values[size],
-          },
-          [selector('my', size)]: {
-            'margin-top': values[size],
-            'margin-bottom': values[size],
-          },
-          [selector('mt', size)]: {
-            'margin-top': values[size],
-          },
-          [selector('mb', size)]: {
-            'margin-bottom': values[size],
-          },
-        }
-      }, {}),
-      variants('margin')
-    )
-  }
+      if (value === undefined) {
+        return []
+      }
+
+      return {
+        [nameClass('m', modifier)]: {
+          margin: value,
+        },
+      }
+    },
+
+    mx(modifier) {
+      const value = asValue(modifier, theme('margin'))
+
+      if (value === undefined) {
+        return []
+      }
+
+      return {
+        [nameClass('mx', modifier)]: {
+          'margin-left': value,
+          'margin-right': value,
+        },
+      }
+    },
+
+    my(modifier) {
+      const value = asValue(modifier, theme('margin'))
+
+      if (value === undefined) {
+        return []
+      }
+
+      return {
+        [nameClass('my', modifier)]: {
+          'margin-top': value,
+          'margin-bottom': value,
+        },
+      }
+    },
+  })
 }

@@ -1,20 +1,22 @@
 import withAlphaVariable from '../utils/withAlphaVariable'
+import { nameClass, asValue } from './utils'
 
-export default function () {
-  return function textColor({ addUtilities, theme, variants }) {
-    const values = theme('textColor')
-    addUtilities(
-      Object.keys(values).reduce((classes, color) => {
-        return {
-          ...classes,
-          [`.text-${color}`]: withAlphaVariable({
-            color: values[color],
-            property: 'color',
-            variable: '--text-opacity',
-          }),
-        }
-      }, {}),
-      variants('textColor')
-    )
-  }
+export default function textColor({ matchUtilities, theme }) {
+  matchUtilities({
+    text(modifier) {
+      const value = asValue(modifier, theme('textColor'))
+
+      if (value === undefined) {
+        return []
+      }
+
+      return {
+        [nameClass('text', modifier)]: withAlphaVariable({
+          color: value,
+          property: 'color',
+          variable: '--fast-text-opacity',
+        }),
+      }
+    },
+  })
 }

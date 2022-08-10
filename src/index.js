@@ -1,76 +1,46 @@
-import fs from 'fs'
-import path from 'path'
-import hash from 'object-hash'
-import postcssPresetEnv from 'postcss-preset-env'
+import postcss from 'postcss'
 
-import corePlugins from './core/plugins'
-import registerConfigAsDependency from './utils/registerConfigAsDependency'
-import resolveConfig from './utils/resolveConfig'
-import processPlugins from './utils/processPlugins'
-import useAtRule from './libs/useAtRule'
+import expandFastAtRules from './libs/expandFastAtRules'
 import evaluateFunctions from './libs/evaluateFunctions'
-import applyAtRule from './libs/applyAtRule'
-import variantsAtRule from './libs/variantsAtRule'
-import responsiveAtRule from './libs/responsiveAtRule'
+import expandApplyAtRules from './libs/expandApplyAtRules'
 import formatNodes from './libs/formatCSS'
-import applyImportant from './libs/applyImportant'
-import { shared } from './utils/disposables'
+import collapseAdjacentRules from './libs/collapseAdjacentRules'
+import setupContext from './utils/setupContext'
 
-let previousConfig = null,
-    processedPlugins = null
-
-module.exports = () => {
-  function resolveConfigPath() {
-    try {
-      const defaultConfigPath = path.resolve('./fast.config.js')
-      fs.accessSync(defaultConfigPath)
-      return defaultConfigPath
-    } catch (error) {
-      return undefined
-    }
-  }
-
-  function getConfig(configPath) {
-    if (!configPath) {
-      return resolveConfig([require('./default.config.js')])
-    }
-
-    delete require.cache[require.resolve(configPath)]
-    return resolveConfig([require(configPath), require('./default.config.js')])
-  }
-
-  const plugins = []
-  const resolvedConfigPath = resolveConfigPath()
-
-  if (resolvedConfigPath) {
-    plugins.push(registerConfigAsDependency(resolvedConfigPath))
-  }
-
-  const config = getConfig(resolvedConfigPath)
-  const configChanged = hash(config) !== hash(previousConfig)
-  previousConfig = config
-
-  if (configChanged) {
-    shared.dispose()
-
-    processedPlugins = processPlugins(
-      [...corePlugins(config), ...config.plugins],
-      config
-    )
-  }
-
+module.exports = (pathOrConfig) => {
   return {
     postcssPlugin: 'fastcss',
     plugins: [
-      ...plugins,
-      useAtRule(config, processedPlugins),
-      evaluateFunctions(config),
-      variantsAtRule(config, processedPlugins),
-      responsiveAtRule(config),
-      applyAtRule(config),
-      applyImportant(config),
-      formatNodes,
-      postcssPresetEnv,
+      function (root) {
+        console.log('\n')
+        console.time('JIT TOTAL')
+        return root
+      },
+      function (root, result) {
+        const context = setupContext(pathOrConfig)(root, result)
+
+        if (context.userConfigPath !== null) {
+          result.messages.push({
+            type: 'dependency',
+            plugin: 'fastcss',
+            parent: result.opts.from,
+            file: context.userConfigPath,
+          })
+        }
+
+        return postcss([
+          expandFastAtRules(context),
+          expandApplyAtRules(context),
+          evaluateFunctions(context.fastConfig),
+          collapseAdjacentRules(context),
+          formatNodes,
+        ]).process(root, { from: undefined })
+      },
+      function (root) {
+        console.timeEnd('JIT TOTAL')
+        console.log('\n')
+        return root
+      },
     ],
   }
 }

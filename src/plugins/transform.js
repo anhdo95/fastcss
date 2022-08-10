@@ -1,23 +1,18 @@
-export default function () {
-  return function transform({ addUtilities, variants }) {
-    addUtilities(
-      {
-        '.transform': {
-          '--transform-translate-x': '0',
-          '--transform-translate-y': '0',
-          '--transform-rotate': '0',
-          '--transform-scale-x': '1',
-          '--transform-scale-y': '1',
-          transform: [
-            'translateX(var(--transform-translate-x))',
-            'translateY(var(--transform-translate-y))',
-            'rotate(var(--transform-rotate))',
-            'scaleX(var(--transform-scale-x))',
-            'scaleY(var(--transform-scale-y))',
-          ].join(' '),
-        },
-      },
-      variants('transform')
-    )
-  }
+export default function transform({ addUtilities }) {
+  addUtilities({
+    '.transform': {
+      '--fast-translate-x': '0',
+      '--fast-translate-y': '0',
+      '--fast-rotate': '0',
+      '--fast-scale-x': '1',
+      '--fast-scale-y': '1',
+      transform: [
+        'translateX(var(--fast-translate-x))',
+        'translateY(var(--fast-translate-y))',
+        'rotate(var(--fast-rotate))',
+        'scaleX(var(--fast-scale-x))',
+        'scaleY(var(--fast-scale-y))',
+      ].join(' '),
+    },
+  })
 }

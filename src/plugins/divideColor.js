@@ -1,19 +1,23 @@
-export default function () {
-  return function divideColor({ addUtilities, theme, variants, e }) {
-    const values = theme('divideColor')
+import { nameClass, asValue } from './utils'
 
-    addUtilities(
-      Object.keys(values).reduce((classes, color) => {
-        if (color === 'default') return classes
+export default function divideColor({ matchUtilities, theme }) {
+  matchUtilities({
+    divide(modifier) {
+      if (modifier === 'DEFAULT') {
+        return []
+      }
 
-        return {
-          ...classes,
-          [`.divide-${e(color)} > :not([hidden]) ~ :not([hidden])`]: {
-            'border-color': values[color],
-          },
-        }
-      }, {}),
-      variants('divideColor')
-    )
-  }
+      const value = asValue(modifier, theme('divideColor'))
+
+      if (value === undefined) {
+        return []
+      }
+
+      return {
+        [`${nameClass('divide', modifier)} > :not([hidden]) ~ :not([hidden])`]: {
+          'border-color': value
+        },
+      }
+    },
+  })
 }

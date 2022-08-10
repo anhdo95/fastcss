@@ -1,20 +1,22 @@
 import withAlphaVariable from '../utils/withAlphaVariable'
+import { nameClass, asValue } from './utils'
 
-export default function () {
-  return function backgroundColor({ addUtilities, theme, variants }) {
-    const values = theme('backgroundColor')
-    addUtilities(
-      Object.keys(values).reduce((classes, color) => {
-        return {
-          ...classes,
-          [`.bg-${color}`]: withAlphaVariable({
-            color: values[color],
-            property: 'background-color',
-            variable: '--bg-opacity',
-          }),
-        }
-      }, {}),
-      variants('backgroundColor')
-    )
-  }
+export default function backgroundColor({ matchUtilities, theme }) {
+  matchUtilities({
+    bg(modifier) {
+      const value = asValue(modifier, theme('backgroundColor'))
+
+      if (value === undefined) {
+        return []
+      }
+
+      return {
+        [nameClass('bg', modifier)]: withAlphaVariable({
+          color: value,
+          property: 'background-color',
+          variable: '--fast-bg-opacity',
+        }),
+      }
+    },
+  })
 }

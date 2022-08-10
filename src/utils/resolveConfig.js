@@ -1,5 +1,7 @@
+import { isFunction, isObject } from '.'
 import defaults from './defaults'
 import toPath from './toPath'
+import defaultConfig from '../../stubs/default.config'
 
 const utils = {
   negative(scale) {
@@ -13,14 +15,6 @@ const utils = {
         {}
       )
   },
-}
-
-function isFunction(fn) {
-  return typeof fn === 'function'
-}
-
-function isObject(obj) {
-  return obj !== null && typeof obj === 'object'
 }
 
 function mergeWith(target, ...sources) {
@@ -77,20 +71,24 @@ function resolveFunctionKeys(theme) {
   return Object.keys(theme).reduce(
     (resolved, key) => ({
       ...resolved,
-      [key]: isFunction(theme[key]) ? theme[key](resolveThemePath, utils) : theme[key],
+      [key]: isFunction(theme[key])
+        ? theme[key](resolveThemePath, utils)
+        : theme[key],
     }),
     {}
   )
 }
 
-export default function resolveConfig(configs) {
+export default function resolveConfig(config = {}) {
+  const allConfigs = [config, defaultConfig]
+
   return defaults(
     {
       theme: resolveFunctionKeys(
-        mergeExtensions(defaults({}, ...configs.map(({ theme }) => theme)))
+        mergeExtensions(defaults({}, ...allConfigs.map(({ theme }) => theme)))
       ),
-      variants: defaults({}, ...configs.map(({ variants }) => variants)),
+      variants: defaults({}, ...allConfigs.map(({ variants }) => variants)),
     },
-    ...configs
+    ...allConfigs
   )
 }
